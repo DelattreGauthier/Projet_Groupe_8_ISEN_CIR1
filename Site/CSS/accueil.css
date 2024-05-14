@@ -1,0 +1,9 @@
+body {
+    background-image: url('../../IMG/main-background.png');
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+p {
+    color: red;
+}
