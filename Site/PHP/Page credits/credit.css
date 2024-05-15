@@ -32,7 +32,7 @@ body, html {
 .credits-main-container {
     margin-top: 7%;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    border-radius: 10px;
+    border-radius: 10px ;
     display: grid;
     grid-template-columns: repeat(2, 1fr); /* 2 colonnes de largeur égale */
     grid-template-rows: repeat(3, 1fr); /* 3 lignes de hauteur égale */
@@ -46,11 +46,11 @@ body, html {
     list-style-type: none; /* Supprime les puces */
     padding: 0;
     margin: 0; /* Ajuste les marges */
-    display: contents; /* Fait que le <ol> n'impacte pas la disposition de la grille */
+    display: contents   ; /* Fait que le <ol> n'impacte pas la disposition de la grille */
     list-style-type: none; /* Supprime les puces */
-    display: contents; /* Fait que le <ol> n'impacte pas la disposition de la grille */
 }  
 .credits-list li {
+    background :rgba(171, 170, 170, 0.47);
     border: 1px solid #cccccc; /* Bordure des boîtes */
     border-radius: 4px; /* Bordures arrondies */
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Ombre portée */
@@ -58,6 +58,9 @@ body, html {
     display: flex; /* Centre le contenu dans la boîte */
     justify-content: center; /* Centre horizontalement */
     align-items: center; /* Centre verticalement */
+}
+.credits-list li:hover{
+    background :rgba(84, 83, 83, 0.47);
 }
 .un { grid-area: 1 / 1 / 2 / 2; } /* Ligne 1, Colonne 1 */
 .deux { grid-area: 1 / 2 / 2 / 3; } /* Ligne 1, Colonne 2 */
