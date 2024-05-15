@@ -7,6 +7,10 @@
 </head>
 <body>
     <div id="buttons">
+        <button id="normalButton" onclick="changeColor('normal')">Normal</button>
+        <button id="vertButton" onclick="changeColor('vert')">Vert</button>
+        <button id="cuivreButton" onclick="changeColor('cuivre')">Cuivre</button>
+        <button id="noirButton" onclick="changeColor('noir')">Noir</button>
         <button onclick="changeGridSize(4, 4)">4x4</button>
         <button onclick="changeGridSize(6, 6)">6x6</button>
         <button onclick="changeGridSize(8, 8)">8x8</button>
@@ -14,6 +18,64 @@
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.80.1/phaser.min.js"></script>
     <script src="../../Javascript/script.js"></script>
+    <script>
+        function changeColor(color) {
+            // Réinitialiser le tableau d'images avec les images correspondant à la couleur choisie
+            var newImageFiles = [];
+            switch (color) {
+                case 'normal':
+                    newImageFiles = [
+                        '../../../Document/Image/Jeu/Tuyaux/Tuyau_Simple.png',
+                        '../../../Document/Image/Jeu/Tuyaux/Tuyau_Courbe.png',
+                        '../../../Document/Image/Jeu/Tuyaux/Tuyau_Triple.png',
+                        '../../../Document/Image/Jeu/Tuyaux/Tuyau_Quadruple.png',
+                        'empty'
+                    ];
+                    break;
+                case 'vert':
+                    newImageFiles = [
+                        '../../../Document/Image/Jeu/Tuyaux/Tuyau_Simple_Vert.png',
+                        '../../../Document/Image/Jeu/Tuyaux/Tuyau_Courbe_Vert.png',
+                        '../../../Document/Image/Jeu/Tuyaux/Tuyau_Triple_Vert.png',
+                        '../../../Document/Image/Jeu/Tuyaux/Tuyau_Quadruple_Vert.png',
+                        'empty'
+                    ];
+                    break;
+                case 'cuivre':
+                    newImageFiles = [
+                        '../../../Document/Image/Jeu/Tuyaux/Tuyau_Simple_Cuivre.png',
+                        '../../../Document/Image/Jeu/Tuyaux/Tuyau_Courbe_Cuivre.png', 
+                        '../../../Document/Image/Jeu/Tuyaux/Tuyau_Triple_Cuivre.png',
+                        '../../../Document/Image/Jeu/Tuyaux/Tuyau_Quadruple_Cuivre.png',
+                        'empty'
+                    ];
+                    break;
+                case 'noir':
+                    newImageFiles = [
+                        '../../../Document/Image/Jeu/Tuyaux/Tuyau_Simple_Noir.png',
+                        '../../../Document/Image/Jeu/Tuyaux/Tuyau_Courbe_Noir.png',
+                        '../../../Document/Image/Jeu/Tuyaux/Tuyau_Triple_Noir.png',
+                        '../../../Document/Image/Jeu/Tuyaux/Tuyau_Quadruple_Noir.png',
+                        'empty'
+                    ];
+                    break;
+                default:
+                    // Si la couleur choisie n'est pas reconnue, utiliser les images normales
+                    newImageFiles = [
+                        '../../../Document/Image/Jeu/Tuyaux/Tuyau_Simple.png',
+                        '../../../Document/Image/Jeu/Tuyaux/Tuyau_Courbe.png',
+                        '../../../Document/Image/Jeu/Tuyaux/Tuyau_Triple.png',
+                        '../../../Document/Image/Jeu/Tuyaux/Tuyau_Quadruple.png',
+                        'empty'
+                    ];
+            }
+
+            // Mettre à jour le tableau d'images dans le script.js
+            imageFiles = newImageFiles;
+
+            // Relancer la création du jeu avec les nouvelles images
+            game.scene.scenes[0].create();
+        }
+    </script>
 </body>
 </html>
-
