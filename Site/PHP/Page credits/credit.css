@@ -28,12 +28,6 @@ body, html {
     width: 40%;
     max-width: 800px;
 }
-.credits-list {
-    list-style-type: none; /* Supprime les puces */
-    padding: 0;
-    margin: 0; /* Ajuste les marges */
-    display: contents; /* Fait que le <ol> n'impacte pas la disposition de la grille */
-}
 
 .credits-main-container {
     margin-top: 7%;
@@ -53,10 +47,10 @@ body, html {
     padding: 0;
     margin: 0; /* Ajuste les marges */
     display: contents; /* Fait que le <ol> n'impacte pas la disposition de la grille */
-}
-
+    list-style-type: none; /* Supprime les puces */
+    display: contents; /* Fait que le <ol> n'impacte pas la disposition de la grille */
+}  
 .credits-list li {
-    background:rgba(87, 86, 86, 0.445);
     border: 1px solid #cccccc; /* Bordure des boîtes */
     border-radius: 4px; /* Bordures arrondies */
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Ombre portée */
@@ -71,12 +65,9 @@ body, html {
 .quatre { grid-area: 2 / 2 / 3 / 3; } /* Ligne 2, Colonne 2 */
 .cinq { grid-area: 3 / 1 / 4 / 2; } /* Ligne 3, Colonne 1 */
 .six { grid-area: 3 / 2 / 4 / 3; } /* Ligne 3, Colonne 2 */
-.credits-list li:hover {
-    background-color: #f0f0f0;
-    
-}
+
 .credits-container:hover {
-    transform: scale(1.05);
+    transform: scale(1.05);     
 }
 .credits-main-container:hover {
     transform: scale(1.05);
