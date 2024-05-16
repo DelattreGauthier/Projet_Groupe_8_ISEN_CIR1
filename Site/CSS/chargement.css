@@ -2,18 +2,15 @@
     position: absolute;
     bottom: 0;
     right: 0;
-    
-    
 }
 
 .curve {
     width: 50%;
     position: relative;
-    background-color: #f0f0f9;
+    background-color: #000000;
     border-radius: 20% / 80%;
     z-index: -1;
     margin-left:46%;
-    background-color: rgba(0, 0, 0, 0.5);
 }
 
 #txt_charg1 {

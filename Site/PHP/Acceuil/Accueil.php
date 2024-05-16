@@ -1,18 +1,18 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HOME</title>
-    <link rel="stylesheet" href="../../CSS/style.css"> 
+    <link rel="stylesheet" href="../../CSS/style.css">
+    <link rel="icon" href="/path/to/your/image/th.jpg" type="image/jpeg"> <!-- Ajout de la favicon -->
 </head>
 <body>
     
     <div class="header-main"> 
         <a href="#play" class="on">PLAY</a>
         <a href="#settings" class="on">SETTINGS</a>
-        <a href="#credits" class="on">CREDITS</a>
+        <a href="/Site/PHP/Page credits/Credits.html" class="on">CREDITS</a>
     </div>
 
     <div class="footer-main"> 

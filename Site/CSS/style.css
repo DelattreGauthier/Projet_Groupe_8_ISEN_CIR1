@@ -64,7 +64,7 @@ p {
    color: inherit;
 }
 
-body, html {
+body {
     height: 100%;
     margin: 0;
     font-family: Arial, sans-serif;
@@ -73,61 +73,81 @@ body, html {
     justify-content: center;
     align-items: center;
     background-image: url('../../Document/Image/Fond/main-background\ .jpg');
+    background-size: cover; 
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    margin: 0;
 }
+
+/* Container principal des crédits */
 .credits-container {
-    color : white;
+    color: white;
     display: flex;
-    justify-content: center; /* Centre les éléments à l'horizontale */
-    align-items: center; /* Centre les éléments à la verticale */
-    position: fixed; /* Fixe la position relative à la fenêtre du navigateur */
+    justify-content: center; /* Centre les éléments horizontalement */
+    align-items: center; /* Centre les éléments verticalement */
+    position: fixed; /* Position fixe par rapport à la fenêtre du navigateur */
     top: 0; /* Aligné en haut */
-    left: 0; /* Aligné à droite */
-    margin: 10px; /* Ajoute un peu d'espace autour du conteneur */
-    background:rgba(0, 0, 0,0.47);
+    left: 0; /* Aligné à gauche */
+    margin: 10px; /* Marge autour du conteneur */
+    background: rgba(0, 0, 0, 0.347); /* Fond semi-transparent */
     border-radius: 100px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    transform: scale(1);
-    transition: transform 0.5s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre portée */
+    transform: scale(1); /* Échelle initiale */
+    transition: transform 0.5s ease; /* Transition pour le hover */
     max-height: 90%;
-    overflow-y: auto;
+    overflow-y: auto; /* Permet le défilement vertical */
     padding: 20px;
-    width: 40%;
+    width: 60%;
+    height: 2;
     max-width: 800px;
 }
 
+/* Conteneur principal interne des crédits */
 .credits-main-container {
     margin-top: 7%;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    border-radius: 10px ;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre portée */
+    border-radius: 10px; /* Bordures arrondies */
     display: grid;
     grid-template-columns: repeat(2, 1fr); /* 2 colonnes de largeur égale */
     grid-template-rows: repeat(3, 1fr); /* 3 lignes de hauteur égale */
-    grid-gap: 10px; /* Espacement entre les grilles */
+    grid-gap: 10px; /* Espacement entre les éléments de la grille */
     padding: 20px; /* Espace autour du contenu interne */
-    background:rgba(0, 0, 0,0.47);
-    max-width: 80%;
+    background: rgba(0, 0, 0, 0.47); /* Fond semi-transparent */
+    max-width: 90%;
+    width: 60%;
+    height: 60%;
 }
 
+/* Liste des crédits */
 .credits-list {
     list-style-type: none; /* Supprime les puces */
     padding: 0;
-    margin: 0; /* Ajuste les marges */
-    display: contents   ; /* Fait que le <ol> n'impacte pas la disposition de la grille */
-    list-style-type: none; /* Supprime les puces */
-}  
+    margin: 0; /* Supprime les marges */
+    display: contents; /* Fait que le <ol> n'impacte pas la disposition de la grille */
+}
+
+/* Éléments de la liste des crédits */
 .credits-list li {
-    background :rgba(171, 170, 170, 0.47);
-    border: 1px solid #cccccc; /* Bordure des boîtes */
+    background: rgba(92, 91, 91, 0.7);
+    color: whitesmoke;
+    font-size: 18px;
+    border:none;
     border-radius: 4px; /* Bordures arrondies */
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Ombre portée */
-    padding: 10px; /* Espace interne autour du texte */
-    display: flex; /* Centre le contenu dans la boîte */
+    padding: 10px; /* Espace interne */
+    display: flex; /* Flexbox pour centrer le contenu */
     justify-content: center; /* Centre horizontalement */
     align-items: center; /* Centre verticalement */
+    transition: background 0.3s ease; /* Transition pour le hover */
 }
-.credits-list li:hover{
-    background :rgba(84, 83, 83, 0.47);
+
+/* Hover sur les éléments de la liste */
+.credits-list li:hover {
+    background: rgba(171, 170, 170, 0.756);
 }
+
+/* Classes pour la disposition des éléments dans la grille */
 .un { grid-area: 1 / 1 / 2 / 2; } /* Ligne 1, Colonne 1 */
 .deux { grid-area: 1 / 2 / 2 / 3; } /* Ligne 1, Colonne 2 */
 .trois { grid-area: 2 / 1 / 3 / 2; } /* Ligne 2, Colonne 1 */
@@ -135,18 +155,132 @@ body, html {
 .cinq { grid-area: 3 / 1 / 4 / 2; } /* Ligne 3, Colonne 1 */
 .six { grid-area: 3 / 2 / 4 / 3; } /* Ligne 3, Colonne 2 */
 
+/* Effet de zoom sur le conteneur principal au survol */
 .credits-container:hover {
     transform: scale(1.05);     
 }
-.credits-main-container:hover {
-    transform: scale(1.05);
-}
+/* Animation pour les éléments individuels */
 .credit-item {
     margin: 10px 0;
     opacity: 0;
     animation: fadeInUp 0.8s ease forwards;
     animation-delay: calc(var(--animation-order) * 0.3s);
 }
+
+/* Animation keyframes */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.Jeu{
+    background-image: url('../../Document/Image/Fond/main-background\ .jpg');
+    background-size: cover; 
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    margin: 0;
+}
+
+.controls-container {
+    position: fixed;
+    left: 5%;
+    top: 25%
+}
+
+#script {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: calc(100vh - 100px); /* Adjust height to account for potential overflow */
+}
+
+.script-container {
+    display: grid;
+    grid-gap: 10px;
+    grid-auto-rows: minmax(100px, auto);
+  }
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    width: 150px; /* Taille fixe pour tous les boutons */
+}
+
+#color-buttons button {
+    background-color: rgba(0, 0, 0, 0.347); /* Couleur de fond par défaut */
+    color: white; /* Couleur du texte par défaut */
+}
+
+#size-buttons button {
+    background-color: rgba(0, 0, 0, 0.347); /* Couleur de fond par défaut */
+    color: white; /* Couleur du texte par défaut */
+}
+
+#size-buttons button:hover {
+    background-color: rgba(0, 0, 0, 0.5); /* Couleur de fond par défaut */
+    color: white; /* Couleur du texte par défaut */
+}
+
+#color-buttons button:hover {
+    background-color: rgba(0, 0, 0, 0.5); /* Couleur de fond par défaut */
+    color: white; /* Couleur du texte par défaut */
+}
+
+.script-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#size-buttons {
+    margin-top: 20px; /* Espace entre les deux catégories de boutons */
+}
+
+/* Styles pour les boutons individuels selon les catégories */
+#normalButton {
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+}
+
+#vertButton {
+    color: #fff;
+}
+
+#cuivreButton {
+    color: #fff;
+}
+
+#noirButton {
+    color: #fff;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+
+#quatrexquatre {
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+}
+
+#dixxdix {
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+
+.script {
+    grid-row: 1;
+}
+
+
 @keyframes fadeInUp {
     from {
         opacity: 0;

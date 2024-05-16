@@ -1,23 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exemple</title>
+    <title>Jeu</title>
+    <link rel="stylesheet" href="../../CSS/style.css">
 </head>
-<body>
-    <div id="buttons">
-        <button id="normalButton" onclick="changeColor('normal')">Normal</button>
-        <button id="vertButton" onclick="changeColor('vert')">Vert</button>
-        <button id="cuivreButton" onclick="changeColor('cuivre')">Cuivre</button>
-        <button id="noirButton" onclick="changeColor('noir')">Noir</button>
-        <button onclick="changeGridSize(4, 4)">4x4</button>
-        <button onclick="changeGridSize(6, 6)">6x6</button>
-        <button onclick="changeGridSize(8, 8)">8x8</button>
-        <button onclick="changeGridSize(10, 10)">10x10</button>
+
+<body class="Jeu"> 
+    <div class="script-container">
+        <!-- Conteneur pour les boutons de couleur -->
+        <div class="controls-container">
+            <div id="color-buttons" style="display: flex; flex-direction: column; align-items: center;">
+                <button id="normalButton" onclick="changeColor('normal')">Normal</button>
+                <button id="vertButton" onclick="changeColor('vert')">Vert</button>
+                <button id="cuivreButton" onclick="changeColor('cuivre')">Cuivre</button>
+                <button id="noirButton" onclick="changeColor('noir')">Noir</button>
+            </div>
+
+            <!-- Conteneur pour les boutons de taille -->
+            
+
+            <!-- Écran de jeu -->
+
+            <div id="size-buttons" style="display: flex; flex-direction: column; align-items: center; margin-top: 20px;">
+                <button id="quatrexquatre" onclick="changeGridSize(4, 4)">4x4</button>
+                <button id="sixxsix" onclick="changeGridSize(6, 6)">6x6</button>
+                <button id="huigtxhuigt" onclick="changeGridSize(8, 8)">8x8</button>
+                <button id="dixxdix" onclick="changeGridSize(10, 10)">10x10</button>
+            </div>  
+        </div> 
+
+        <div id="script">
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.80.1/phaser.min.js"></script>
+            <script src="../../Javascript/script.js"></script>
+        </div>
+
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.80.1/phaser.min.js"></script>
-    <script src="../../Javascript/script.js"></script>
+
     <script>
         function changeColor(color) {
             // Réinitialiser le tableau d'images avec les images correspondant à la couleur choisie

@@ -1,16 +1,16 @@
-// Création d'une configuration pour le jeu
 var config = {
     type: Phaser.AUTO,
-    width: 480,
-    height: 480,
+    width: 600, // Augmenter la largeur de la fenêtre de jeu pour accueillir le cadre autour de la grille
+    transparent: true,
+    height: 600, // Augmenter la hauteur de la fenêtre de jeu pour accueillir le cadre autour de la grille
     scene: {
         preload: preload,
         create: create
     }
 };
 
-let numRows = 5;
-let numCols = 5;
+let numRows = 4;
+let numCols = 4;
 let cellSize = 480 / numCols;
 let gridContainer;
 let imageFiles = [
@@ -51,7 +51,8 @@ function createGrid(rows, cols) {
 
     // Clearing previously created grid if any
     if (gridContainer) gridContainer.removeAll(true);
-    gridContainer = game.scene.scenes[0].add.container(0, 0);
+    gridContainer = game.scene.scenes[0].add.container(60, 60);
+
 
     // Creating new grid
     for (let i = 0; i < numRows; i++) {
@@ -86,7 +87,7 @@ function createGrid(rows, cols) {
                 });
             } else {
                 // Creating a square of the same color as the background
-                image = game.scene.scenes[0].add.rectangle(j * cellSize + cellSize / 2, i * cellSize + cellSize / 2, cellSize, cellSize, 0xFA8072);
+                image = game.scene.scenes[0].add.rectangle(j * cellSize + cellSize / 2, i * cellSize + cellSize / 2, cellSize, cellSize, 0x000000, 0);
             }
             
             gridContainer.add(image);
@@ -98,7 +99,11 @@ function changeGridSize(rows, cols) {
 }
 
 function create() {
+    // Création du cadre autour de la grille
+    var graphics = this.add.graphics();
+    graphics.lineStyle(4, 0xffffff); // Définir l'épaisseur et la couleur de la ligne du cadre
+    graphics.strokeRect(58, 58, 484, 484); // Dessiner un rectangle autour de la zone de la grille
+
     createGrid(numRows, numCols);
-    this.cameras.main.setBackgroundColor('#FA8072');
 }
 
