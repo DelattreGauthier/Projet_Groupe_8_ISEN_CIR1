@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>Sign up</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../../CSS/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -18,19 +18,19 @@
 		<form method="post">
 			<hr>
 			<div class="input-box">
-				<input type="text" name="username" placeholder="Username">
+				<input type="text" name="username" placeholder="Username" required="required">
 				<i class='bx bxs-user'></i>
 			</div>
 			<div class="input-box"> 
-				<input type="email" name="email" placeholder="Email">
+				<input type="email" name="email" placeholder="Email" required="required">
 				<i class='bx bxs-envelope'></i>
 			</div>
 			<div class="input-box">
-				<input type="password" name="password" placeholder="Password">
+				<input type="password" name="password" placeholder="Password" required="required">
 				<i class='bx bx-lock-alt'></i>
 			</div>
             <div class="profile-pic-container">
-                <img id="profile-pic" src="https://via.placeholder.com/150" alt="Profile Picture">
+                <img id="profile-pic" src="https://via.placeholder.com/150" alt="Profile Picture" required="required">
                 <input type="file" id="profile-pic-input" name="profile_picture" accept="image/*">
             </div>
 			<button type="submit" class="btn" name="submit">Submit</button>
@@ -38,8 +38,6 @@
 			<p>Already have an account ? <a href="#">sign in</a></p>
 		</form>
 	</div>
-
-    
 
     <script>
         document.getElementById('profile-pic').addEventListener('click', function() {
@@ -54,7 +52,7 @@
         });
     </script>
 
-    <div class="message-container"></div>
+    <div id="message-container"></div>
 
     <?php
     session_start();

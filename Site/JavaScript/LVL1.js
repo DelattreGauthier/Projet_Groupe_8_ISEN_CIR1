@@ -1,6 +1,7 @@
 var config = {
     type: Phaser.AUTO,
     width: 484, // Augmenter la largeur de la fenêtre de jeu pour accueillir le cadre autour de la grille
+    transparent:true,
     height: 484, // Augmenter la hauteur de la fenêtre de jeu pour accueillir le cadre autour de la grille
     scene: {
         preload: preload,
@@ -13,12 +14,13 @@ let numCols = 6;
 let cellSize = 480 / numCols;
 let gridContainer;
 let imageFiles = [
-    '../../../Document/Image/Jeu/Tuyaux/Tuyau_Simple.png',
-    '../../../Document/Image/Jeu/Tuyaux/Tuyau_Courbe.png',
-    '../../../Document/Image/Jeu/Tuyaux/Tuyau_Triple.png',
-    '../../../Document/Image/Jeu/Tuyaux/Tuyau_Quadruple.png',
-    '../../../Document/Image/Jeu/Tuyaux/Entree.png',
-    '../../../Document/Image/Jeu/Tuyaux/Sortie.png',
+    '../../../Document/Image/Jeu/Tuyaux/Tuyau_Simple_Cuivre.png',
+    '../../../Document/Image/Jeu/Tuyaux/Tuyau_Courbe_Cuivre.png',
+    '../../../Document/Image/Jeu/Tuyaux/Tuyau_Triple_Cuivre.png',
+    '../../../Document/Image/Jeu/Tuyaux/Tuyau_Quadruple_Cuivre.png',
+    '../../../Document/Image/Jeu/Tuyaux/Entree_Cuivre.png',
+    '../../../Document/Image/Jeu/Tuyaux/Sortie_Cuivre.png',
+    '../../../Document/Image/Jeu/Tuyaux/Sortie_Cuivre_True.png',
     'empty' // Valeur pour les cases vides
 ];
 
@@ -59,27 +61,27 @@ function createGrid(rows, cols) {
             let can_move;
             switch (pattern[i][j]) {
                 case 'S':
-                    imageKey = '../../../Document/Image/Jeu/Tuyaux/Tuyau_Simple.png';
+                    imageKey = '../../../Document/Image/Jeu/Tuyaux/Tuyau_Simple_Cuivre.png';
                     can_move=true;
                     break;
                 case 'C':
-                    imageKey = '../../../Document/Image/Jeu/Tuyaux/Tuyau_Courbe.png';
+                    imageKey = '../../../Document/Image/Jeu/Tuyaux/Tuyau_Courbe_Cuivre.png';
                     can_move=true;
                     break;
                 case 'T':
-                    imageKey = '../../../Document/Image/Jeu/Tuyaux/Tuyau_Triple.png';
+                    imageKey = '../../../Document/Image/Jeu/Tuyaux/Tuyau_Triple_Cuivre.png';
                     can_move=true;
                     break;
                 case 'Q':
-                    imageKey = '../../../Document/Image/Jeu/Tuyaux/Tuyau_Quadruple.png';
+                    imageKey = '../../../Document/Image/Jeu/Tuyaux/Tuyau_Quadruple_Cuivre.png';
                     can_move=true;
                     break;
                 case 'D':
-                    imageKey = '../../../Document/Image/Jeu/Tuyaux/Entree.png';
+                    imageKey = '../../../Document/Image/Jeu/Tuyaux/Entree_Cuivre.png';
                     can_move=false;
                     break;
                 case 'A':
-                    imageKey = '../../../Document/Image/Jeu/Tuyaux/Sortie.png';
+                    imageKey = '../../../Document/Image/Jeu/Tuyaux/Sortie_Cuivre.png';
                     can_move=false;
                     break;
                 case 'E':
@@ -137,8 +139,5 @@ function create() {
     graphics2.lineStyle(4, 0xffffff); // Définir l'épaisseur et la couleur de la ligne du cadre
     graphics2.strokeRect(2, 2, 480, 480); // Dessiner un rectangle autour de la zone de la grille
     createGrid(numRows, numCols);
-    
-    // Définir la couleur de fond de la caméra sur transparent
-    this.cameras.main.transparent = true;
+    this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0.7)');
 }
-

@@ -1,7 +1,8 @@
 var config = {
     type: Phaser.AUTO,
-    width: 720, // Augmenter la largeur de la fenêtre de jeu pour accueillir le cadre autour de la grille
-    height: 720, // Augmenter la hauteur de la fenêtre de jeu pour accueillir le cadre autour de la grille
+    width: 484, // Augmenter la largeur de la fenêtre de jeu pour accueillir le cadre autour de la grille
+    transparent:true,
+    height: 484, // Augmenter la hauteur de la fenêtre de jeu pour accueillir le cadre autour de la grille
     scene: {
         preload: preload,
         create: create
@@ -13,12 +14,13 @@ let numCols = 6;
 let cellSize = 480 / numCols;
 let gridContainer;
 let imageFiles = [
-    '../../../Document/Image/Jeu/Tuyaux/Tuyau_Simple.png',
-    '../../../Document/Image/Jeu/Tuyaux/Tuyau_Courbe.png',
-    '../../../Document/Image/Jeu/Tuyaux/Tuyau_Triple.png',
-    '../../../Document/Image/Jeu/Tuyaux/Tuyau_Quadruple.png',
-    '../../../Document/Image/Jeu/Tuyaux/Entree.png',
-    '../../../Document/Image/Jeu/Tuyaux/Sortie.png',
+    '../../../Document/Image/Jeu/Tuyaux/Tuyau_Simple_Cuivre.png',
+    '../../../Document/Image/Jeu/Tuyaux/Tuyau_Courbe_Cuivre.png',
+    '../../../Document/Image/Jeu/Tuyaux/Tuyau_Triple_Cuivre.png',
+    '../../../Document/Image/Jeu/Tuyaux/Tuyau_Quadruple_Cuivre.png',
+    '../../../Document/Image/Jeu/Tuyaux/Entree_Cuivre.png',
+    '../../../Document/Image/Jeu/Tuyaux/Sortie_Cuivre.png',
+    '../../../Document/Image/Jeu/Tuyaux/Sortie_Cuivre_True.png',
     'empty' // Valeur pour les cases vides
 ];
 
@@ -40,15 +42,15 @@ function createGrid(rows, cols) {
 
     // Clearing previously created grid if any
     if (gridContainer) gridContainer.removeAll(true);
-    gridContainer = game.scene.scenes[0].add.container(120, 120);
+    gridContainer = game.scene.scenes[0].add.container(0, 0);
 
     // Define the pattern
     const pattern = [
-        ['E', 'E', 'D', 'E', 'E', 'E'],
-        ['E', 'C', 'C', 'E', 'E', 'E'],
-        ['E', 'S', 'E', 'E', 'E', 'E'],
-        ['E', 'T', 'T', 'C', 'E', 'E'],
-        ['E', 'C', 'C', 'S', 'E', 'E'],
+        ['E', 'E', 'E', 'E', 'D', 'E'],
+        ['E', 'C', 'C', 'E', 'S', 'E'],
+        ['E', 'S', 'T', 'T', 'T', 'E'],
+        ['E', 'S', 'C', 'T', 'C', 'E'],
+        ['E', 'C', 'S', 'C', 'E', 'E'],
         ['E', 'E', 'E', 'A', 'E', 'E']
     ];
 
@@ -59,27 +61,27 @@ function createGrid(rows, cols) {
             let can_move;
             switch (pattern[i][j]) {
                 case 'S':
-                    imageKey = '../../../Document/Image/Jeu/Tuyaux/Tuyau_Simple.png';
+                    imageKey = '../../../Document/Image/Jeu/Tuyaux/Tuyau_Simple_Cuivre.png';
                     can_move=true;
                     break;
                 case 'C':
-                    imageKey = '../../../Document/Image/Jeu/Tuyaux/Tuyau_Courbe.png';
+                    imageKey = '../../../Document/Image/Jeu/Tuyaux/Tuyau_Courbe_Cuivre.png';
                     can_move=true;
                     break;
                 case 'T':
-                    imageKey = '../../../Document/Image/Jeu/Tuyaux/Tuyau_Triple.png';
+                    imageKey = '../../../Document/Image/Jeu/Tuyaux/Tuyau_Triple_Cuivre.png';
                     can_move=true;
                     break;
                 case 'Q':
-                    imageKey = '../../../Document/Image/Jeu/Tuyaux/Tuyau_Quadruple.png';
+                    imageKey = '../../../Document/Image/Jeu/Tuyaux/Tuyau_Quadruple_Cuivre.png';
                     can_move=true;
                     break;
                 case 'D':
-                    imageKey = '../../../Document/Image/Jeu/Tuyaux/Entree.png';
+                    imageKey = '../../../Document/Image/Jeu/Tuyaux/Entree_Cuivre.png';
                     can_move=false;
                     break;
                 case 'A':
-                    imageKey = '../../../Document/Image/Jeu/Tuyaux/Sortie.png';
+                    imageKey = '../../../Document/Image/Jeu/Tuyaux/Sortie_Cuivre.png';
                     can_move=false;
                     break;
                 case 'E':
@@ -131,8 +133,13 @@ function create() {
     // Création du cadre autour de la grille
     var graphics = this.add.graphics();
     graphics.lineStyle(4, 0xffffff); // Définir l'épaisseur et la couleur de la ligne du cadre
-    graphics.strokeRect(118, 118, 484, 484); // Dessiner un rectangle autour de la zone de la grille
+    graphics.strokeRect(78, 78, 324, 324); // Dessiner un rectangle autour de la zone de la grille
+
+    var graphics2 = this.add.graphics();
+    graphics2.lineStyle(4, 0xffffff, 0.5); // Définir l'épaisseur et la couleur de la ligne du cadre
+    graphics2.strokeRect(2, 2, 480, 480); // Dessiner un rectangle autour de la zone de la grille
     createGrid(numRows, numCols);
-    this.cameras.main.setBackgroundColor('#FA8072');
+
+    this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0.7)');
 }
 
