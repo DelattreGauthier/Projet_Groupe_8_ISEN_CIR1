@@ -1,7 +1,7 @@
 var config = {
     type: Phaser.AUTO,
-    width: 484, // Augmenter la largeur de la fenêtre de jeu pour accueillir le cadre autour de la grille
-    height: 484, // Augmenter la hauteur de la fenêtre de jeu pour accueillir le cadre autour de la grille
+    width: 720, // Augmenter la largeur de la fenêtre de jeu pour accueillir le cadre autour de la grille
+    height: 720, // Augmenter la hauteur de la fenêtre de jeu pour accueillir le cadre autour de la grille
     scene: {
         preload: preload,
         create: create
@@ -40,7 +40,7 @@ function createGrid(rows, cols) {
 
     // Clearing previously created grid if any
     if (gridContainer) gridContainer.removeAll(true);
-    gridContainer = game.scene.scenes[0].add.container(0, 0);
+    gridContainer = game.scene.scenes[0].add.container(120, 120);
 
     // Define the pattern
     const pattern = [
@@ -131,14 +131,8 @@ function create() {
     // Création du cadre autour de la grille
     var graphics = this.add.graphics();
     graphics.lineStyle(4, 0xffffff); // Définir l'épaisseur et la couleur de la ligne du cadre
-    graphics.strokeRect(78, 78, 324, 324); // Dessiner un rectangle autour de la zone de la grille
-
-    var graphics2 = this.add.graphics();
-    graphics2.lineStyle(4, 0xffffff); // Définir l'épaisseur et la couleur de la ligne du cadre
-    graphics2.strokeRect(2, 2, 480, 480); // Dessiner un rectangle autour de la zone de la grille
+    graphics.strokeRect(118, 118, 484, 484); // Dessiner un rectangle autour de la zone de la grille
     createGrid(numRows, numCols);
-    
-    // Définir la couleur de fond de la caméra sur transparent
-    this.cameras.main.transparent = true;
+    this.cameras.main.setBackgroundColor('#FA8072');
 }
 

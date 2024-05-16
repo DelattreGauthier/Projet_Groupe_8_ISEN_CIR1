@@ -178,7 +178,109 @@ body {
         transform: translateY(0);
     }
 }
+/* Partie connexion */
+.ebody{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    background-image: url('../../Document/Image/Fond/main-background\ .jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 17px;
+    font-weight: bold;
+}
 
+.wrapper-body{
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 25px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.wrapper-body h4 {
+    font-size: 36px;
+    text-align: center;
+    color: #fff;
+    margin: 0 0 20px 0;
+}
+
+.wrapper-body .input-box {
+    width: 100%;
+    margin: 20px 0;
+    position: relative;
+}
+
+.wrapper-body .input-box input[type="text"], 
+.wrapper-body .input-box input[type="email"], 
+.wrapper-body .input-box input[type="password"] {
+    width: 100%;
+    height: 30px;
+    background: white;
+    border: none;
+    outline: none;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 40px;
+}
+
+.wrapper-body .input-box input::placeholder {
+    color: grey;
+}
+
+.wrapper-body .input-box i {
+    position: relative;
+    left: 365px;
+    bottom: 21px;
+}
+
+.wrapper-body .btn {
+    text-align: center;
+    width: 80%;
+    height: 35px;
+    border-radius: 20px;
+    background-color: blue;
+    color: #fff;
+}
+
+.wrapper-body p{
+    color: white;
+}
+
+.wrapper-body .profile-pic-container {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+}
+
+.wrapper-body .profile-pic-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.wrapper-body .profile-pic-container input[type="file"] {
+    display: none;
+}
+
+.message-container {
+    display: flex;
+    
+    padding: 10px;
+    margin-top: 20px;
+    color: white;
+    font-weight: bold;
+}
+/* FIN de la partie connexion*/
 .Jeu{
     background-image: url('../../Document/Image/Fond/main-background\ .jpg');
     background-size: cover; 
