@@ -1,58 +1,58 @@
 <?php
-
 session_start(); // Démarrer la session pour utiliser les variables de session
 
 $error = ""; // Initialisation de la variable d'erreur
 
-if (isset($_POST["reset_password_submit"], $_POST["new_password"], $_POST["confirm_password"])) {
-    $new_password = $_POST["new_password"];
-    $confirm_password = $_POST["confirm_password"];
+$servername = 'localhost'; 
+$username = 'root';
+$password = 'root';
+$database = 'projet2';
+// Connexion à la base de données (à remplacer avec vos propres informations de connexion)
+$bdd = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
 
-    // Vérifier si les nouveaux mots de passe correspondent
-    if ($new_password === $confirm_password) {
-        // Vérifier si le code de récupération est valide
-        if (isset($_SESSION["recup_code"]) && isset($_SESSION["recup_mail"])) {
-            $recup_code = $_SESSION["recup_code"];
-            $recup_mail = $_SESSION["recup_mail"];
+if (isset($_POST["recup_submit"], $_POST["recup_mail"])) {
+    if (!empty($_POST["recup_mail"])) {
+        $mail = htmlspecialchars($_POST["recup_mail"]);
+        if (filter_var($mail, FILTER_VALIDATE_EMAIL)) {
+            $mailexist = $bdd->prepare("SELECT id, username FROM adherents WHERE email = ?");
+            $mailexist->execute(array($mail));
+            $mailexist_count = $mailexist->rowCount();
+            if ($mailexist_count == 1) {
+                $pseudo = $mailexist->fetch();
+                $pseudo = $pseudo["username"];
+                $_SESSION["recup_mail"] = $mail;
+                $recup_code = "";
+                for ($i = 0; $i < 8; $i++) { 
+                    $recup_code .= mt_rand(0, 9);
+                }
+                // Stocker le code de récupération dans la session
+                $_SESSION["recup_code"] = $recup_code;
 
-            // Vérifier si le code entré correspond au code de récupération stocké dans la session
-            if ($_POST["recup_code"] === $recup_code) {
-                // Connexion à la base de données
-                $servername = 'localhost'; 
-                $username = 'root';
-                $password = 'root';
-                $database = 'projet2';
-                $bdd = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
+                // Insérer le code de récupération dans la table 'recuperation'
+                $insert_code = $bdd->prepare("INSERT INTO recuperation (mail, code) VALUES (?, ?)");
+                $insert_code->execute(array($mail, $recup_code));
 
-                // Hasher le nouveau mot de passe
-                $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+                // Inclure le fichier mail.php et appeler la fonction pour envoyer l'email
+                require 'mail.php';
+                sendRecoveryMail($mail, $recup_code);
 
-                // Mettre à jour le mot de passe dans la table 'adherents'
-                $update_password = $bdd->prepare("UPDATE adherents SET mot_de_passe = ? WHERE email = ?");
-                $update_password->execute(array($hashed_password, $recup_mail));
-
-                // Réinitialiser les variables de session
-                unset($_SESSION["recup_code"]);
-                unset($_SESSION["recup_mail"]);
-
-                // Redirection vers une page de confirmation ou de connexion
-                header("Location: connexion.php");
+                // Redirection vers la page de saisie du code de récupération
+                header("Location: recovery_code.php");
                 exit();
             } else {
-                $error = "Code de récupération invalide";
+                $error = "Cette adresse mail n'est pas enregistrée";
             }
         } else {
-            $error = "Une erreur est survenue. Veuillez réessayer.";
+            $error = "Adresse-mail invalide";
         }
     } else {
-        $error = "Les nouveaux mots de passe ne correspondent pas.";
+        $error = "Veuillez entrer votre adresse e-mail"; // Définition du message d'erreur
     }
 }
 ?>
 
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8">
     <title>Reset Password</title>
@@ -62,30 +62,20 @@ if (isset($_POST["reset_password_submit"], $_POST["new_password"], $_POST["confi
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
-
 <body>
-    <div class='ebody'>
-        <!-- Formulaire de réinitialisation du mot de passe -->
-        <div class="wrapper-body">
-            <h4>Reset Your Password</h4>
-            <form method="post">
-                <hr>
-                <div class="input-box">
-                    <input type="text" name="recup_code" placeholder="Recovery Code">
-                </div>
-                <div class="input-box">
-                    <input type="password" name="new_password" placeholder="New Password">
-                </div>
-                <div class="input-box">
-                    <input type="password" name="confirm_password" placeholder="Confirm New Password">
-                </div>
-                <button type="submit" class="btn" name="reset_password_submit">Reset Password</button>
-            </form>
-            <?php if (!empty($error)) {
-                echo '<span style="color:red">' . $error . '</span>';
-            } ?>
-        </div>
+<div class='ebody'>
+    <!-- Formulaire de récupération de mot de passe -->
+    <div class="wrapper-body">
+        <h4>Reset your password</h4>
+        <form method="post">
+            <hr>
+            <div class="input-box"> 
+                <input type="email" name="recup_mail" placeholder="Email">
+            </div>
+            <button type="submit" class="btn" name="recup_submit">Submit</button>
+        </form>
+        <?php if (!empty($error)) { echo '<span style="color:red">'. $error.'</span>'; } ?>
     </div>
+</div>
 </body>
-
 </html>

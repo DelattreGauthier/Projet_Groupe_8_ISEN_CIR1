@@ -23,15 +23,17 @@ let imageFiles = [
     '../../../Document/Image/Jeu/Tuyaux/Entree_Noir.png',
     '../../../Document/Image/Jeu/Tuyaux/Sortie_Noir.png',
     '../../../Document/Image/Jeu/Tuyaux/Sortie_Noir_True.png',
-
+    '../../../Document/Image/Jeu/Dino/Dino.png',
+    '../../../Document/Image/Jeu/Dino/Dino2.png',
     'empty' // Valeur pour les cases vides
 ];
-
 
 var game = new Phaser.Game(config);
 var isAnimating = false;
 var background;
 var sortieSprite;  // Référence au sprite de la case 'A'
+var dinoSprite; // Référence au sprite du dino
+var dinoFrame = 0;
 
 function preload() {
     for (let i = 0; i < imageFiles.length - 1; i++) {
@@ -196,19 +198,39 @@ function create() {
     background = this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0.7)');
 
     createGrid(numRows, numCols);
+
+
 }
 
 function update() {
     if (checkPatternMatch()) {
+        if (!dinoSprite) {
+            // Créer le sprite du dino seulement s'il n'existe pas déjà
+            dinoSprite = this.add.sprite(480 - cellSize / 2, 480 - cellSize / 2, '../../../Document/Image/Jeu/Dino/Dino.png');
+            dinoSprite.setOrigin(0.5);
+            dinoSprite.displayWidth = cellSize;
+            dinoSprite.displayHeight = cellSize;
+
+            // Configurer la minuterie pour changer les images de Dino
+            this.time.addEvent({
+                delay: 300, // 0.3 seconde
+                callback: function () {
+                    dinoFrame = (dinoFrame + 1) % 2;
+                    dinoSprite.setTexture(dinoFrame === 0 ? '../../../Document/Image/Jeu/Dino/Dino.png' : '../../../Document/Image/Jeu/Dino/Dino2.png');
+                },
+                loop: true
+            });
+        }
         background.setBackgroundColor('rgba(2, 73, 2, 0.7)');
         if (sortieSprite) {
             sortieSprite.setTexture('../../../Document/Image/Jeu/Tuyaux/Sortie_Noir_True.png');
         }
     } else {
+
         background.setBackgroundColor('rgba(0, 0, 0, 0.7)');
         if (sortieSprite) {
             sortieSprite.setTexture('../../../Document/Image/Jeu/Tuyaux/Sortie_Noir.png');
         }
     }
-}
 
+}
