@@ -3,7 +3,7 @@ body {
     background-size: cover; 
     background-position: center;
     background-repeat: no-repeat;
-    height: 100vh;
+    height: auto;
     margin: 0;
 }
 
@@ -76,7 +76,7 @@ body {
     background-size: cover; 
     background-position: center;
     background-repeat: no-repeat;
-    height: 100vh;
+    height: auto;
     margin: 0;
 }
 
@@ -96,11 +96,11 @@ body {
     transform: scale(1); /* Échelle initiale */
     transition: transform 0.5s ease; /* Transition pour le hover */
     max-height: 90%;
-    overflow-y: auto; 
     padding: 20px;
-    width: 60%;
-    height: 2;
+    width: 40%;
+    height: 10%;
     max-width: 800px;
+    overflow: hidden;
 }
 
 /* Conteneur principal interne des crédits */
@@ -179,23 +179,6 @@ body {
     }
 }
 /* Partie connexion */
-.ebody{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
-    padding: 0;
-    background-image: url('../../Document/Image/Fond/main-background\ .jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    height: 100vh;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 17px;
-    font-weight: bold;
-}
-
 .wrapper-body{
     background-color: rgba(0, 0, 0, 0.5);
     padding: 25px;
@@ -207,7 +190,6 @@ body {
     font-size: 36px;
     text-align: center;
     color: #fff;
-    margin: 0 0 20px 0;
 }
 
 .wrapper-body .input-box {
@@ -274,11 +256,28 @@ body {
 
 .message-container {
     display: flex;
-    
     padding: 10px;
     margin-top: 20px;
-    color: white;
+    color: black;
     font-weight: bold;
+}
+#message-container {
+    min-height: 20px;
+    margin-bottom: 20px;
+    color: red;
+}
+#redirect_singup{
+text-decoration: none;
+}
+/* Styles pour le cadre des conditions de mot de passe */
+.password-requirements {
+    border: 1px solid #000000;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    font-size: 12px;
+    color:whitesmoke;    
+    border-radius: 10px;
 }
 /* FIN de la partie connexion*/
 .Jeu{
@@ -307,10 +306,36 @@ body {
     margin: 0;
 }
 
+.Jeu-Actuel{
+    background-image: url('../../Document/Image/Fond/loading_screen/paris.png');
+    background-size: cover; 
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    margin: 0;
+}
+
 .controls-container {
     position: fixed;
     left: 5%;
     top: 25%
+}
+
+.level-container {
+    position: fixed;
+    left: 5%;
+    top: 25%
+    
+}
+
+#level1 {
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+}
+
+#level8 {
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
 }
 
 #script {
@@ -421,3 +446,30 @@ button {
         font-size: 14px;
     }
 }
+
+/*début page leaderboard*/
+.lbody {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centrer horizontalement les enfants */
+    background-color: rgba(0, 0, 0, 0.7);
+    height: 100vh; /* Utiliser vh pour assurer que lbody prend toute la hauteur de la fenêtre */
+    width: 100%;
+}
+
+.title {
+    background-color: rgba(255, 255, 255, 0.7);
+    height: 30px;
+    width: 300px;
+    border-radius: 10px;
+    text-align: center;
+    position: relative; /* Si vous avez besoin de déplacer le titre un peu vers le bas, utilisez 'top: xpx' */
+}
+/*fin page leaderboard*/
+
+
+/* DEBUT PAGE SETTINGS */ 
+
+
+
+/* FIN PAGE SETTINGS */ 

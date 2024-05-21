@@ -11,18 +11,18 @@ var config = {
 };
 
 let succes = false;
-let numRows = 6;
-let numCols = 6;
+let numRows = 10;
+let numCols = 10;
 let cellSize = 480 / numCols;
 let gridContainer;
 let imageFiles = [
-    '../../../Document/Image/Jeu/Tuyaux/Tuyau_Simple_Noir.png',
-    '../../../Document/Image/Jeu/Tuyaux/Tuyau_Courbe_Noir.png',
-    '../../../Document/Image/Jeu/Tuyaux/Tuyau_Triple_Noir.png',
-    '../../../Document/Image/Jeu/Tuyaux/Tuyau_Quadruple_Noir.png',
-    '../../../Document/Image/Jeu/Tuyaux/Entree_Noir.png',
-    '../../../Document/Image/Jeu/Tuyaux/Sortie_Noir.png',
-    '../../../Document/Image/Jeu/Tuyaux/Sortie_Noir_True.png',
+    '../../../Document/Image/Jeu/Tuyaux/Tuyau_Simple_Vert.png',
+    '../../../Document/Image/Jeu/Tuyaux/Tuyau_Courbe_Vert.png',
+    '../../../Document/Image/Jeu/Tuyaux/Tuyau_Triple_Vert.png',
+    '../../../Document/Image/Jeu/Tuyaux/Tuyau_Quadruple_Vert.png',
+    '../../../Document/Image/Jeu/Tuyaux/Entree_Vert.png',
+    '../../../Document/Image/Jeu/Tuyaux/Sortie_Vert.png',
+    '../../../Document/Image/Jeu/Tuyaux/Sortie_Vert_True.png',
 
     'empty' // Valeur pour les cases vides
 ];
@@ -75,28 +75,40 @@ function createGrid(rows, cols) {
     gridContainer = game.scene.scenes[0].add.container(0, 0);
 
     pattern = [
-        ['E', 'E', 'D', 'E', 'E', 'E'],
-        ['E', 'C', 'C', 'E', 'E', 'E'],
-        ['E', 'S', 'E', 'E', 'E', 'E'],
-        ['E', 'T', 'T', 'C', 'E', 'E'],
-        ['E', 'C', 'C', 'S', 'E', 'E'],
-        ['E', 'E', 'E', 'A', 'E', 'E']
+        ['E','E', 'D', 'E', 'E', 'E', 'E','E','E','E'],
+        ['E','E', 'C', 'T', 'T', 'T', 'T','C','E','E'],
+        ['E','E', 'C', 'C', 'S', 'T', 'T','S','E','E'],
+        ['E','C', 'T', 'E', 'T', 'C', 'T','Q','C','E'],
+        ['E','S', 'S', 'E', 'S', 'C', 'Q','T','S','E'],
+        ['E','C', 'T', 'S', 'C', 'S', 'S','C','C','E'],
+        ['E','E', 'E', 'E', 'C', 'C', 'S','E','E','E'],
+        ['E','E', 'E', 'E', 'T', 'S', 'T','E','E','E'],
+        ['E','E', 'E', 'E', 'C', 'S', 'T','E','E','E'],
+        ['E','E', 'E', 'E', 'E', 'E', 'A','E','E','E']
     ];
     road_pattern = [
-        [0, 0, 1, 0, 0, 0],
-        [0, 4, 2, 0, 0, 0],
-        [0, 2, 0, 0, 0, 0],
-        [0, 4, 1, 1, 0, 0],
-        [0, 3, 2, 2, 0, 0],
-        [0, 0, 0, 1, 0, 0]
+        [0,0,1,0,0,0,0,0,0,0],
+        [0,0,3,1,1,1,1,1,0,0],
+        [0,0,4,2,2,4,2,2,0,0],
+        [0,4,2,0,4,2,4,1,1,0],
+        [0,2,2,0,2,4,1,2,2,0],
+        [0,3,3,1,2,2,2,3,2,0],
+        [0,0,0,0,4,2,2,0,0,0],
+        [0,0,0,0,4,1,2,0,0,0],
+        [0,0,0,0,3,1,2,0,0,0],
+        [0,0,0,0,0,0,1,0,0,0],
     ];
     base_pattern = [
-        [0, 0, 1, 0, 0, 0],
-        [0, 1, 1, 0, 0, 0],
-        [0, 1, 0, 0, 0, 0],
-        [0, 1, 1, 1, 0, 0],
-        [0, 1, 1, 1, 0, 0],
-        [0, 0, 0, 1, 0, 0]
+        [0,0,1,0,0,0,0,0,0,0],
+        [0,0,1,1,1,1,1,1,0,0],
+        [0,0,1,1,1,1,1,1,0,0],
+        [0,1,1,0,1,1,1,1,1,0],
+        [0,1,1,0,1,1,1,1,1,0],
+        [0,1,1,1,1,1,1,1,1,0],
+        [0,0,0,0,1,1,1,0,0,0],
+        [0,0,0,0,1,1,1,0,0,0],
+        [0,0,0,0,1,1,1,0,0,0],
+        [0,0,0,0,0,0,1,0,0,0],
     ];
 
     gridImages = []; // Pour stocker les références aux images affichées sur chaque case
@@ -110,27 +122,27 @@ function createGrid(rows, cols) {
             checkPatternMatch(); // Appel pour vérifier si le motif initial est correct
             switch (pattern[i][j]) {
                 case 'S':
-                    imageKey = '../../../Document/Image/Jeu/Tuyaux/Tuyau_Simple_Noir.png';
+                    imageKey = '../../../Document/Image/Jeu/Tuyaux/Tuyau_Simple_Vert.png';
                     can_move=true;
                     break;
                 case 'C':
-                    imageKey = '../../../Document/Image/Jeu/Tuyaux/Tuyau_Courbe_Noir.png';
+                    imageKey = '../../../Document/Image/Jeu/Tuyaux/Tuyau_Courbe_Vert.png';
                     can_move=true;
                     break;
                 case 'T':
-                    imageKey = '../../../Document/Image/Jeu/Tuyaux/Tuyau_Triple_Noir.png';
+                    imageKey = '../../../Document/Image/Jeu/Tuyaux/Tuyau_Triple_Vert.png';
                     can_move=true;
                     break;
                 case 'Q':
-                    imageKey = '../../../Document/Image/Jeu/Tuyaux/Tuyau_Quadruple_Noir.png';
+                    imageKey = '../../../Document/Image/Jeu/Tuyaux/Tuyau_Quadruple_Vert.png';
                     can_move=true;
                     break;
                 case 'D':
-                    imageKey = '../../../Document/Image/Jeu/Tuyaux/Entree_Noir.png';
+                    imageKey = '../../../Document/Image/Jeu/Tuyaux/Entree_Vert.png';
                     can_move=false;
                     break;
                 case 'A':
-                    imageKey = '../../../Document/Image/Jeu/Tuyaux/Sortie_Noir.png';
+                    imageKey = '../../../Document/Image/Jeu/Tuyaux/Sortie_Vert.png';
                     can_move=false;
                     break;
                 case 'E':
@@ -185,13 +197,15 @@ function changeGridSize(rows, cols) {
 }
 
 function create() {
+    // Création du cadre autour de la grille
     var graphics = this.add.graphics();
-    graphics.lineStyle(4, 0xffffff);
-    graphics.strokeRect(78, 78, 324, 324);
+    graphics.lineStyle(4, 0xffffff); // Définir l'épaisseur et la couleur de la ligne du cadre
+    graphics.strokeRect(46, 46, 388, 388); // Dessiner un rectangle autour de la zone de la grille
 
     var graphics2 = this.add.graphics();
-    graphics2.lineStyle(4, 0xffffff);
-    graphics2.strokeRect(2, 2, 480, 480);
+    graphics2.lineStyle(4, 0xffffff); // Définir l'épaisseur et la couleur de la ligne du cadre
+    graphics2.strokeRect(2, 2, 480, 480); // Dessiner un rectangle autour de la zone de la grille
+    createGrid(numRows, numCols);
 
     background = this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0.7)');
 
@@ -200,14 +214,14 @@ function create() {
 
 function update() {
     if (checkPatternMatch()) {
-        background.setBackgroundColor('rgba(2, 73, 2, 0.7)');
+        background.setBackgroundColor('rgba(15, 142, 86, 0.7)');
         if (sortieSprite) {
-            sortieSprite.setTexture('../../../Document/Image/Jeu/Tuyaux/Sortie_Noir_True.png');
+            sortieSprite.setTexture('../../../Document/Image/Jeu/Tuyaux/Sortie_Vert_True.png');
         }
     } else {
         background.setBackgroundColor('rgba(0, 0, 0, 0.7)');
         if (sortieSprite) {
-            sortieSprite.setTexture('../../../Document/Image/Jeu/Tuyaux/Sortie_Noir.png');
+            sortieSprite.setTexture('../../../Document/Image/Jeu/Tuyaux/Sortie_Vert.png');
         }
     }
 }

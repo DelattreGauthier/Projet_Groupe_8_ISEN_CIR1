@@ -10,14 +10,14 @@
 <body>
     
     <div class="header-main"> 
-        <a href="#play" class="on">PLAY</a>
-        <a href="#settings" class="on">SETTINGS</a>
-        <a href="/Site/PHP/Page credits/Credits.html" class="on">CREDITS</a>
+        <a href="../Jeu/Level1.html" class="on">PLAY</a>
+        <a href="../Settings/Settings.html" class="on">SETTINGS</a>
+        <a href="../Credits/Credits.html" class="on">CREDITS</a>
     </div>
 
     <div class="footer-main"> 
         <a href="#leaderboard" class="on">LEADERBOARD</a>
-        <a href="#connection" class="on">CONNECTION</a>
+        <a href="../Connexion/connexion.php" class="on">CONNECTION</a>
     </div>
 
 </body>

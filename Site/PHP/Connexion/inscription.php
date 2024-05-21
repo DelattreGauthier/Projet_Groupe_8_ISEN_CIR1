@@ -1,56 +1,49 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8">
     <title>Sign up</title>
     <link rel="stylesheet" href="../../CSS/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap" rel="stylesheet">
+   
 </head>
 <body>
-<div class='ebody'>
-	<!-- Formulaire d'ajout -->
+<div>
+    <!-- Formulaire d'ajout -->
     <div class="wrapper-body">
-        <h4>Sign up</h4>
-		<form method="post">
-			<hr>
-			<div class="input-box">
-				<input type="text" name="username" placeholder="Username" required="required">
-				<i class='bx bxs-user'></i>
-			</div>
-			<div class="input-box"> 
-				<input type="email" name="email" placeholder="Email" required="required">
-				<i class='bx bxs-envelope'></i>
-			</div>
-			<div class="input-box">
-				<input type="password" name="password" placeholder="Password" required="required">
-				<i class='bx bx-lock-alt'></i>
-			</div>
+        <a id="redirect_singup" href="../Accueil.php"><h4>Sign up</h4></a>
+        <form method="post" enctype="multipart/form-data">
+            <hr>
+            <div class="input-box">
+                <input type="text" name="username" placeholder="Username" required>
+                <i class='bx bxs-user'></i>
+            </div>
+            <div class="input-box"> 
+                <input type="email" name="email" placeholder="Email" required>
+                <i class='bx bxs-envelope'></i>
+            </div>
+            <div class="input-box">
+                <input type="password" name="password" placeholder="Password" required>
+                <i class='bx bx-lock-alt'></i>
+            </div>
+            <div class="password-requirements">
+                <p>Le mot de passe doit contenir :</p>
+                <ul>
+                    <li>Au moins 12 caractères</li>
+                    <li>Au moins une majuscule</li>
+                    <li>Au moins une minuscule</li>
+                    <li>Au moins un caractère spécial</li>
+                </ul>
+            </div>
             <div class="profile-pic-container">
-                <img id="profile-pic" src="https://via.placeholder.com/150" alt="Profile Picture" required="required">
+                <img id="profile-pic" src="https://via.placeholder.com/150" alt="Profile Picture">
                 <input type="file" id="profile-pic-input" name="profile_picture" accept="image/*">
             </div>
-			<button type="submit" class="btn" name="submit">Submit</button>
-			
-			<p>Already have an account ? <a href="#">sign in</a></p>
-		</form>
-	</div>
-
-    <script>
-        document.getElementById('profile-pic').addEventListener('click', function() {
-            document.getElementById('profile-pic-input').click();
-        });
-
-        document.getElementById('profile-pic-input').addEventListener('change', function(event) {
-            if (event.target.files.length > 0) {
-                var src = URL.createObjectURL(event.target.files[0]);
-                document.getElementById('profile-pic').src = src;
-            }
-        });
-    </script>
+            <button type="submit" class="btn" name="submit">Submit</button>
+            <p>Already have an account? <a href="connexion.php">sign in</a></p>
+        </form>
+    </div>
 
     <div id="message-container"></div>
 
@@ -77,6 +70,8 @@
                 $message = "Tous les champs sont obligatoires.";
             } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $message = "Adresse e-mail invalide.";
+            } elseif (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{12,}$/', $password)) {
+                $message = "Le mot de passe doit contenir au moins 12 caractères, dont une majuscule, une minuscule et un caractère spécial.";
             } else {
                 // Vérifier si l'email ou le pseudo existe déjà
                 $stmt = $conn->prepare("SELECT * FROM adherents WHERE username = :username OR email = :email");
@@ -137,7 +132,6 @@
             document.getElementById('message-container').innerHTML = "<p><?php echo $message; ?></p>";
         <?php } ?>
     </script>
-		
 </div>
 </body>
 </html>
