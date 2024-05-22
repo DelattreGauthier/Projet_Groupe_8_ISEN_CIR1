@@ -38,7 +38,7 @@ try {
         <thead>
             <tr>
                 <th>Place</th>
-                <th>username</th>
+                <th>Username</th>
                 <th>Score</th>
             </tr>
         </thead>

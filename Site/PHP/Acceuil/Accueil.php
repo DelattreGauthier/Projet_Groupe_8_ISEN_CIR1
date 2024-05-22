@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HOME</title>
     <link rel="stylesheet" href="../../CSS/style.css">
-    <link rel="icon" href="/path/to/your/image/th.jpg" type="image/jpeg"> <!-- Ajout de la favicon -->
+    <link rel="icon" href="../../../Document/Image/Jeu/Dino/Dino_Vert.png" type="image/jpeg"> <!-- Ajout de la favicon -->
 </head>
 <body >
     

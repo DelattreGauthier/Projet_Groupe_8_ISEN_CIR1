@@ -35,7 +35,10 @@ var background;
 var sortieSprite;  // Référence au sprite de la case 'A'
 var dinoSprite; // Référence au sprite du dino
 var dinoFrame = 0;
-
+var victoryText; // Référence au texte de victoire
+var victoryRect; // Référence au rectangle de victoire
+var score = 0;
+var scoreText;
 function preload() {
     for (let i = 0; i < imageFiles.length - 1; i++) {
         this.load.image(imageFiles[i], imageFiles[i]);
@@ -158,9 +161,13 @@ function createGrid(rows, cols) {
                 if (can_move) {
                     image.setInteractive();
                     image.on('pointerdown', function () {
-                        if (!isAnimating) {
+                        if (!isAnimating && !succes) {
                             isAnimating = true;
                             updateBasePattern(i, j); // Déplacez ceci ici
+
+                            score++;
+                            scoreText.setText('Score: ' + score);
+
                             this.scene.tweens.add({
                                 targets: this,
                                 angle: this.angle + 90,
@@ -207,16 +214,36 @@ function create() {
     background = this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0.7)');
 
     createGrid(numRows, numCols);
+
+    
+    scoreText = this.add.text(320, 430, 'Score: ' + score, {
+        fontSize: '32px',
+        fill: '#FFFFFF',
+        fontFamily: 'Arial, sans-serif'
+    });
+
+    // Ajouter le rectangle noir de victoire mais le rendre invisible pour l'instant
+    victoryRect = this.add.rectangle(240, 240, 360, 360, 0x000000, 0.5);
+    victoryRect.setVisible(false);
+    victoryText = this.add.text(242, 120, 'Score : ' + score,{
+        fontSize: '64px',
+        fill: '#FFFFFF',
+        fontFamily: 'Arial, sans-serif'
+    });
+    victoryText.setOrigin(0.5);
+    victoryText.setVisible(false);
+    
+
 }
 
 function update() {
     if (checkPatternMatch()) {
         if (!dinoSprite) {
             // Créer le sprite du dino seulement s'il n'existe pas déjà
-            dinoSprite = this.add.sprite(480 - cellSize / 2, 480 - cellSize / 2, '../../../Document/Image/Jeu/Dino/Dino_Rouge.png');
+            dinoSprite = this.add.sprite(242, 242-24, '../../../Document/Image/Jeu/Dino/Dino_Rouge.png');
             dinoSprite.setOrigin(0.5);
-            dinoSprite.displayWidth = cellSize;
-            dinoSprite.displayHeight = cellSize;
+            dinoSprite.displayWidth = cellSize+96;
+            dinoSprite.displayHeight = cellSize+96;
 
             // Configurer la minuterie pour changer les images de Dino
             this.time.addEvent({
@@ -232,8 +259,15 @@ function update() {
         if (sortieSprite) {
             sortieSprite.setTexture('../../../Document/Image/Jeu/Tuyaux/Sortie_Cuivre_True.png');
         }
-    } else {
 
+        // Afficher le rectangle et le texte de victoire
+        victoryRect.setVisible(true);
+        victoryText.setText('Score : ' + score);
+        victoryText.setVisible(false);
+
+        // Marquer que le joueur a gagné
+        succes = true;
+    } else {
         background.setBackgroundColor('rgba(0, 0, 0, 0.7)');
         if (sortieSprite) {
             sortieSprite.setTexture('../../../Document/Image/Jeu/Tuyaux/Sortie_Cuivre.png');

@@ -206,13 +206,12 @@ function create() {
 
     createGrid(numRows, numCols);
 
-    scoreText = this.add.text(10, 10, 'Score: ' + score, {
+    scoreText = this.add.text(320, 420, 'Score: ' + score, {
         fontSize: '32px',
         fill: '#FFFFFF',
         fontFamily: 'Arial, sans-serif'
     });
 
-    // Ajouter le rectangle noir de victoire mais le rendre invisible pour l'instant
     victoryRect = this.add.rectangle(240, 240, 320, 320, 0x000000, 0.5);
     victoryRect.setVisible(false);
     victoryText = this.add.text(242, 120, 'Score : ' + score,{
