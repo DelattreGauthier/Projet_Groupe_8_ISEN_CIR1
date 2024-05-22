@@ -1,5 +1,5 @@
 <?php// Contenu
-    $mail->isHTML(true);                                  // Définir le format du courriel en HTML
+    $mail->isHTML(true);// Définir le format du courriel en HTML
     $mail->Subject = 'Voici le sujet';
     $mail->Body    = 'Le code de confirmation est : '.$_SESSION["recup_code"]?'</b>';
     $mail->AltBody = 'Ceci est le corps du message en texte brut pour les clients de messagerie non-HTML';

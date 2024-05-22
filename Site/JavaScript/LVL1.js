@@ -10,6 +10,7 @@ var config = {
     }
 };
 
+
 let succes = false;
 let numRows = 6;
 let numCols = 6;
@@ -38,6 +39,7 @@ var victoryText; // Référence au texte de victoire
 var victoryRect; // Référence au rectangle de victoire
 var score = 0;
 var scoreText;
+
 function preload() {
     for (let i = 0; i < imageFiles.length - 1; i++) {
         this.load.image(imageFiles[i], imageFiles[i]);
@@ -56,13 +58,12 @@ function updateBasePattern(row, col) {
 function checkPatternMatch() {
     for (let i = 0; i < numRows; i++) {
         for (let j = 0; j < numCols; j++) {
-            if(pattern[i][j]!=='Q'){
-                if(pattern[i][j]==='S'){
-                    if (road_pattern[i][j]%2 !== base_pattern[i][j]%2) {
+            if (pattern[i][j] !== 'Q') {
+                if (pattern[i][j] === 'S') {
+                    if (road_pattern[i][j] % 2 !== base_pattern[i][j] % 2) {
                         return false;
-                    }  
-                }
-                else if (road_pattern[i][j] !== base_pattern[i][j]) {
+                    }
+                } else if (road_pattern[i][j] !== base_pattern[i][j]) {
                     return false;
                 }
             }
@@ -97,10 +98,10 @@ function createGrid(rows, cols) {
     ];
     base_pattern = [
         [0, 0, 1, 0, 0, 0],
-        [0, 1, 1, 0, 0, 0],
+        [0, 3, 4, 0, 0, 0],
         [0, 1, 0, 0, 0, 0],
-        [0, 1, 1, 1, 0, 0],
-        [0, 1, 1, 1, 0, 0],
+        [0, 2, 1, 2, 0, 0],
+        [0, 4, 3, 1, 0, 0],
         [0, 0, 0, 1, 0, 0]
     ];
 
@@ -112,31 +113,32 @@ function createGrid(rows, cols) {
             let imageKey;
             let can_move;
             let angle = 0; // Angle initial de l'image
-            checkPatternMatch(); // Appel pour vérifier si le motif initial est correct
+            checkPatternMatch(); // Appel de la fonction checkPatternMatch ici
+
             switch (pattern[i][j]) {
                 case 'S':
                     imageKey = '../../../Document/Image/Jeu/Tuyaux/Tuyau_Simple_Noir.png';
-                    can_move=true;
+                    can_move = true;
                     break;
                 case 'C':
                     imageKey = '../../../Document/Image/Jeu/Tuyaux/Tuyau_Courbe_Noir.png';
-                    can_move=true;
+                    can_move = true;
                     break;
                 case 'T':
                     imageKey = '../../../Document/Image/Jeu/Tuyaux/Tuyau_Triple_Noir.png';
-                    can_move=true;
+                    can_move = true;
                     break;
                 case 'Q':
                     imageKey = '../../../Document/Image/Jeu/Tuyaux/Tuyau_Quadruple_Noir.png';
-                    can_move=true;
+                    can_move = true;
                     break;
                 case 'D':
                     imageKey = '../../../Document/Image/Jeu/Tuyaux/Entree_Noir.png';
-                    can_move=false;
+                    can_move = false;
                     break;
                 case 'A':
                     imageKey = '../../../Document/Image/Jeu/Tuyaux/Sortie_Noir.png';
-                    can_move=false;
+                    can_move = false;
                     break;
                 case 'E':
                 default:
@@ -150,7 +152,10 @@ function createGrid(rows, cols) {
                 image.setOrigin(0.5);
                 image.displayWidth = cellSize;
                 image.displayHeight = cellSize;
+                if (base_pattern[i][j] > 0) {
+                    image.angle += 90 * (base_pattern[i][j] - 1);
 
+                }
                 if (can_move) {
                     image.setInteractive();
                     image.on('pointerdown', function () {
@@ -214,24 +219,24 @@ function create() {
 
     victoryRect = this.add.rectangle(240, 240, 320, 320, 0x000000, 0.5);
     victoryRect.setVisible(false);
-    victoryText = this.add.text(242, 120, 'Score : ' + score,{
+    victoryText = this.add.text(242, 120, 'Score : ' + score, {
         fontSize: '64px',
         fill: '#FFFFFF',
         fontFamily: 'Arial, sans-serif'
     });
     victoryText.setOrigin(0.5);
     victoryText.setVisible(false);
-    
+
 }
 
 function update() {
     if (checkPatternMatch()) {
         if (!dinoSprite) {
             // Créer le sprite du dino seulement s'il n'existe pas déjà
-            dinoSprite = this.add.sprite(242, 242-24, '../../../Document/Image/Jeu/Dino/Dino_Vert.png');
+            dinoSprite = this.add.sprite(242, 242 - 24, '../../../Document/Image/Jeu/Dino/Dino_Vert.png');
             dinoSprite.setOrigin(0.5);
-            dinoSprite.displayWidth = cellSize+48;
-            dinoSprite.displayHeight = cellSize+48;
+            dinoSprite.displayWidth = cellSize + 48;
+            dinoSprite.displayHeight = cellSize + 48;
 
             // Configurer la minuterie pour changer les images de Dino
             this.time.addEvent({
@@ -251,14 +256,29 @@ function update() {
         // Afficher le rectangle et le texte de victoire
         victoryRect.setVisible(true);
         victoryText.setText('Score : ' + score);
-        victoryText.setVisible(false);
+
 
         // Marquer que le joueur a gagné
         succes = true;
+
+        // Définir un cookie pour débloquer le niveau suivant
+        setCookie("level1", "unlocked", 7);
+        enableNextLevelLinks();
     } else {
         background.setBackgroundColor('rgba(0, 0, 0, 0.7)');
         if (sortieSprite) {
             sortieSprite.setTexture('../../../Document/Image/Jeu/Tuyaux/Sortie_Noir.png');
+        }
+    }
+}
+
+
+function enableNextLevelLinks() {
+    for (let i = 2; i <= 8; i++) {
+        let levelLink = document.getElementById("level" + i);
+        if (getCookie("level" + (i - 1)) === "unlocked") {
+            levelLink.classList.remove("disabled");
+            levelLink.href = "Level" + i + ".php";
         }
     }
 }

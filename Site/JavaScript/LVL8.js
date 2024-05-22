@@ -107,23 +107,23 @@ function createGrid(rows, cols) {
         [0,4,3,1,1,4,3,1,4,1,2,0],
         [0,2,4,2,4,1,1,2,2,4,2,0],
         [0,3,2,3,2,3,3,1,2,3,2,0],
-        [0,0,1,0,0,0,0,0,0,0,0,0],
+        [0,0,1,0,0,0,0,0,0,0,0,0]
     ]
     
     base_pattern = [
-        [0,0,0,0,0,0,0,1,0,0,0,0],
-        [0,1,1,1,1,1,1,1,1,1,1,0],
-        [0,1,1,1,1,1,1,1,1,1,1,0],
-        [0,1,1,1,1,1,1,1,1,1,1,0],
-        [0,1,1,1,1,1,1,1,1,1,1,0],
-        [0,1,1,1,1,1,1,1,1,1,1,0],
-        [0,1,1,1,1,1,1,1,1,1,1,0],
-        [0,1,1,1,1,1,1,1,1,1,1,0],
-        [0,1,1,1,1,1,1,1,1,1,1,0],
-        [0,1,1,1,1,1,1,1,1,1,1,0],
-        [0,1,1,1,1,1,1,1,1,1,1,0],
-        [0,0,1,0,0,0,0,0,0,0,0,0],
-    ]
+        [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+        [0, 2, 4, 3, 1, 2, 1, 3, 4, 2, 1, 0],
+        [0, 3, 1, 4, 2, 3, 4, 1, 2, 3, 1, 0],
+        [0, 4, 2, 3, 1, 4, 2, 3, 1, 4, 2, 0],
+        [0, 1, 3, 2, 4, 1, 3, 2, 4, 1, 3, 0],
+        [0, 2, 4, 1, 3, 2, 4, 1, 3, 2, 4, 0],
+        [0, 3, 1, 2, 4, 3, 1, 2, 4, 3, 1, 0],
+        [0, 4, 2, 3, 1, 4, 2, 3, 1, 4, 2, 0],
+        [0, 1, 3, 2, 4, 1, 3, 2, 4, 1, 3, 0],
+        [0, 2, 4, 1, 3, 2, 4, 1, 3, 2, 4, 0],
+        [0, 3, 1, 2, 4, 3, 1, 2, 4, 3, 1, 0],
+        [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ];
     
     
 
@@ -173,7 +173,9 @@ function createGrid(rows, cols) {
                 image.setOrigin(0.5);
                 image.displayWidth = cellSize;
                 image.displayHeight = cellSize;
-
+                if(base_pattern[i][j]>0){
+                    image.angle += 90 * (base_pattern[i][j]-1); 
+                }
                 if (can_move) {
                     image.setInteractive();
                     image.on('pointerdown', function () {
@@ -277,10 +279,21 @@ function update() {
 
         // Marquer que le joueur a gagné
         succes = true;
+        setCookie("level8", "unlocked", 7);
+        enableNextLevelLinks();
     } else {
         background.setBackgroundColor('rgba(0, 0, 0, 0.7)');
         if (sortieSprite) {
             sortieSprite.setTexture('../../../Document/Image/Jeu/Tuyaux/Sortie.png');
+        }
+    }
+}
+function enableNextLevelLinks() {
+    for (let i = 2; i <= 8; i++) {
+        let levelLink = document.getElementById("level" + i);
+        if (getCookie("level" + (i - 1)) === "unlocked") {
+            levelLink.classList.remove("disabled");
+            levelLink.href = "Level" + i + ".php";
         }
     }
 }

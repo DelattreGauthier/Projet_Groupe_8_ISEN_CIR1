@@ -97,18 +97,19 @@ function createGrid(rows, cols) {
         [0,4,2,2,2,0,0,0],
         [0,3,2,3,2,0,0,0],
         [0,0,0,4,2,0,0,0],
-        [0,0,0,1,0,0,0,0],
+        [0,0,0,1,0,0,0,0]
     ];
     base_pattern = [
-        [0,1,0,0,0,0,0,0],
-        [0,1,1,1,1,0,0,0],
-        [0,1,1,1,1,1,0,0],
-        [0,1,1,1,1,1,0,0],
-        [0,1,1,1,1,0,0,0],
-        [0,1,1,1,1,0,0,0],
-        [0,0,0,1,1,0,0,0],
-        [0,0,0,1,0,0,0,0],
+        [0, 1, 0, 0, 0, 0, 0, 0],
+        [0, 3, 2, 1, 4, 0, 0, 0],
+        [0, 2, 4, 3, 1, 2, 0, 0],
+        [0, 1, 2, 3, 4, 3, 0, 0],
+        [0, 3, 4, 1, 1, 0, 0, 0],
+        [0, 2, 1, 4, 3, 0, 0, 0],
+        [0, 0, 0, 2, 4, 0, 0, 0],
+        [0, 0, 0, 1, 0, 0, 0, 0]
     ];
+    
 
     gridImages = []; // Pour stocker les références aux images affichées sur chaque case
 
@@ -156,7 +157,9 @@ function createGrid(rows, cols) {
                 image.setOrigin(0.5);
                 image.displayWidth = cellSize;
                 image.displayHeight = cellSize;
-
+                if(base_pattern[i][j]>0){
+                    image.angle += 90 * (base_pattern[i][j]-1); 
+                }
                 if (can_move) {
                     image.setInteractive();
                     image.on('pointerdown', function () {
@@ -261,6 +264,8 @@ function update() {
 
         // Marquer que le joueur a gagné
         succes = true;
+        setCookie("level4", "unlocked", 7);
+        enableNextLevelLinks();
     } else {
         background.setBackgroundColor('rgba(0, 0, 0, 0.7)');
         if (sortieSprite) {
@@ -270,4 +275,12 @@ function update() {
 }
 
 
-
+function enableNextLevelLinks() {
+    for (let i = 2; i <= 8; i++) {
+        let levelLink = document.getElementById("level" + i);
+        if (getCookie("level" + (i - 1)) === "unlocked") {
+            levelLink.classList.remove("disabled");
+            levelLink.href = "Level" + i + ".php";
+        }
+    }
+}

@@ -11,7 +11,7 @@
     background-color: rgba(0, 0, 0, 0.5); 
     color: #fff; 
     padding: 10px 49px;
-    text-align: center; 
+    text-align: center; ts
     text-decoration: none;
     display: inline-block; 
     font-family: 'Open Sans', sans-serif; 
@@ -154,6 +154,12 @@ body {
     opacity: 0;
     animation: fadeInUp 0.8s ease forwards;
     animation-delay: calc(var(--animation-order) * 0.3s);
+}
+.Accueil-container>.Logo{
+display: flex;
+text-decoration:none;
+color: inherit;
+margin-left : 0;
 }
 
 /* Animation keyframes */
