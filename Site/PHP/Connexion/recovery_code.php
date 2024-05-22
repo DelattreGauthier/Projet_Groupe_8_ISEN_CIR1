@@ -33,7 +33,7 @@ if (isset($_POST["recup_submit"], $_POST["recup_mail"])) {
                 $insert_code->execute(array($mail, $recup_code));
 
                 // Inclure le fichier mail.php et appeler la fonction pour envoyer l'email
-                require 'mail.php';
+                require '../../../mail.php';
                 sendRecoveryMail($mail, $recup_code);
 
                 // Redirection vers la page de saisie du code de récupération

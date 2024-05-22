@@ -6,6 +6,7 @@
     <title>Settings</title>
     <link rel="stylesheet" href="../../CSS/style.css">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <style>
@@ -17,7 +18,7 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             overflow: hidden;
-            margin: 50px;
+            margin: 50px auto;
         }
 
         .sidebar {
@@ -26,7 +27,6 @@
             padding: 20px;
             border-radius: 5px;
             margin-left: 20px;
-            top: 0px;
             box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
             display: flex;
             flex-direction: column;
@@ -134,113 +134,90 @@
 
         /* Volume bar */
         #player {
-            width: 350px;
-            height: 50px;
-            position: relative;
-            top: 20px;
-            left: 0px;
+            display: flex;
+            align-items: center;
+            width: 200px;
         }
-
-        #player i {
-            position: absolute;
-            margin-top: -6px;
-            color: #666;
-        }
-
-        #player i.fa-volume-down {
-            margin-left: -8px;
-        }
-
-        #player i.fa-volume-up {
-            margin-right: -8px;
-            right: 0;
-        }
-
         #volume {
-            position: absolute;
-            left: 24px;
-            margin: 0 auto;
-            height: 5px;
-            width: 300px;
-            background: #555;
-            border-radius: 15px;
+            flex: 1;
+            height: 10px;
+            background: #ddd;
+            margin: 0 10px;
+            position: relative;
         }
-
-        .ui-slider-range-min {
-            height: 5px;
-            width: 300px;
+        #volume-bar {
+            width: 50%; /* Initial volume level */
+            height: 100%;
+            background: #007bff;
             position: absolute;
-            background: white;
-            border: none;
-            border-radius: 10px;
-            outline: none;
+            top: 0;
+            left: 0;
         }
-
-        .ui-slider-handle {
-            width: 20px;
-            height: 20px;
-            border-radius: 20px;
-            background: #FFF;
-            position: absolute;
-            margin-left: -8px;
-            margin-top: -8px;
-            cursor: pointer;
-            outline: none;
+        audio {
+            display: none;
         }
     </style>
 </head>
 <body>
-    <div class="sidebar">
-        <a href="#" class="active" onclick="showSection(event, 'profil')">
-            <i class="fas fa-user"></i> Profil
-        </a>
-        <a href="#" onclick="showSection(event, 'securite')">
-            <i class="fas fa-lock"></i> Security
-        </a>
-        <a href="#" onclick="showSection(event, 'notifications')">
-            <i class="fas fa-bell"></i> Sound
-        </a>
-        <a href="#" onclick="showSection(event, 'preferences')">
-            <i class="fas fa-cog"></i> Preferences
-        </a>
-    </div>
+    <audio id="audio" autoplay loop>
+        <source src="testson.mp3" type="audio/mpeg">
+    </audio>
     <div class="container">
+        <div class="sidebar">
+            <a href="#" class="active" onclick="showSection(event, 'profil')">
+                <i class="fas fa-user"></i> Profile
+            </a>
+            <a href="#" onclick="showSection(event, 'securite')">
+                <i class="fas fa-lock"></i> Security
+            </a>
+            <a href="#" onclick="showSection(event, 'notifications')">
+                <i class="fas fa-bell"></i> Voice / Sound
+            </a>
+            <a href="#" onclick="showSection(event, 'preferences')">
+                <i class="fas fa-cog"></i> Preferences
+            </a>
+        </div>
         <div class="content">
             <div id="profil" class="content-section active">
-                <h1>Your profil</h1>
+                <h1>Your profile</h1>
+
                 <div class="settings-section">
                     <div class="setting-item">
                         <label for="username">Username</label>
                         <input type="text" id="username" name="username" placeholder="My_username">
                     </div>
                     <div class="setting-item">
-                        <label for="email">Mail</label>
+                        <label for="email">Email</label>
                         <input type="email" id="email" name="email" placeholder="my@mail.com">
                     </div>
+                    <button class="save-button">Save Edits</button>
                 </div>
             </div>
             <div id="securite" class="content-section">
                 <h1>Security</h1>
                 <div class="settings-section">
                     <div class="setting-item">
-                        <label for="password"><a id="resetSett" href="../Connexion/reinitilize.php">Click here to reset your password</a></label>
+                        <label for="password"><a id="resetSett" href="../Connexion/reinitialize.php">Click here to reset your password</a></label>
                     </div>
                 </div>
             </div>
             <div id="notifications" class="content-section">
-                <h1>Sound & Voice</h1>
+                <h1>Voice & Sound</h1>
                 <div class="settings-section">
                     <div class="setting-item">
-                        <label for="email-notifications">Voice Choice :</label>
+                        <label for="voice-choice">Voice Choice:</label>
                     </div>
                     <div class="setting-item">
-                        <label for="sms-notifications">Sound Level :</label>
+                        <label for="sound-level">Sound Level:</label>
                         <div id="player">
                             <i class="fa fa-volume-down"></i>
-                            <div id="volume"></div>
+                            <div id="volume">
+                                <div id="volume-bar"></div>
+                            </div>
                             <i class="fa fa-volume-up"></i>
                         </div>
                     </div>
+                    <button class="save-button">Save Edits</button>
                 </div>
             </div>
             <div id="preferences" class="content-section">
@@ -260,7 +237,6 @@
                     </div>
                 </div>
             </div>
-            <button class="save-button">Save Edits</button>
         </div>
     </div>
 
@@ -286,37 +262,32 @@
             // Add active class to the clicked menu item
             event.target.closest('a').classList.add('active');
         }
-    
-        $(document).ready(function() {
-            $("#volume").slider({
-                min: 0,
-                max: 100,
-                value: 50, // Set initial volume to 50%
-                range: "min",
-                slide: function(event, ui) {
-                    setVolume(ui.value / 100);
-                }
-            });
-    
-            function playAudio(fileName, myVolume) {
-                myMedia.src = fileName;
-                myMedia.setAttribute('loop', 'loop');
-                setVolume(myVolume);
-                myMedia.play();
-            }
-    
-            function setVolume(myVolume) {
-                var myMedia = document.getElementById('myMedia');
-                myMedia.volume = myVolume;
-            }
-    
-            var myMedia = document.createElement('audio');
-            $('#player').append(myMedia);
-            myMedia.id = "myMedia";
-
-            playAudio('test_sound.mp3', 0.5);
-        });
     </script>
     
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var volume = document.getElementById('volume');
+            var volumeBar = document.getElementById('volume-bar');
+            var audio = document.getElementById('audio'); // Get the audio element
+
+            // Set initial volume
+            var initialVolume = 0.5;
+            audio.volume = initialVolume;
+
+            // Update the volume bar width according to the initial volume
+            volumeBar.style.width = (initialVolume * 100) + '%';
+
+            volume.addEventListener('click', function(e) {
+                var rect = volume.getBoundingClientRect();
+                var offsetX = e.clientX - rect.left;
+                var volumeLevel = offsetX / volume.clientWidth;
+
+                volumeBar.style.width = (volumeLevel * 100) + '%';
+                
+                // Set the audio volume
+                audio.volume = volumeLevel;
+            });
+        });
+    </script>
 </body>
 </html>

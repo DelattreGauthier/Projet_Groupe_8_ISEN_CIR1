@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../../CSS/style.css">
     <link rel="icon" href="/path/to/your/image/th.jpg" type="image/jpeg"> <!-- Ajout de la favicon -->
 </head>
-<body>
+<body >
     
     <div class="header-main"> 
         <a href="../Jeu/Level1.html" class="on">PLAY</a>
@@ -16,7 +16,7 @@
     </div>
 
     <div class="footer-main"> 
-        <a href="#leaderboard" class="on">LEADERBOARD</a>
+        <a href="../Leaderboard/leaderboard.php" class="on">LEADERBOARD</a>
         <a href="../Connexion/connexion.php" class="on">CONNECTION</a>
     </div>
 

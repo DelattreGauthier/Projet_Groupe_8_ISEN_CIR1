@@ -30,7 +30,7 @@
             <div class="password-requirements">
                 <p>Le mot de passe doit contenir :</p>
                 <ul>
-                    <li>Au moins 12 caractères</li>
+                    <li>Au moins 10 caractères</li>
                     <li>Au moins une majuscule</li>
                     <li>Au moins une minuscule</li>
                     <li>Au moins un caractère spécial</li>
@@ -70,8 +70,8 @@
                 $message = "Tous les champs sont obligatoires.";
             } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $message = "Adresse e-mail invalide.";
-            } elseif (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{12,}$/', $password)) {
-                $message = "Le mot de passe doit contenir au moins 12 caractères, dont une majuscule, une minuscule et un caractère spécial.";
+            } elseif (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{10,}$/', $password)) {
+                $message = "Le mot de passe doit contenir au moins 10 caractères, dont une majuscule, une minuscule et un caractère spécial.";
             } else {
                 // Vérifier si l'email ou le pseudo existe déjà
                 $stmt = $conn->prepare("SELECT * FROM adherents WHERE username = :username OR email = :email");
@@ -105,7 +105,10 @@
 
                     $stmt->execute();
 
-                    $message = "Nouvelle inscription enregistrée avec succès.";
+                    $_SESSION['user'] = $username; // Enregistrer l'utilisateur dans la session
+                    header("Location: ../Accueil.php"); // Redirection vers la page d'accueil
+                    exit();
+
                 }
             }
         } catch (PDOException $e) {

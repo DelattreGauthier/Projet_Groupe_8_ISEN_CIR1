@@ -32,6 +32,7 @@ try {
 </head>
 <body>
 <div class="lbody">
+    <i class="fas fa-trophy trophy-left"></i>
     <h2 class="title">Leaderboard</h2>
     <table>
         <thead>
@@ -55,6 +56,7 @@ try {
             ?>
         </tbody>
     </table>
+    <i class="fas fa-trophy trophy-right"></i>
 </div>
 </body>
 </html>

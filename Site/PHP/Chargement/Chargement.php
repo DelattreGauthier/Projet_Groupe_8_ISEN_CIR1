@@ -5,32 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Loading...</title>
     <link rel="stylesheet" href="../../CSS/chargement.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            background-position: center;
-            background-size: cover;
-        }
-        .container {
-            text-align: center;
-            margin-top: 20%;
-            color: white;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
-            padding: 20px;
-            border-radius: 10px;
-            display: inline-block;
-        }
-        .curve {
-            background: rgba(0, 0, 0, 0.5); /* Fond semi-transparent */
-            padding: 10px;
-            border-radius: 10px;
-        }
-        #txt_charg1 {
-            margin: 0;
-        }
-    </style>
 </head>
 <body>
 
@@ -61,7 +35,13 @@ $images = [
         "text" => "<b><u>Dinosaures : Did you know?</u></b><br>
             During the age of dinosaurs, a young velociraptor stumbled upon a delicious plant, reshaping its tribe's diet and destiny. Meanwhile, a courageous triceratops discovered a concealed path leading to a vital water source, providing sanctuary for its herd during parched spells.<br>
             Not to be outdone, an intrepid stegosaurus chanced upon a verdant glade nestled deep within the dense jungle, serving as a secure refuge for its troop amid turbulent storms, showcasing their remarkable adaptability and survival instincts."
+    ],
+    "future" => [
+        "image" => "../../../Document/Image/Fond/loading_screen/future.jpg",
+        "text" => "<b><u>Future : Did you know?</u></b><br>
+        In the future, hovering above the city skyline, sleek skybridges connect towering eco-friendly skyscrapers, showcasing Paris's commitment to sustainable urban living. Meanwhile, beneath the Seine, advanced underwater habitats serve as research centers, pushing the boundaries of marine exploration and environmental conservation."
     ]
+
 ];
 ?>
 
@@ -87,14 +67,12 @@ $images = [
             document.getElementById('txt_charg1').innerHTML = text;
         }
 
-        // Change background and text every 4 seconds
         changeBackground();
-        setInterval(changeBackground, 4000);
+        setInterval(changeBackground, 5000);
 
-        // Redirect to the specified page after 14 seconds
         setTimeout(function() {
             window.location.href = '../Acceuil/Accueil.php';
-        }, 14000);
+        }, 20000);
     });
 </script>
 
