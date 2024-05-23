@@ -15,7 +15,7 @@
 
 <div class='ebody'>
 <div class="Accueil-container">
-        <a  class="Logo" href="../Acceuil/Accueil.php"><img src="../../../Document/Image/Jeu/Dino/Dino_Vert.png"></img></a> 
+  <a  class="Logo" href="../../../Site/PHP/Accueil/Accueil.php"><img src="../../../Document/Image/connect/home.png" alt="accueil"></a> 
     </div>
     <!-- Formulaire de connexion -->
     <div class="wrapper-body">
@@ -33,6 +33,7 @@
             <button type="submit" class="btn" name="submit">Submit</button>
             
             <p>You don't have an account? <a href="inscription.php">Sign up</a></p>
+            <p>Forgotten password? <a href="recovery_code.php">Click Here</a></p>
         </form>
     </div>
 

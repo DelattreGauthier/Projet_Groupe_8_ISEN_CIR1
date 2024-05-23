@@ -9,8 +9,8 @@
     <a href="../Accueil.php">Auccueil</a>
 </head>
 <body>
-    <div class="credits-container">
-        <a  class="bouton-credits" href="../Acceuil/Accueil.php"><h1>Credits</h1></a> 
+<div class="Accueil-container">
+  <a  class="Logo" href="../../../Site/PHP/Accueil/Accueil.php"><img src="../../../Document/Image/Jeu/Dino/Dino_Vert.png" alt="accueil"></a> 
     </div>
     <div class="credits-main-container">    
         <ol class="credits-list">

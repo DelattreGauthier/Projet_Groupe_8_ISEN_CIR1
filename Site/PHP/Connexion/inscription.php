@@ -10,6 +10,9 @@
 </head>
 <body>
 <div>
+<div class="Accueil-container">
+  <a  class="Logo" href="../../../Site/PHP/Accueil/Accueil.php"><img src="../../../Document/Image/Jeu/Dino/Dino_Vert.png" alt="accueil"></a> 
+    </div>
     <!-- Formulaire d'ajout -->
     <div class="wrapper-body">
         <a id="redirect_singup" href="../../Accueil.php"><h4>Sign up</h4></a>
@@ -106,7 +109,15 @@
                     $stmt->execute();
 
                     $_SESSION['user'] = $username; // Enregistrer l'utilisateur dans la session
-                    header("Location: ../Accueil.php"); // Redirection vers la page d'accueil
+                    // Insérer un nouvel enregistrement dans la table des scores
+                    $userId = $conn->lastInsertId(); // Récupérer l'ID nouvellement inséré
+
+                    // Préparer la requête pour insérer un nouvel enregistrement dans la table des scores
+                    $sqlScore = "INSERT INTO score (idJoueur) VALUES (:idJoueur)";
+                    $stmtScore = $conn->prepare($sqlScore);
+                    $stmtScore->bindParam(':idJoueur', $userId);
+                    $stmtScore->execute();
+                    header("Location: ../Accueil/Accueil.php"); // Redirection vers la page d'accueil
                     exit();
 
                 }

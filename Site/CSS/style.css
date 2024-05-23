@@ -11,7 +11,7 @@
     background-color: rgba(0, 0, 0, 0.5); 
     color: #fff; 
     padding: 10px 49px;
-    text-align: center; ts
+    text-align: center;
     text-decoration: none;
     display: inline-block; 
     font-family: 'Open Sans', sans-serif; 
@@ -155,11 +155,17 @@ body {
     animation: fadeInUp 0.8s ease forwards;
     animation-delay: calc(var(--animation-order) * 0.3s);
 }
-.Accueil-container>.Logo{
-display: flex;
-text-decoration:none;
-color: inherit;
-margin-left : 0;
+.Accueil-container>.Logo {
+    display:flex;
+    text-decoration: none;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+    height: 40px;
+    width: 40px;
+    margin-left: -490px;
+}
+.Accueil-container>.Logo>img{
+    padding: 10px;
 }
 
 /* Animation keyframes */
@@ -180,6 +186,10 @@ margin-left : 0;
     border-radius: 10px;
     text-align: center;
     margin-top: 15%;
+}
+.wrapper-body a {
+    text-decoration: none;
+    color: ;
 }
 
 .wrapper-body h4 {

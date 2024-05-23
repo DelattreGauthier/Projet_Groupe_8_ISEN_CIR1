@@ -11,7 +11,7 @@ var config = {
 };
 
 
-let succes = false;
+let succes = false; // Définir succès comme une variable globale
 let numRows = 6;
 let numCols = 6;
 let cellSize = 480 / numCols;
@@ -253,22 +253,25 @@ function update() {
             sortieSprite.setTexture('../../../Document/Image/Jeu/Tuyaux/Sortie_Noir_True.png');
         }
 
-        // Afficher le rectangle et le texte de victoire
-        victoryRect.setVisible(true);
-        victoryText.setText('Score : ' + score);
+        // Afficher le rectangle et le texte de victoire une seule fois
+        if (!succes) {
+            succes = true; // Marquer que la sauvegarde a été tentée
+            victoryRect.setVisible(true);
+            victoryText.setText('Score : ' + score);
 
+            // Tenter la sauvegarde
+            saveScore(score);
 
-        // Marquer que le joueur a gagné
-        succes = true;
-
-        // Définir un cookie pour débloquer le niveau suivant
-        setCookie("level1", "unlocked", 7);
-        enableNextLevelLinks();
+            // Définir un cookie pour débloquer le niveau suivant
+            setCookie("level1", "unlocked", 7);
+            enableNextLevelLinks();
+        }
     } else {
         background.setBackgroundColor('rgba(0, 0, 0, 0.7)');
         if (sortieSprite) {
             sortieSprite.setTexture('../../../Document/Image/Jeu/Tuyaux/Sortie_Noir.png');
         }
+        
     }
 }
 
@@ -282,3 +285,16 @@ function enableNextLevelLinks() {
         }
     }
 }
+
+function saveScore(score) {
+    if (!getCookie("user_id")) { // Inverser la condition
+        alert("You must be logged in to save your score.");
+    } else if (!succes) { // Ajouter une condition pour vérifier si la sauvegarde a déjà été effectuée
+        succes = true;
+        window.location.href = "save_score.php?score=" + score;
+    }
+}
+
+
+
+

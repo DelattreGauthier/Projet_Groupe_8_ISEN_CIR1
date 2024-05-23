@@ -65,6 +65,9 @@ if (isset($_POST["reset_password_submit"], $_POST["new_password"], $_POST["confi
 </head>
 
 <body>
+<div class="Accueil-container">
+  <a  class="Logo" href="../../../Site/PHP/Accueil/Accueil.php"><img src="../../../Document/Image/Jeu/Dino/Dino_Vert.png" alt="accueil"></a> 
+    </div>
     <div class='ebody'>
         <!-- Formulaire de réinitialisation du mot de passe -->
         <div class="wrapper-body">
