@@ -6,7 +6,6 @@
     <title>Credits</title>
     <link rel="stylesheet" href="../../CSS/style.css">
     <link rel="icon" href="../../../Document/Image/Jeu/Dino/Dino_Vert.png" type="image/png">
-    <a href="../Accueil.php">Auccueil</a>
 </head>
 <body>
 <div class="Accueil-container">

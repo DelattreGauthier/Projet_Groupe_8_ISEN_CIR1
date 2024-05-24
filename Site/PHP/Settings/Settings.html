@@ -5,161 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Settings</title>
     <link rel="stylesheet" href="../../CSS/style.css">
+    
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <link rel="icon" href="../../../Document/Image/Jeu/Dino/Dino_Vert.png" type="image/png">
-    <style>
-        .container {
-            display: flex;
-            width: 80%;
-            max-width: 1200px;
-            height: 80vh;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            overflow: hidden;
-            margin: 50px auto;
-        }
-
-        .sidebar {
-            background-color: rgba(0, 0, 0, 0.7);
-            width: 13%;
-            padding: 20px;
-            border-radius: 5px;
-            margin-left: 20px;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .sidebar a {
-            color: #fff;
-            text-decoration: none;
-            padding: 15px;
-            display: flex;
-            align-items: center;
-            margin: 5px 0;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .sidebar a:hover,
-        .sidebar a.active {
-            background-color: rgba(255, 255, 255, 0.2);
-        }
-
-        .sidebar a i {
-            margin-right: 10px;
-        }
-
-        .content {
-            padding: 40px;
-            flex-grow: 1;
-            background: rgba(92, 91, 91, 0.7);
-            overflow-y: auto;
-        }
-
-        h1 {
-            color: #333;
-        }
-
-        .settings-section {
-            margin-bottom: 20px;
-        }
-
-        .settings-section h2 {
-            border-bottom: 1px solid #ccc;
-            padding-bottom: 5px;
-            color: #444;
-        }
-
-        .setting-item {
-            margin-top: 10px;
-        }
-
-        .setting-item label {
-            display: block;
-            margin-bottom: 5px;
-            color: darkgray;
-        }
-
-        .setting-item input[type="text"],
-        .setting-item input[type="email"],
-        .setting-item input[type="password"],
-        .setting-item select {
-            width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        .setting-item input[type="checkbox"] {
-            margin-right: 10px;
-        }
-
-        .save-button {
-            width: 100%;
-            padding: 10px;
-            background-color: #007BFF;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            margin-top: 20px;
-        }
-
-        .save-button:hover {
-            background-color: #0056b3;
-        }
-
-        .content-section {
-            display: none;
-        }
-
-        .content-section.active {
-            display: block;
-        }
-
-        #resetSett {
-            text-decoration: none;
-            color: white;
-            text-decoration: underline;
-        }
-
-        #resetSett:hover {
-            color: lightgray;
-        }
-
-        /* Volume bar */
-        #player {
-            display: flex;
-            align-items: center;
-            width: 200px;
-        }
-        #volume {
-            flex: 1;
-            height: 10px;
-            background: #ddd;
-            margin: 0 10px;
-            position: relative;
-        }
-        #volume-bar {
-            width: 50%; /* Initial volume level */
-            height: 100%;
-            background: #007bff;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-        audio {
-            display: none;
-        }
-    </style>
 </head>
 <body>
+    
+    <a  class="LogoSett" href="../../../Site/PHP/Accueil/Accueil.php"><img src="../../../Document/Image/Jeu/Dino/Dino_Vert.png" alt="accueil"></a> 
     <audio id="audio" autoplay loop>
         <source src="testson.mp3" type="audio/mpeg">
     </audio>
@@ -280,7 +135,9 @@
 
             volume.addEventListener('click', function(e) {
                 var rect = volume.getBoundingClientRect();
-                var offsetX = e.clientX - rect.left;
+                var offsetX = e.clientX - rect.left
+
+;
                 var volumeLevel = offsetX / volume.clientWidth;
 
                 volumeBar.style.width = (volumeLevel * 100) + '%';

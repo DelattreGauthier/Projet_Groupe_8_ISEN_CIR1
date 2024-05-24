@@ -72,7 +72,7 @@ $images = [
         setInterval(changeBackground, 5000);
 
         setTimeout(function() {
-            window.location.href = '../Acceuil/Accueil.php';
+            window.location.href = '../Accueil/Accueil.php';
         }, 20000);
     });
 </script>

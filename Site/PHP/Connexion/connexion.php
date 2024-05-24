@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Sign up</title>
+    <title href="">Sign up</title>
     <link rel="stylesheet" href="../../CSS/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
@@ -15,11 +15,11 @@
 
 <div class='ebody'>
 <div class="Accueil-container">
-  <a  class="Logo" href="../../../Site/PHP/Accueil/Accueil.php"><img src="../../../Document/Image/connect/home.png" alt="accueil"></a> 
+  <a  class="Logo" href="../../../Site/PHP/Accueil/Accueil.php"><img src="../../../Document/Image/Jeu/Dino/Dino_Vert.png" alt="accueil"></a> 
     </div>
     <!-- Formulaire de connexion -->
     <div class="wrapper-body">
-        <h4>Sign up</h4>
+        <h4>Log in</h4>
         <form method="post">
             <hr>
             <div class="input-box"> 
@@ -32,8 +32,8 @@
             </div>
             <button type="submit" class="btn" name="submit">Submit</button>
             
-            <p>You don't have an account? <a href="inscription.php">Sign up</a></p>
-            <p>Forgotten password? <a href="recovery_code.php">Click Here</a></p>
+            <p>Don't have an account? <a href="inscription.php" class="linko">Sign up</a></p>
+            <p>Password forgotten? <a  href="recovery_code.php" class='linko'>Click Here</a></p>
         </form>
     </div>
 

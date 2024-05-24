@@ -54,7 +54,9 @@ p {
    text-decoration:none;
    color: inherit;
 }
-
+.bouton-credits>h1{
+    color:white;
+}
 body {
     height: 100%;
     margin: 0;
@@ -77,8 +79,7 @@ body {
     justify-content: center; /* Centre les éléments horizontalement */
     align-items: center; /* Centre les éléments verticalement */
     position: fixed;
-    top: 0; 
-    left: 0; 
+    top: 1.5%;  
     margin: 10px; 
     background: rgba(0, 0, 0, 0.347); 
     border-radius: 100px;
@@ -95,7 +96,7 @@ body {
 
 /* Conteneur principal interne des crédits */
 .credits-main-container {
-    margin-top: 15%;
+    margin-top: 13.5%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
     border-radius: 10px;
     display: grid;
@@ -165,7 +166,7 @@ body {
     margin-left: -490px;
 }
 .Accueil-container>.Logo>img{
-    padding: 10px;
+    padding: 0px 0px 7px 4px;
 }
 
 /* Animation keyframes */
@@ -189,7 +190,7 @@ body {
 }
 .wrapper-body a {
     text-decoration: none;
-    color: ;
+    color : white;  
 }
 
 .wrapper-body h4 {
@@ -267,11 +268,13 @@ body {
     color: black;
     font-weight: bold;
 }
+
 #message-container {
     min-height: 20px;
     margin-bottom: 20px;
     color: red;
 }
+
 #redirect_singup{
 text-decoration: none;
 }
@@ -285,6 +288,11 @@ text-decoration: none;
     color:whitesmoke;    
     border-radius: 10px;
 }
+.linko:visited, .linko:link {
+    color: blue;
+    text-decoration: none;
+}
+
 /* FIN de la partie connexion*/
 .Jeu{
     background-image: url('../../Document/Image/Fond/main-background\ .jpg');
@@ -340,8 +348,7 @@ text-decoration: none;
 .level-container {
     position: fixed;
     left: 5%;
-    top: 25%
-    
+    top: 25% 
 }
 
 #level1 {
@@ -501,8 +508,12 @@ button {
     font-size: 20px;
     padding: 10px;
     margin-bottom: 20px;
+    transition: transform 0.5s ease;
 }
 
+.title:hover{
+    transform: scale(1.05);     
+}
 
 table {
     width: 80%;
@@ -544,12 +555,171 @@ th:last-child, td:last-child {
     border-bottom-right-radius: 10px; 
 }
 
-
+.titrelien:link, .titrelien:visited  {
+    color:black;
+    text-decoration:none;
+}
 /*fin page leaderboard*/
 
 
 /* DEBUT PAGE SETTINGS */ 
 
+.container {
+    display: flex;
+    width: 80%;
+    max-width: 1200px;
+    height: 80vh;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    margin: 50px auto;
+}
 
+.sidebar {
+    background-color: rgba(0, 0, 0, 0.7);
+    width: 13%;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar a {
+    color: #fff;
+    text-decoration: none;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.sidebar a i {
+    margin-right: 10px;
+}
+
+.content {
+    padding: 40px;
+    flex-grow: 1;
+    background: rgba(92, 91, 91, 0.7);
+    overflow-y: auto;
+}
+
+h1 {
+    color: #333;
+}
+
+.settings-section {
+    margin-bottom: 20px;
+}
+
+.settings-section h2 {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+    color: #444;
+}
+
+.setting-item {
+    margin-top: 10px;
+}
+
+.setting-item label {
+    display: block;
+    margin-bottom: 5px;
+    color: darkgray;
+}
+
+.setting-item input[type="text"],
+.setting-item input[type="email"],
+.setting-item input[type="password"],
+.setting-item select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.setting-item input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.save-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+.save-button:hover {
+    background-color: #0056b3;
+}
+
+.content-section {
+    display: none;
+}
+
+.content-section.active {
+    display: block;
+}
+
+#resetSett {
+    text-decoration: none;
+    color: white;
+    text-decoration: underline;
+}
+
+#resetSett:hover {
+    color: lightgray;
+}
+
+/* Volume bar */
+#player {
+    display: flex;
+    align-items: center;
+    width: 200px;
+}
+#volume {
+    flex: 1;
+    height: 10px;
+    background: #ddd;
+    margin: 0 10px;
+    position: relative;
+}
+#volume-bar {
+    width: 50%; /* Initial volume level */
+    height: 100%;
+    background: #007bff;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+audio {
+    display: none;
+}
+
+.LogoSett {
+    display:flex;
+    text-decoration: none;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+    height: 40px;
+    width: 40px;
+}
+.LogoSett>img{
+    padding: 0px 0px 7px 4px;
+}
 
 /* FIN PAGE SETTINGS */ 

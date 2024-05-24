@@ -31,12 +31,12 @@ function sendRecoveryMail($to, $code) {
         $mail->Port       = 587;
 
         // Destinataires
-        $mail->setFrom('clement.rubin76@gmail.com', 'Mailer');
+        $mail->setFrom('clement.rubin76@gmail.com', 'Support');
         $mail->addAddress($to);
 
         // Contenu
         $mail->isHTML(true);
-        $mail->Subject = 'Code de recuperation';
+        $mail->Subject = 'Demande de reinitialisation du mot de passe ';
         $mail->Body    = "Votre code de recuperation est : <b>$code</b>";
         $mail->AltBody = "Votre code de recuperation est : $code";
 

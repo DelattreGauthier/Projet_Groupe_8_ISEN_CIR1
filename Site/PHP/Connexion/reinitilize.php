@@ -36,7 +36,7 @@ if (isset($_POST["reset_password_submit"], $_POST["new_password"], $_POST["confi
                 unset($_SESSION["recup_mail"]);
 
                 // Redirection vers une page de confirmation ou de connexion
-                header("Location: password_reset_confirmation.php");
+                header("Location: connexion.php");
                 exit();
             } else {
                 $error = "Code de récupération invalide";

@@ -34,11 +34,11 @@ try {
 <body>
 <div class="lbody">
     <i class="fas fa-trophy trophy-left"></i>
-    <h2 class="title">Leaderboard</h2>
+    <h2 class="title"><a href="../Accueil/accueil.php" class="titrelien">Leaderboard</a></h2>
     <table>
         <thead>
             <tr>
-                <th>Place</th>
+                <th>Rank</th>
                 <th>Username</th>
                 <th>Score</th>
             </tr>
