@@ -11,6 +11,7 @@ var config = {
 };
 
 let succes = false;
+let END = false;
 let numRows = 6;
 let numCols = 6;
 let cellSize = 480 / numCols;
@@ -157,11 +158,12 @@ function createGrid(rows, cols) {
                 if (can_move) {
                     image.setInteractive();
                     image.on('pointerdown', function () {
-                        if (!isAnimating && !succes) {
+                        if (!isAnimating && !END) {
                             isAnimating = true;
                             updateBasePattern(i, j); // Déplacez ceci ici
-
-                            score++;
+                            if(score<999){
+                                score++;
+                            }
                             scoreText.setText('Score: ' + score);
 
                             this.scene.tweens.add({
@@ -252,17 +254,22 @@ function update() {
             sortieSprite.setTexture('../../../Document/Image/Jeu/Tuyaux/Sortie_Noir_True.png');
         }
 
-        // Afficher le rectangle et le texte de victoire
-        victoryRect.setVisible(true);
-        victoryText.setText('Score : ' + score);
-        victoryText.setVisible(false);
+        // Afficher le rectangle et le texte de victoire une seule fois
+        if (!succes) {
+            succes = true; // Marquer que la sauvegarde a été tentée
+            END=true;
+            victoryRect.setVisible(true);
+            victoryText.setText('Score : ' + score);
+            victoryText.setVisible(false);
 
-        // Marquer que le joueur a gagné
-        succes = true;
-        
-        // Définir un cookie pour débloquer le niveau suivant
-        setCookie("level2", "unlocked", 6);
+            // Tenter la sauvegarde
+            saveScore(score,2);
+
+            // Définir un cookie pour débloquer le niveau suivant
+        setCookie("level2", "unlocked", 7);
         enableNextLevelLinks();
+        }
+        
     } else {
         background.setBackgroundColor('rgba(0, 0, 0, 0.7)');
         if (sortieSprite) {
@@ -278,5 +285,16 @@ function enableNextLevelLinks() {
             levelLink.classList.remove("disabled");
             levelLink.href = "Level" + i + ".php";
         }
+    }
+}
+
+function saveScore(score, level) {
+    if (!succes) {
+        alert("You must be logged in to save your score.");
+    } else if (succes) {
+        succes = false;
+        let xhr = new XMLHttpRequest();
+        xhr.open("GET", "save_score.php?score=" + score + "&level=" + level, true); // Ajout du niveau dans la requête GET
+        xhr.send();
     }
 }

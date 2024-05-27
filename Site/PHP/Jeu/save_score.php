@@ -1,51 +1,47 @@
 <?php
 session_start();
+$servername = 'localhost'; 
+$username = 'root';
+$password = 'root';
+$database = 'projet2';
+try {
+    $conn = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['score'])) {
-    // Récupérer le score envoyé depuis le client
-    $score = $_GET['score'];
+    if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['score']) && isset($_GET['level'])) {
+        if (isset($_SESSION['username'])) {
+            $username = $_SESSION['username'];
+            $score = $_GET['score'];
+            $level = $_GET['level'];
+            if ($score > 999) {
+                $score = 997; // Limiter le score à 997 si nécessaire
+            }
+            // Récupérer le score actuel dans la base de données
+            $bestStmt = $conn->prepare("SELECT Lv{$level}_score FROM score WHERE idJoueur = (SELECT id FROM adherents WHERE username = :username)");
+            $bestStmt->bindParam(':username', $username);
+            $bestStmt->execute();
+            $bestRow = $bestStmt->fetch(PDO::FETCH_ASSOC);
+            $bestScore = $bestRow["Lv{$level}_score"];
 
-    // Vérifier si l'utilisateur est connecté et si le score n'a pas déjà été enregistré
-    if (isset($_SESSION['user']) && !isset($_SESSION['score_saved'])) {
-        // L'utilisateur est connecté, récupérer son identifiant
-        $userId = $_SESSION['user'];
-
-        // Insérer le score dans la base de données
-        // Code à remplacer avec votre propre logique d'accès à la base de données
-        // Assurez-vous de remplacer "your_username", "your_password" et "your_database" par vos informations de connexion appropriées
-        $servername = "localhost";
-        $username = "your_username";
-        $password = "your_password";
-        $dbname = "your_database";
-
-        try {
-            $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-            // Préparer et exécuter la requête SQL pour mettre à jour le score dans la table des scores
-            $stmt = $conn->prepare("UPDATE score SET Lv1_score=:score WHERE idJoueur=:userId");
-            $stmt->bindParam(':score', $score);
-            $stmt->bindParam(':userId', $userId);
-            $stmt->execute();
-
-            // Marquer le score comme enregistré pour éviter les enregistrements multiples
-            $_SESSION['score_saved'] = true;
-
-            // Fermer la connexion à la base de données
-            $conn = null;
-
-            echo "Score enregistré avec succès!";
-        } catch(PDOException $e) {
-            echo "Erreur lors de l'enregistrement du score: " . $e->getMessage();
+            // Comparer les scores et mettre à jour si nécessaire
+            if ($bestScore === null || $score < $bestScore) {
+                $stmt = $conn->prepare("UPDATE score SET Lv{$level}_score = :score WHERE idJoueur = (SELECT id FROM adherents WHERE username = :username)");
+                $stmt->bindParam(':username', $username);
+                $stmt->bindParam(':score', $score);
+                $stmt->execute();
+            }
+        } else {
+            echo "Error: You must be logged in to save your score.";
         }
-    } elseif (!isset($_SESSION['user'])) {
-        // L'utilisateur n'est pas connecté, ne rien faire ou renvoyer une erreur
-        echo "Erreur: Utilisateur non connecté!";
-    } elseif (isset($_SESSION['score_saved'])) {
-        // Le score a déjà été enregistré, ne rien faire
-        echo "Score déjà enregistré!";
+    } else {
+        echo "Error: Invalid request.";
     }
-} else {
-    echo "Erreur: Requête invalide!";
+} catch (PDOException $e) {
+    $message = "Erreur : " . $e->getMessage();
 }
+
+$conn = null;
 ?>
+
+
+

@@ -1,22 +1,5 @@
-<?php
-session_start();
-
-if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['score'])) {
-    if (isset($_SESSION['user'])) {
-        $userId = $_SESSION['user'];
-        $score = $_GET['score'];
-
-        // Enregistrer le score dans la base de données...
-    } else {
-        echo "Error: You must be logged in to save your score.";
-    }
-} else {
-    echo "Error: Invalid request.";
-}
-?>
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"> 
 
 <head>
     <meta charset="UTF-8">
@@ -67,7 +50,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['score'])) {
             }
         }
     </script>
-
 </head>
 
 <body class="Jeu-Jurassic" onload="checkLevels()">
@@ -94,7 +76,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['score'])) {
     </div>
 
 </body>
-
 </html>
 
 

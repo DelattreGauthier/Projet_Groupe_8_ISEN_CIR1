@@ -11,12 +11,39 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <link rel="icon" href="../../../Document/Image/Jeu/Dino/Dino_Vert.png" type="image/png">
+    <style>
+        #volume-bar-container {
+            width: 100px;
+            height: 10px;
+            background-color: #ccc;
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        #volume-bar {
+            height: 100%;
+            background-color: #4caf50;
+            width: 50%; /* Initial volume */
+        }
+
+        #stop-button {
+            margin-top: 10px;
+            cursor: pointer;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
     
     <a  class="LogoSett" href="../../../Site/PHP/Accueil/Accueil.php"><img src="../../../Document/Image/Jeu/Dino/Dino_Vert.png" alt="accueil"></a> 
-    <audio id="audio" autoplay loop>
-        <source src="testson.mp3" type="audio/mpeg">
+    <audio id="myAudio" autoplay>
+        <source src="https://www.jamendo.com/track/1114663/lsd-instrumental" type="audio/mpeg">
+        Your browser does not support the audio element.
     </audio>
     <div class="container">
         <div class="sidebar">
@@ -67,11 +94,12 @@
                         <label for="sound-level">Sound Level:</label>
                         <div id="player">
                             <i class="fa fa-volume-down"></i>
-                            <div id="volume">
+                            <div id="volume-bar-container">
                                 <div id="volume-bar"></div>
                             </div>
                             <i class="fa fa-volume-up"></i>
                         </div>
+                        <button id="stop-button">Stop Music</button>
                     </div>
                     <button class="save-button">Save Edits</button>
                 </div>
@@ -118,34 +146,29 @@
             // Add active class to the clicked menu item
             event.target.closest('a').classList.add('active');
         }
-    </script>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var volume = document.getElementById('volume');
-            var volumeBar = document.getElementById('volume-bar');
-            var audio = document.getElementById('audio'); // Get the audio element
 
-            // Set initial volume
-            var initialVolume = 0.5;
-            audio.volume = initialVolume;
+        window.onload = function() {
+            var audio = document.getElementById("myAudio");
+            audio.volume = 0.5; // Set initial volume to 50%
+            audio.play();
 
-            // Update the volume bar width according to the initial volume
-            volumeBar.style.width = (initialVolume * 100) + '%';
-
-            volume.addEventListener('click', function(e) {
-                var rect = volume.getBoundingClientRect();
-                var offsetX = e.clientX - rect.left
-
-;
-                var volumeLevel = offsetX / volume.clientWidth;
-
-                volumeBar.style.width = (volumeLevel * 100) + '%';
-                
-                // Set the audio volume
-                audio.volume = volumeLevel;
+            var stopButton = document.getElementById("stop-button");
+            stopButton.addEventListener("click", function() {
+                audio.pause();
+                audio.currentTime = 0;
             });
-        });
+    
+            var volumeBarContainer = document.getElementById('volume-bar-container');
+            var volumeBar = document.getElementById('volume-bar');
+    
+            volumeBarContainer.addEventListener('click', function(event) {
+                var rect = volumeBarContainer.getBoundingClientRect();
+                var offsetX = event.clientX - rect.left;
+                var newVolume = offsetX / rect.width;
+                audio.volume = newVolume;
+                volumeBar.style.width = newVolume * 100 + '%';
+            });
+        };
     </script>
 </body>
 </html>

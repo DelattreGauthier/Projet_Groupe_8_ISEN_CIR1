@@ -15,7 +15,7 @@
     </div>
     <!-- Formulaire d'ajout -->
     <div class="wrapper-body">
-        <a id="redirect_singup" href="../../Accueil.php"><h4>Sign up</h4></a>
+        <a id="redirect_singup" href="../../../Site/PHP/Accueil/Accueil.php"><h4>Sign up</h4></a>
         <form method="post" enctype="multipart/form-data">
             <hr>
             <div class="input-box">

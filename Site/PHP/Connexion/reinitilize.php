@@ -67,11 +67,11 @@ if (isset($_POST["reset_password_submit"], $_POST["new_password"], $_POST["confi
 <body>
 <div class="Accueil-container">
   <a  class="Logo" href="../../../Site/PHP/Accueil/Accueil.php"><img src="../../../Document/Image/Jeu/Dino/Dino_Vert.png" alt="accueil"></a> 
-    </div>
+    </div>  
     <div class='ebody'>
         <!-- Formulaire de réinitialisation du mot de passe -->
         <div class="wrapper-body">
-            <h4>Reset Your Password</h4>
+            <a href="../../../Site/PHP/Accueil/Accueil.php"><h4>Reset Your Password</h4></a>
             <form method="post">
                 <hr>
                 <div class="input-box">
@@ -83,7 +83,7 @@ if (isset($_POST["reset_password_submit"], $_POST["new_password"], $_POST["confi
                 <div class="input-box">
                     <input type="password" name="confirm_password" placeholder="Confirm New Password">
                 </div>
-                <button type="submit" class="btn" name="reset_password_submit">Reset Password</button>
+                <button href="../../../Site/PHP/Connexion/connexion.php" type="submit" class="btn" name="reset_password_submit">Reset Password</button>
             </form>
             <?php if (!empty($error)) {
                 echo '<span style="color:red">' . $error . '</span>';

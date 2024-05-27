@@ -1,3 +1,8 @@
+<?php
+    if (!isset($_COOKIE['level6'])) {
+        header("Location:level6.php");
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,7 +28,7 @@
     </style>
     <script>
         // Function to get cookie value by name
-        function getCookie(name) {
+        function getCookie(na6e) {
             let match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
             if (match) return match[2];
         }

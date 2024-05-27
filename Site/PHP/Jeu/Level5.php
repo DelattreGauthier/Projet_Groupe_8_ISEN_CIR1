@@ -1,3 +1,8 @@
+<?php
+    if (!isset($_COOKIE['level4'])) {
+        header("Location:level4.php");
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 

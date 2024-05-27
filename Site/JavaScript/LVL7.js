@@ -11,6 +11,7 @@ var config = {
 };
 
 let succes = false;
+let END = false;
 let numRows = 12;
 let numCols = 12;
 let cellSize = 480 / numCols;
@@ -180,10 +181,12 @@ function createGrid(rows, cols) {
                 if (can_move) {
                     image.setInteractive();
                     image.on('pointerdown', function () {
-                        if (!isAnimating && !succes) {
+                        if (!isAnimating && !END) {
                             isAnimating = true;
                             updateBasePattern(i, j); 
-                            score++;
+                            if(score<999){
+                                score++;
+                            }
                             scoreText.setText('Score: ' + score);
                             this.scene.tweens.add({
                                 targets: this,
@@ -273,15 +276,19 @@ function update() {
             sortieSprite.setTexture('../../../Document/Image/Jeu/Tuyaux/Sortie_True.png');
         }
 
-        // Afficher le rectangle et le texte de victoire
-        victoryRect.setVisible(true);
-        victoryText.setText('Score : ' + score);
-        victoryText.setVisible(false);
+        if (!succes) {
+            succes = true; // Marquer que la sauvegarde a été tentée
+            END=true;
+            victoryRect.setVisible(true);
+            victoryText.setText('Score : ' + score);
+            victoryText.setVisible(false);
 
-        // Marquer que le joueur a gagné
-        succes = true;
-        setCookie("level7", "unlocked", 7);
-        enableNextLevelLinks();
+            // Tenter la sauvegarde
+            saveScore(score,7);
+           // Définir un cookie pour débloquer le niveau suivant
+           setCookie("level7", "unlocked",7);
+           enableNextLevelLinks();
+           }
     } else {
         background.setBackgroundColor('rgba(0, 0, 0, 0.7)');
         if (sortieSprite) {
@@ -296,5 +303,15 @@ function enableNextLevelLinks() {
             levelLink.classList.remove("disabled");
             levelLink.href = "Level" + i + ".php";
         }
+    }
+}
+function saveScore(score, level) {
+    if (!succes) {
+        alert("You must be logged in to save your score.");
+    } else if (succes) {
+        succes = false;
+        let xhr = new XMLHttpRequest();
+        xhr.open("GET", "save_score.php?score=" + score + "&level=" + level, true); // Ajout du niveau dans la requête GET
+        xhr.send();
     }
 }

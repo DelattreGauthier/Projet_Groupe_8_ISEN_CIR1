@@ -46,7 +46,7 @@ if (isset($_POST["recup_submit"], $_POST["recup_mail"])) {
                     sendRecoveryMail($mail, $recup_code);
 
                     // Redirection vers la page de saisie du code de récupération
-                    header("Location: recovery_code.php");
+                    header("Location: reinitilize.php");
                     exit();
                 } else {
                     $error = "Cette adresse mail n'est pas enregistrée";
@@ -107,7 +107,7 @@ if (isset($_POST["recup_submit"], $_POST["recup_mail"])) {
             <div class="input-box"> 
                 <input type="email" name="recup_mail" placeholder="Email">
             </div>
-            <button type="submit" class="btn" name="recup_submit">Submit</button>
+            <button href="reinitilize.php"type="submit" class="btn" name="recup_submit">Submit</button>
         </form>
         <?php if (!empty($error)) { echo '<span style="color:red">'. $error.'</span>'; } ?>
     </div>

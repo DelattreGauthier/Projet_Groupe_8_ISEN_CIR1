@@ -10,8 +10,8 @@ var config = {
     }
 };
 
-
 let succes = false; // Définir succès comme une variable globale
+let END =false;
 let numRows = 6;
 let numCols = 6;
 let cellSize = 480 / numCols;
@@ -39,7 +39,6 @@ var victoryText; // Référence au texte de victoire
 var victoryRect; // Référence au rectangle de victoire
 var score = 0;
 var scoreText;
-
 function preload() {
     for (let i = 0; i < imageFiles.length - 1; i++) {
         this.load.image(imageFiles[i], imageFiles[i]);
@@ -159,11 +158,12 @@ function createGrid(rows, cols) {
                 if (can_move) {
                     image.setInteractive();
                     image.on('pointerdown', function () {
-                        if (!isAnimating && !succes) {
+                        if (!isAnimating && !END) {
                             isAnimating = true;
                             updateBasePattern(i, j); // Déplacez ceci ici
-
-                            score++;
+                            if(score<999){
+                                score++;
+                            }
                             scoreText.setText('Score: ' + score);
 
                             this.scene.tweens.add({
@@ -256,11 +256,13 @@ function update() {
         // Afficher le rectangle et le texte de victoire une seule fois
         if (!succes) {
             succes = true; // Marquer que la sauvegarde a été tentée
+            END=true;
             victoryRect.setVisible(true);
             victoryText.setText('Score : ' + score);
+            victoryText.setVisible(false);
 
             // Tenter la sauvegarde
-            saveScore(score);
+            saveScore(score,1);
 
             // Définir un cookie pour débloquer le niveau suivant
             setCookie("level1", "unlocked", 7);
@@ -286,12 +288,13 @@ function enableNextLevelLinks() {
     }
 }
 
-function saveScore(score) {
-    if (!getCookie("user_id")) { // Inverser la condition
-        alert("You must be logged in to save your score.");
-    } else if (!succes) { // Ajouter une condition pour vérifier si la sauvegarde a déjà été effectuée
-        succes = true;
-        window.location.href = "save_score.php?score=" + score;
+function saveScore(score, level) {
+    if (succes) {
+        succes = false;
+        let xhr = new XMLHttpRequest();
+        xhr.open("GET", "save_score.php?score=" + score + "&level=" + level, true); // Ajout du niveau dans la requête GET
+
+        xhr.send();
     }
 }
 
