@@ -1,6 +1,7 @@
+<?php include '../Fonctionnement/header.php'; ?>
+
 <?php
 
-session_start(); // Démarrer la session pour utiliser les variables de session
 
 $error = ""; // Initialisation de la variable d'erreur
 

@@ -1,3 +1,9 @@
+<?php include '../Fonctionnement/header.php'; 
+if (!isset($_SESSION['authentifie'])) {
+    header("Location: ../Connexion/logout.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en"> 
 
@@ -66,7 +72,13 @@
             <a id="level8" href="Level8.php"><button>Level 8</button></a>
         </div>
     </div>
-
+    <div class="concepteur-container">
+        <div id="color-buttons" style="display: flex; flex-direction: column; align-items: center;">
+            <a href="../Concepteur/Concepteur_Manuelle.php"><button>Concepteur Manuelle</button></a>
+            <a href="Level1.php"><button>Concepteur Auto</button></a>
+            <a href="Level1.php"><button>Solveur</button></a>
+        </div>
+    </div>
     <div class="script-container">
         <!-- Écran de jeu -->
         <div id="script">

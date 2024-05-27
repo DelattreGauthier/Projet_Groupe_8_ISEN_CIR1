@@ -1,3 +1,5 @@
+<?php include '../Fonctionnement/header.php'; ?>
+
 <?php
     if (!isset($_COOKIE['level1'])) {
         header("Location:level1.php");
@@ -71,7 +73,13 @@
             <a id="level8" href="Level8.php"><button>Level 8</button></a>
         </div>
     </div>
-
+    <div class="concepteur-container">
+        <div id="color-buttons" style="display: flex; flex-direction: column; align-items: center;">
+            <a href="Level1.php"><button>Concepteur Manuelle</button></a>
+            <a href="Level1.php"><button>Concepteur Auto</button></a>
+            <a href="Level1.php"><button>Solveur</button></a>
+        </div>
+    </div>
     <div class="script-container">
         <!-- Écran de jeu -->
         <div id="script">

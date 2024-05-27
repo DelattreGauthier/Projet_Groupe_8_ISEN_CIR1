@@ -35,6 +35,7 @@ try {
         }
     } else {
         echo "Error: Invalid request.";
+        header("Location:../Accueil/Accueil.php");
     }
 } catch (PDOException $e) {
     $message = "Erreur : " . $e->getMessage();

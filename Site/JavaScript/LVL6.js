@@ -299,6 +299,7 @@ function enableNextLevelLinks() {
         }
     }
 }
+
 function saveScore(score, level) {
     if (!succes) {
         alert("You must be logged in to save your score.");

@@ -1,3 +1,5 @@
+<?php include '../Fonctionnement/header.php'; ?>
+
 <?php
     if (!isset($_COOKIE['level6'])) {
         header("Location:level6.php");
@@ -28,7 +30,7 @@
     </style>
     <script>
         // Function to get cookie value by name
-        function getCookie(na6e) {
+        function getCookie(name) {
             let match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
             if (match) return match[2];
         }
@@ -51,7 +53,7 @@
                 } else {
                     levelLink.classList.remove("disabled");
                     levelLink.href = "Level" + i + ".php";
-                }
+                } 
             }
         }
     </script>
@@ -71,7 +73,13 @@
             <a id="level8" href="Level8.php"><button>Level 8</button></a>
         </div>
     </div>
-
+    <div class="concepteur-container">
+        <div id="color-buttons" style="display: flex; flex-direction: column; align-items: center;">
+            <a href="Level1.php"><button>Concepteur Manuelle</button></a>
+            <a href="Level1.php"><button>Concepteur Auto</button></a>
+            <a href="Level1.php"><button>Solveur</button></a>
+        </div>
+    </div>
     <div class="script-container">
         <!-- Écran de jeu -->
         <div id="script">

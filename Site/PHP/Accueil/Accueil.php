@@ -17,18 +17,19 @@ session_start();
         <a href="../Credits/Credits.html" class="on">CREDITS</a>
     </div>
 
-    <div class="user-info">
-        <?php if (isset($_SESSION['username'])): ?>
-            <div class="dropdown">
-                <button class="dropbtn"><?php echo htmlspecialchars($_SESSION['username']); ?> <i class="fas fa-user-circle"></i></button>
-                <div class="dropdown-content">
-                    <a href="../Settings/Settings.html">Paramètres</a>
-                    <a href="../Connexion/logout.php">Se déconnecter</a>
+    <div class="centremoiça">
+        <div  class="user-info">
+            <?php if (isset($_SESSION['username'])): ?>
+                <div class="dropdown">
+                    <button class="dropbtn"><?php echo htmlspecialchars($_SESSION['username']); ?> <i class="fas fa-user-circle"></i></button>
+                    <div class="dropdown-content">
+                        <a href="../Connexion/logout.php">Disconnected</a>
+                    </div>
                 </div>
-            </div>
-        <?php else: ?>
-            <a href="../Connexion/connexion.php" class="on"></a>
-        <?php endif; ?>
+            <?php else: ?>
+                <a href="../Connexion/connexion.php" class="on"></a>
+            <?php endif; ?>
+        </div>
     </div>
 
     <div class="footer-main">

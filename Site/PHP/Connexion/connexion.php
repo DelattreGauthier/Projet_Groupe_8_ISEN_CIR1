@@ -1,6 +1,6 @@
-<?php
-session_start();
+<?php include '../Fonctionnement/header.php'; ?>
 
+<?php
 if (isset($_SESSION['authentifie']) && $_SESSION['authentifie'] === true) {
     header("Location: ../Accueil/Accueil.php");
     exit();
@@ -61,13 +61,11 @@ if (isset($_POST['submit'])) {
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="icon" href="../../../Document/Image/Jeu/Dino/Dino_Vert.png" type="image/png">
 </head>
 <body>
 
 <div class='ebody'>
 <div class="Accueil-container">
-  <a class="Logo" href="../../../Site/PHP/Accueil/Accueil.php"><img src="../../../Document/Image/Jeu/Dino/Dino_Vert.png" alt="accueil"></a> 
   <?php if (isset($_SESSION['username'])): ?>
     <div class="user-info">
         <div class="dropdown">
@@ -82,22 +80,22 @@ if (isset($_POST['submit'])) {
 </div>
     <!-- Formulaire de connexion -->
     <div class="wrapper-body">
-        <h4>Log in</h4>
-        <form method="post">
-            <hr>
-            <div class="input-box"> 
-                <input type="text" name="login" placeholder="Username or Email" required>
-                <i class='bx bxs-user'></i>
-            </div>
-            <div class="input-box">
-                <input type="password" name="password" placeholder="Password" required>
-                <i class='bx bx-lock-alt'></i>
-            </div>
-            <button type="submit" class="btn" name="submit">Submit</button>
-            
-            <p>Don't have an account? <a href="inscription.php" class="linko">Sign up</a></p>
-            <p>Password forgotten? <a href="recovery_code.php" class='linko'>Click Here</a></p>
-        </form>
+            <h4>Log in</h4>
+            <form method="post">
+                <hr>
+                <div class="input-box"> 
+                    <input type="text" name="login" placeholder="Username or Email" required>
+                    <i class='bx bxs-user'></i>
+                </div>
+                <div class="input-box">
+                    <input type="password" name="password" placeholder="Password" required>
+                    <i class='bx bx-lock-alt'></i>
+                </div>
+                <button type="submit" class="btn" name="submit">Submit</button>
+                
+                <p>Don't have an account? <a href="inscription.php" class="linko">Sign up</a></p>
+                <p>Password forgotten? <a href="recovery_code.php" class='linko'>Click Here</a></p>
+            </form>
     </div>
 
     <div id="message-container"></div>

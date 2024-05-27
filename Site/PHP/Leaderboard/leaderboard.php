@@ -1,26 +1,7 @@
-<?php
-$servername = 'localhost';
-$username = 'root';
-$password = 'root';
-$database = 'projet2';
+<?php include '../Fonctionnement/header.php'; ?>
 
-try {
-    $conn = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    // Requête pour récupérer les données des joueurs
-    $stmt = $conn->prepare("SELECT username, score FROM joueurs ORDER BY score DESC");
-    $stmt->execute();
-
-    // Récupération des résultats
-    $joueurs = $stmt->fetchAll(PDO::FETCH_ASSOC);
-} catch(PDOException $e) {
-    echo "Erreur : " . $e->getMessage();
-    exit();
-}
-?>
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" >
 <head>
     <meta charset="utf-8">
     <title>Leaderboard</title>
@@ -33,8 +14,60 @@ try {
 </head>
 <body>
 <div class="lbody">
-    <i class="fas fa-trophy trophy-left"></i>
-    <h2 class="title"><a href="../Accueil/accueil.php" class="titrelien">Leaderboard</a></h2>
+    <i id="Leader" class="fas fa-trophy trophy-left"></i>
+    <h2 id="Leader">
+        <form action="leaderboard.php" method="get">
+            <select name="level" id="liste" onchange="this.form.submit()">
+                <option value="">Choix Niveau</option>
+                <option value="total">Total</option>
+                <option value="1">Niveau 1</option>
+                <option value="2">Niveau 2</option>
+                <option value="3">Niveau 3</option>
+                <option value="4">Niveau 4</option>
+                <option value="5">Niveau 5</option>
+                <option value="6">Niveau 6</option>
+                <option value="7">Niveau 7</option>
+                <option value="8">Niveau 8</option>
+            </select>
+        </form>
+    </h2>
+
+    <?php
+    $servername = 'localhost';
+    $username = 'root';
+    $password = 'root';
+    $database = 'projet2';
+
+    try {
+        $conn = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        if(isset($_GET['level'])) {
+            // Récupérer le niveau sélectionné depuis le formulaire
+            $selected_level = $_GET['level'];
+            if($selected_level != "total") {
+                // Requête pour récupérer les données des joueurs en fonction du niveau sélectionné
+                $stmt = $conn->prepare("SELECT adherents.username, score.Lv{$selected_level}_score AS score FROM score JOIN adherents ON score.idJoueur = adherents.id ORDER BY Lv{$selected_level}_score ASC");
+                $stmt->execute();
+                $joueurs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            } else {
+                // Calcul du classement total
+                $stmt = $conn->query("SELECT adherents.username, SUM(score.Lv1_score + score.Lv2_score + score.Lv3_score + score.Lv4_score + score.Lv5_score + score.Lv6_score + score.Lv7_score + score.Lv8_score) AS total_score FROM score JOIN adherents ON score.idJoueur = adherents.id GROUP BY adherents.username ORDER BY total_score ASC");
+                $totalJoueurs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+        } else {
+            // Calcul du classement total
+            $selected_level="total";
+            $stmt = $conn->query("SELECT adherents.username, SUM(score.Lv1_score + score.Lv2_score + score.Lv3_score + score.Lv4_score + score.Lv5_score + score.Lv6_score + score.Lv7_score + score.Lv8_score) AS total_score FROM score JOIN adherents ON score.idJoueur = adherents.id GROUP BY adherents.username ORDER BY total_score ASC");
+            $totalJoueurs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        }
+    } catch(PDOException $e) {
+        echo "Erreur : " . $e->getMessage();
+        exit();
+    }
+    ?>
+
     <table>
         <thead>
             <tr>
@@ -46,18 +79,36 @@ try {
         <tbody>
             <?php
             $place = 1; // Variable pour déterminer la place
-            foreach ($joueurs as $joueur) {
-                echo "<tr>";
-                echo "<td>{$place}</td>";
-                echo "<td>{$joueur['username']}</td>";
-                echo "<td>{$joueur['score']}</td>";
-                echo "</tr>";
-                $place++; // Incrémenter la place pour chaque joueur
+            if($selected_level != "total") {
+                foreach ($joueurs as $joueur) {
+                    if($joueur['score'] !== NULL) {
+                        echo "<tr>";
+                        echo "<td>{$place}</td>";
+                        echo "<td>{$joueur['username']}</td>";
+                        echo "<td>{$joueur['score']}</td>";
+                        echo "</tr>";
+                        $place++; // Incrémenter la place pour chaque joueur
+                    }
+                }
+            } else {
+                foreach ($totalJoueurs as $joueur) {
+                    if($joueur['total_score'] !== NULL) {
+                        echo "<tr>";
+                        echo "<td>{$place}</td>";
+                        echo "<td>{$joueur['username']}</td>";
+                        echo "<td>{$joueur['total_score']}</td>";
+                        echo "</tr>";
+                        $place++; // Incrémenter la place pour chaque joueur
+                    }
+                }
             }
             ?>
         </tbody>
     </table>
-    <i class="fas fa-trophy trophy-right"></i>
+
+    <i id="Leader" class="fas fa-trophy trophy-right"></i>
 </div>
 </body>
 </html>
+
+

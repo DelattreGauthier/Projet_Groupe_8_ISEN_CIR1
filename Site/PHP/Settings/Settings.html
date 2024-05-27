@@ -26,22 +26,12 @@
             background-color: #4caf50;
             width: 50%; /* Initial volume */
         }
-
-        #stop-button {
-            margin-top: 10px;
-            cursor: pointer;
-            background-color: #f44336;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-        }
     </style>
 </head>
-<body>
+<body onclick="playAudio()">
     
     <a  class="LogoSett" href="../../../Site/PHP/Accueil/Accueil.php"><img src="../../../Document/Image/Jeu/Dino/Dino_Vert.png" alt="accueil"></a> 
-    <audio id="myAudio" autoplay>
+    <audio id="myAudio">
         <source src="https://www.jamendo.com/track/1114663/lsd-instrumental" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
@@ -99,7 +89,6 @@
                             </div>
                             <i class="fa fa-volume-up"></i>
                         </div>
-                        <button id="stop-button">Stop Music</button>
                     </div>
                     <button class="save-button">Save Edits</button>
                 </div>
@@ -147,28 +136,11 @@
             event.target.closest('a').classList.add('active');
         }
 
-        window.onload = function() {
+        function playAudio() {
             var audio = document.getElementById("myAudio");
-            audio.volume = 0.5; // Set initial volume to 50%
             audio.play();
-
-            var stopButton = document.getElementById("stop-button");
-            stopButton.addEventListener("click", function() {
-                audio.pause();
-                audio.currentTime = 0;
-            });
-    
-            var volumeBarContainer = document.getElementById('volume-bar-container');
-            var volumeBar = document.getElementById('volume-bar');
-    
-            volumeBarContainer.addEventListener('click', function(event) {
-                var rect = volumeBarContainer.getBoundingClientRect();
-                var offsetX = event.clientX - rect.left;
-                var newVolume = offsetX / rect.width;
-                audio.volume = newVolume;
-                volumeBar.style.width = newVolume * 100 + '%';
-            });
-        };
+            document.body.removeEventListener("click", playAudio); // Désactive l'événement après la première lecture
+        }
     </script>
 </body>
 </html>

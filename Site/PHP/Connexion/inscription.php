@@ -1,3 +1,5 @@
+<?php include '../Fonctionnement/header.php'; ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,48 +12,48 @@
 </head>
 <body>
 <div>
-<div class="Accueil-container">
-  <a  class="Logo" href="../../../Site/PHP/Accueil/Accueil.php"><img src="../../../Document/Image/Jeu/Dino/Dino_Vert.png" alt="accueil"></a> 
+        <div class="Accueil-container">
     </div>
     <!-- Formulaire d'ajout -->
     <div class="wrapper-body">
-        <a id="redirect_singup" href="../../../Site/PHP/Accueil/Accueil.php"><h4>Sign up</h4></a>
-        <form method="post" enctype="multipart/form-data">
-            <hr>
-            <div class="input-box">
-                <input type="text" name="username" placeholder="Username" required>
-                <i class='bx bxs-user'></i>
-            </div>
-            <div class="input-box"> 
-                <input type="email" name="email" placeholder="Email" required>
-                <i class='bx bxs-envelope'></i>
-            </div>
-            <div class="input-box">
-                <input type="password" name="password" placeholder="Password" required>
-                <i class='bx bx-lock-alt'></i>
-            </div>
-            <div class="password-requirements">
-                <p>Le mot de passe doit contenir :</p>
-                <ul>
-                    <li>Au moins 10 caractères</li>
-                    <li>Au moins une majuscule</li>
-                    <li>Au moins une minuscule</li>
-                    <li>Au moins un caractère spécial</li>
-                </ul>
-            </div>
-            <div class="profile-pic-container">
-                <img id="profile-pic" src="https://via.placeholder.com/150" alt="Profile Picture">
-                <input type="file" id="profile-pic-input" name="profile_picture" accept="image/*">
-            </div>
-            <button type="submit" class="btn" name="submit">Submit</button>
-            <p>Already have an account? <a href="connexion.php">sign in</a></p>
-        </form>
+            <a id="redirect_singup" href="../../../Site/PHP/Accueil/Accueil.php"><h4>Sign up</h4></a>
+            <form method="post" enctype="multipart/form-data">
+                <hr>
+                <div class="input-box">
+                    <input type="text" name="username" placeholder="Username" maxlength="10" required>
+                    <i class='bx bxs-user'></i>
+                </div>
+                <div class="input-box"> 
+                    <input type="email" name="email" placeholder="Email" required>
+                    <i class='bx bxs-envelope'></i>
+                </div>
+                <div class="input-box">
+                    <input type="password" name="password" placeholder="Password" required>
+                    <i class='bx bx-lock-alt'></i>
+                </div>
+                <div class="password-requirements">
+                <p>The password must contain:</p>
+            <ul>
+            <li>Maximum 10 characters for the username</li>
+            <li>At least 10 characters for the password</li>
+                <li>At least one uppercase letter</li>
+                <li>At least one lowercase letter</li>
+                <li>At least one special character</li>
+            </ul>
+
+                </div>
+                <div class="profile-pic-container">
+                    <img id="profile-pic" src="https://via.placeholder.com/150" alt="Profile Picture">
+                    <input type="file" id="profile-pic-input" name="profile_picture" accept="image/*">
+                </div>
+                <button type="submit" class="btn" name="submit">Submit</button>
+                <p>Already have an account? <a class="linko" href="connexion.php">Log in</a></p>
+            </form>
     </div>
 
     <div id="message-container"></div>
 
     <?php
-    session_start();
     $message = '';
 
     if (isset($_POST['submit'])) {
@@ -71,6 +73,8 @@
             // Validation des champs du formulaire
             if (empty($username) || empty($email) || empty($password)) {
                 $message = "Tous les champs sont obligatoires.";
+            } elseif (strlen($username) > 20) {
+                $message = "Le nom d'utilisateur ne doit pas dépasser 20 caractères.";
             } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $message = "Adresse e-mail invalide.";
             } elseif (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{10,}$/', $password)) {
