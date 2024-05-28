@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Settings</title>
     <link rel="stylesheet" href="../../CSS/style.css">
-    
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -19,6 +18,7 @@
             position: relative;
             display: inline-block;
             cursor: pointer;
+            margin: 0 10px;
         }
 
         #volume-bar {
@@ -28,11 +28,11 @@
         }
     </style>
 </head>
-<body onclick="playAudio()">
+<body>
     
-    <a  class="LogoSett" href="../../../Site/PHP/Accueil/Accueil.php"><img src="../../../Document/Image/Jeu/Dino/Dino_Vert.png" alt="accueil"></a> 
-    <audio id="myAudio">
-        <source src="https://www.jamendo.com/track/1114663/lsd-instrumental" type="audio/mpeg">
+    <a class="LogoSett" href="../../../Site/PHP/Accueil/Accueil.php"><img src="../../../Document/Image/Jeu/Dino/Dino_Vert.png" alt="accueil"></a> 
+    <audio id="myAudio" autoplay loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
     <div class="container">
@@ -53,7 +53,6 @@
         <div class="content">
             <div id="profil" class="content-section active">
                 <h1>Your profile</h1>
-
                 <div class="settings-section">
                     <div class="setting-item">
                         <label for="username">Username</label>
@@ -63,14 +62,14 @@
                         <label for="email">Email</label>
                         <input type="email" id="email" name="email" placeholder="my@mail.com">
                     </div>
-                    <button class="save-button">Save Edits</button>
+                    <button class="save-button" onclick="saveSettings()">Save Edits</button>
                 </div>
             </div>
             <div id="securite" class="content-section">
                 <h1>Security</h1>
                 <div class="settings-section">
                     <div class="setting-item">
-                        <label for="password"><a id="resetSett" href="../Connexion/reinitialize.php">Click here to reset your password</a></label>
+                        <label for="password"><a id="resetSett" href="../Connexion/reinitilize.php">Click here to reset your password</a></label>
                     </div>
                 </div>
             </div>
@@ -83,14 +82,14 @@
                     <div class="setting-item">
                         <label for="sound-level">Sound Level:</label>
                         <div id="player">
-                            <i class="fa fa-volume-down"></i>
+                            <i id="volume-down" class="fa fa-volume-down"></i>
                             <div id="volume-bar-container">
                                 <div id="volume-bar"></div>
                             </div>
-                            <i class="fa fa-volume-up"></i>
+                            <i id="volume-up" class="fa fa-volume-up"></i>
                         </div>
                     </div>
-                    <button class="save-button">Save Edits</button>
+                    <button class="save-button" onclick="saveSettings()">Save Edits</button>
                 </div>
             </div>
             <div id="preferences" class="content-section">
@@ -109,11 +108,20 @@
                         </select>
                     </div>
                 </div>
+                <button class="save-button" onclick="saveSettings()">Save Edits</button>
             </div>
         </div>
     </div>
 
     <script>
+        // Load settings when the page is loaded
+        document.addEventListener("DOMContentLoaded", function() {
+            loadSettings();
+            var audio = document.getElementById("myAudio");
+            audio.muted = false;
+            audio.play();
+        });
+
         function showSection(event, sectionId) {
             event.preventDefault();
     
@@ -136,11 +144,62 @@
             event.target.closest('a').classList.add('active');
         }
 
-        function playAudio() {
-            var audio = document.getElementById("myAudio");
-            audio.play();
-            document.body.removeEventListener("click", playAudio); // Désactive l'événement après la première lecture
+        function saveSettings() {
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const volume = document.getElementById('myAudio').volume;
+            const language = document.getElementById('language').value;
+            const theme = document.getElementById('theme').value;
+
+            const settings = {
+                username,
+                email,
+                volume,
+                language,
+                theme
+            };
+
+            localStorage.setItem('userSettings', JSON.stringify(settings));
+            alert('Settings saved!');
         }
+
+        function loadSettings() {
+            const savedSettings = JSON.parse(localStorage.getItem('userSettings'));
+            if (savedSettings) {
+                document.getElementById('username').value = savedSettings.username;
+                document.getElementById('email').value = savedSettings.email;
+                document.getElementById('myAudio').volume = savedSettings.volume;
+                document.getElementById('volume-bar').style.width = (savedSettings.volume * 100) + '%';
+                document.getElementById('language').value = savedSettings.language;
+                document.getElementById('theme').value = savedSettings.theme;
+            }
+        }
+
+        document.getElementById('volume-bar-container').addEventListener('click', function(e) {
+            var volumeBar = document.getElementById('volume-bar');
+            var posX = e.offsetX / this.offsetWidth;
+            volumeBar.style.width = (posX * 100) + '%';
+            var audio = document.getElementById('myAudio');
+            audio.volume = posX;
+        });
+
+        document.getElementById('volume-down').addEventListener('click', function() {
+            var audio = document.getElementById('myAudio');
+            var volumeBar = document.getElementById('volume-bar');
+            if (audio.volume > 0) {
+                audio.volume = Math.max(0, audio.volume - 0.1);
+                volumeBar.style.width = (audio.volume * 100) + '%';
+            }
+        });
+
+        document.getElementById('volume-up').addEventListener('click', function() {
+            var audio = document.getElementById('myAudio');
+            var volumeBar = document.getElementById('volume-bar');
+            if (audio.volume < 1) {
+                audio.volume = Math.min(1, audio.volume + 0.1);
+                volumeBar.style.width = (audio.volume * 100) + '%';
+            }
+        });
     </script>
 </body>
 </html>

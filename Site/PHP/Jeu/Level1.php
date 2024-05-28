@@ -74,8 +74,8 @@ if (!isset($_SESSION['authentifie'])) {
     </div>
     <div class="concepteur-container">
         <div id="color-buttons" style="display: flex; flex-direction: column; align-items: center;">
-            <a href="../Concepteur/Concepteur_Manuelle.php"><button>Concepteur Manuelle</button></a>
-            <a href="Level1.php"><button>Concepteur Auto</button></a>
+            <a href="../Concepteur/Concepteur_Manuel.php"><button>Concepteur Manuel</button></a>
+            <a href="../Concepteur/Concepteur_Auto.php"><button>Concepteur Auto</button></a>
             <a href="Level1.php"><button>Solveur</button></a>
         </div>
     </div>

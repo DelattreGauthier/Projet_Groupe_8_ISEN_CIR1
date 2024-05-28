@@ -205,6 +205,18 @@ body {
     padding: 0px 0px 7px 4px;
 }
 
+#stepButton {
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.347);
+    color: white;
+}
+
+#stepButton:hover {
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.5);;
+    color: white;
+}
+
 select#liste:hover{
     transform: scale(1.05);     
 }
@@ -258,6 +270,8 @@ body {
     font-family: Arial, sans-serif;
 }
 
+
+
 .Accueil-container {
     display: flex;
     justify-content: space-between;
@@ -286,8 +300,8 @@ body {
     right: 350%;
 }
 
-.dropbtn {  
-    background-color: rgba(0, 0, 0, 0.2);
+.dropbtn { 
+    background-color: inherit;
     border-radius: 100px;
     cursor: pointer;
     font-size: 32px;
@@ -299,7 +313,7 @@ body {
 
 /* Style pour les liens dans le contenu du menu déroulant */
 .dropdown-content a {
-    background-color: rgba(0, 0, 0, 0.18);
+    background-color: inherit;
     color: whitesmoke;
     padding: 12px 16px;
     text-decoration: none;
@@ -386,7 +400,7 @@ body {
     padding: 25px;
     border-radius: 10px;
     text-align: center;    
-    margin-top: 75%;
+    margin-top: 10%;
 }
 
 .wrapper-body a {
@@ -543,20 +557,122 @@ body {
 
 #Etapes{
     padding: 10px;
-    height: 200px;
-    width: 1000px;
+    margin-top: 5%;
+    height: 100px;
+    width: 500px;
     align-content: center;
-    font-size: 25px;
+    font-size: 15px;
     text-align: center;
     border-radius: 10px;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.347);
     color: white;
+}
+#Etapes-Jeu {
+    padding: 10px;
+    margin-top: 5%;
+    height: 200px;
+    width: 200px;
+    margin-right: 400px;
+    font-size: 15px;
+    text-align: center;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.347);
+    color: white;
+
+}
+
+
+#stepButton {
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.347);
+    color: white;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+}
+
+#stepButton:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Styles pour les boutons radio */
+.color-buttons-concepteur,
+.size-buttons-concepteur {
+    display: flex;
+    gap: 10px;
+}
+
+.color-buttons-concepteur input[type="radio"],
+.size-buttons-concepteur input[type="radio"] {
+    display: none;
+}
+
+.color-buttons-concepteur label,
+.size-buttons-concepteur label {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.347);
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.color-buttons-concepteur input[type="radio"]:checked + label,
+.size-buttons-concepteur input[type="radio"]:checked + label {
+    background-color: rgba(0, 0, 0, 0.7);
+    transform: scale(1.05);
+}
+
+/* Styles spécifiques pour les couleurs */
+#bleuButton + label {
+    background-color: rgba(0, 0, 255, 0.5);
+}
+
+#bleuButton:checked + label {
+    background-color: blue;
+}
+
+#vertButton + label {
+    background-color: rgba(0, 255, 0, 0.5);
+}
+
+#vertButton:checked + label {
+    background-color: green;
+}
+
+#cuivreButton + label {
+    background-color: rgba(184, 115, 51, 0.5); /* Copper color */
+}
+
+#cuivreButton:checked + label {
+    background-color: #b87333; /* Darker copper */
+}
+
+#noirButton + label {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+#noirButton:checked + label {
+    background-color: black;
 }
 
 .controls-container {
     position: fixed;
     left: 5%;
-    top: 25%
+    top: 25%;
+}
+
+.controls-container-concepteur {
+    position: fixed;
+    left: 35%;
+    top: 50%;
+    align-content: center;
+    text-align: center;
 }
 
 .level-container {
@@ -601,13 +717,20 @@ button {
     width: 150px; /* Taille fixe pour tous les boutons */
 }
 
+
 #color-buttons button {
     background-color: rgba(0, 0, 0, 0.347); /* Couleur de fond par défaut */
     color: white; /* Couleur du texte par défaut */
 }
 
+
 #size-buttons button {
     background-color: rgba(0, 0, 0, 0.347); /* Couleur de fond par défaut */
+    color: white; /* Couleur du texte par défaut */
+}
+
+#size-buttons button:hover {
+    background-color: rgba(0, 0, 0, 0.5); /* Couleur de fond par défaut */
     color: white; /* Couleur du texte par défaut */
 }
 
@@ -627,8 +750,10 @@ button {
     align-items: center;
 }
 
+
 #size-buttons {
     margin-top: 20px; /* Espace entre les deux catégories de boutons */
+    margin-left: 5%;
 }
 
 /* Styles pour les boutons individuels selon les catégories */
@@ -657,6 +782,60 @@ button {
 }
 
 #dixxdix {
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+
+#color-buttons-concepteur button {
+    background-color: rgba(0, 0, 0, 0.347); /* Couleur de fond par défaut */
+    color: white; /* Couleur du texte par défaut */
+}
+
+#size-buttons-concepteur button {
+    background-color: rgba(0, 0, 0, 0.347); /* Couleur de fond par défaut */
+    color: white; /* Couleur du texte par défaut */
+}
+
+#size-buttons-concepteur button:hover {
+    background-color: rgba(0, 0, 0, 0.5); /* Couleur de fond par défaut */
+    color: white; /* Couleur du texte par défaut */
+}
+
+#color-buttons-concepteur button:hover {
+    background-color: rgba(0, 0, 0, 0.5); /* Couleur de fond par défaut */
+    color: white; /* Couleur du texte par défaut */
+}
+
+#size-buttons-concepteur {
+    margin-top: 20px; /* Espace entre les deux catégories de boutons */
+}
+
+/* Styles pour les boutons individuels selon les catégories */
+#normalButton-concepteur {
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+}
+
+#vertButton-concepteur {
+    color: #fff;
+}
+
+#cuivreButton-concepteur {
+    color: #fff;
+}
+
+#noirButton-concepteur {
+    color: #fff;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+
+#quatrexquatre-concepteur {
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+}
+
+#dixxdix-concepteur {
     border-bottom-right-radius: 15px;
     border-bottom-left-radius: 15px;
 }
@@ -928,7 +1107,7 @@ audio {
     display: none;
   }
   #volume-bar-container {
-    width: 120px;
+    width: 120px;   
     height: 10px;
     background-color: #ccc;
     position: relative;

@@ -18,16 +18,16 @@
     <h2 id="Leader">
         <form action="leaderboard.php" method="get">
             <select name="level" id="liste" onchange="this.form.submit()">
-                <option value="">Choix Niveau</option>
+                <option value="">Select Level</option>
                 <option value="total">Total</option>
-                <option value="1">Niveau 1</option>
-                <option value="2">Niveau 2</option>
-                <option value="3">Niveau 3</option>
-                <option value="4">Niveau 4</option>
-                <option value="5">Niveau 5</option>
-                <option value="6">Niveau 6</option>
-                <option value="7">Niveau 7</option>
-                <option value="8">Niveau 8</option>
+                <option value="1">Level 1</option>
+                <option value="2">Level 2</option>
+                <option value="3">Level 3</option>
+                <option value="4">Level 4</option>
+                <option value="5">Level 5</option>
+                <option value="6">Level 6</option>
+                <option value="7">Level 7</option>
+                <option value="8">Level 8</option>
             </select>
         </form>
     </h2>
