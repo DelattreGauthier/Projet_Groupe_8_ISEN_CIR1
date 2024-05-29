@@ -270,8 +270,6 @@ body {
     font-family: Arial, sans-serif;
 }
 
-
-
 .Accueil-container {
     display: flex;
     justify-content: space-between;
@@ -581,7 +579,6 @@ body {
 
 }
 
-
 #stepButton {
     border-radius: 10px;
     background-color: rgba(0, 0, 0, 0.347);
@@ -707,7 +704,13 @@ body {
     display: grid;
     grid-gap: 10px;
     grid-auto-rows: minmax(100px, auto);
-  }
+}
+
+.script-container-trois{
+    display: grid;
+    grid-gap: 10px;
+    grid-auto-rows: minmax(100px, auto);
+}
 
 button {
     padding: 10px 20px;
@@ -717,12 +720,10 @@ button {
     width: 150px; /* Taille fixe pour tous les boutons */
 }
 
-
 #color-buttons button {
     background-color: rgba(0, 0, 0, 0.347); /* Couleur de fond par défaut */
     color: white; /* Couleur du texte par défaut */
 }
-
 
 #size-buttons button {
     background-color: rgba(0, 0, 0, 0.347); /* Couleur de fond par défaut */
@@ -895,8 +896,6 @@ button {
     right: 10px; /* Positionner à droite */
 }
 
-
-
 table {
     width: 80%;
     margin-top: 20px;
@@ -953,6 +952,16 @@ th:last-child, td:last-child {
     height: 80vh;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    margin: 50px auto;
+}
+.container .black{
+    display: flex;
+    width: 80%;
+    max-width: 1200px;
+    height: 80vh;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
     overflow: hidden;
     margin: 50px auto;
 }

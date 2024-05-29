@@ -31,11 +31,11 @@
         grid, on the top and on the bottom of the grid.
     </h3>
 </div>
-
+<button id="nextButton" style="display: none;">Next Step</button>
 <script>
     // Récupérer la couleur choisie depuis PHP
     var couleur = "<?php echo $couleur; ?>";
-
+    var taille = <?php echo $taille; ?>;
     // Fonction pour changer l'image de fond en fonction de la couleur choisie
     function changeBackgroundImage() {
         var body = document.body;
@@ -61,7 +61,16 @@
     // Appeler la fonction pour changer l'image de fond
     changeBackgroundImage();
 
+
+
 </script>
+<div class="script-container-trois">
+        <!-- Écran de jeu -->
+        <div id="script-trois">
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.80.1/phaser.min.js"></script>
+            <script src="../../Javascript/Concepteur_manuel_3.js"></script>
+        </div>
+    </div>
 </body>
 
 </html>

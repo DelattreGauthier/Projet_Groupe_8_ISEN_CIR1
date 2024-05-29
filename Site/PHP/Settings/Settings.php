@@ -36,22 +36,20 @@
         <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
-    <div class="container">
-        <div class="black">
-            <div class="sidebar">
-                <a href="#" class="active" onclick="showSection(event, 'profil')">
-                    <i class="fas fa-user"></i> Profile
-                </a>
-                <a href="#" onclick="showSection(event, 'securite')">
-                    <i class="fas fa-lock"></i> Security
-                </a>
-                <a href="#" onclick="showSection(event, 'notifications')">
-                    <i class="fas fa-bell"></i> Voice / Sound
-                </a>
-                <a href="#" onclick="showSection(event, 'preferences')">
-                    <i class="fas fa-cog"></i> Preferences
-                </a>
-            </div>
+    <div class="container" class="black" id="theme-btn">
+        <div class="sidebar">
+            <a href="#" class="active" onclick="showSection(event, 'profil')">
+                <i class="fas fa-user"></i> Profile
+            </a>
+            <a href="#" onclick="showSection(event, 'securite')">
+                <i class="fas fa-lock"></i> Security
+            </a>
+            <a href="#" onclick="showSection(event, 'notifications')">
+                <i class="fas fa-bell"></i> Voice / Sound
+            </a>
+            <a href="#" onclick="showSection(event, 'preferences')">
+                <i class="fas fa-cog"></i> Preferences
+            </a>
         </div>
         <div class="content"  id="theme-btn">
             <div id="profil" class="content-section active">
@@ -92,7 +90,7 @@
                             <i id="volume-up" class="fa fa-volume-up"></i>
                         </div>
                     </div>
-                    <button class="save-button" onclick="saveSettings()">Save Edits</button>
+                    <button class="save-button">Save Edits</button>
                 </div>
             </div>
             <div id="preferences" class="content-section">
@@ -106,65 +104,46 @@
                     </div>
                     <div class="setting-item">
                         <label for="theme">Theme</label>
-                        <bouton  id="theme-btn"> Dark </bouton> 
+                        <select id="theme" name="theme">
+                            <option value="light">Light</option>
+                        </select>
                     </div>
                 </div>
-                <button class="save-button" onclick="saveSettings()">Save Edits</button>
+                <button class="save-button" >Save Edits</button>
             </div>
         </div>
     </div>
-<?php
-    session_start();
-    $message = '';
-    
-    if (isset($_POST['submit'])) {
-        $servername = 'localhost'; 
-        $db_username = 'root';
-        $db_password = 'root';
-        $database = 'projet2';
-    
-        try {
-            $conn = new PDO("mysql:host=$servername;dbname=$database", $db_username, $db_password);
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    
-            $new_username = $_POST['username'];
-    
-            // Validation du champ du formulaire
-            if (empty($new_username)) {
-                $message = "Le nom d'utilisateur est obligatoire.";
-            } elseif (strlen($new_username) > 20) {
-                $message = "Le nom d'utilisateur ne doit pas dépasser 20 caractères.";
-            } else {
-                // Vérifier si le nouveau nom d'utilisateur existe déjà
-                $stmt = $conn->prepare("SELECT * FROM adherents WHERE username = :username");
-                $stmt->bindParam(':username', $new_username);
-                $stmt->execute();
-                $existingUser = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-                if ($existingUser) {
-                    $message = "Nom d'utilisateur déjà utilisé. Veuillez en choisir un autre.";
-                } else {
-                    // Mettre à jour le nom d'utilisateur dans la base de données
-                    $current_user_id = $_SESSION['user_id']; // Supposons que l'ID utilisateur soit stocké dans la session
-                    $sql = "UPDATE adherents SET username = :new_username WHERE id = :user_id";
-                    $stmt = $conn->prepare($sql);
-                    
-                    $stmt->bindParam(':new_username', $new_username);
-                    $stmt->bindParam(':user_id', $current_user_id);
-                    $stmt->execute();
-    
-                    $message = "Nom d'utilisateur mis à jour avec succès.";
-                    $_SESSION['username'] = $new_username; // Mettre à jour le nom d'utilisateur dans la session
-                    exit();
-                }
-            }
-        } catch (PDOException $e) {
-            $message = "Erreur : " . $e->getMessage();
-        }
-    
-        $conn = null;
-    }
+    <?php
+
+$error = ""; // Initialisation de la variable d'erreur
+
+if (isset($_POST["saves"])) {
+    $new_username = $_POST["new_username"];
+
+    // Connexion à la base de données
+    $servername = 'localhost'; 
+    $username = 'root';
+    $password = 'root';
+    $database = 'projet2';
+    $bdd = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
+
+    // Mettre à jour le nom d'utilisateur dans la table 'adherents'
+    $update_username = $bdd->prepare("UPDATE adherents SET nom_utilisateur = ? WHERE email = ?");
+    $update_username->execute(array($new_username, $_SESSION["recup_mail"]));
+
+    // Réinitialiser les variables de session
+    unset($_SESSION["recup_mail"]);
+
+    // Redirection vers une page de confirmation ou de connexion
+    header("Location: connexion.php");
+    exit();
+}
 ?>
+
+
+
+
+
     
     <script>
         // Load settings when the page is loaded
@@ -195,25 +174,6 @@
     
             // Add active class to the clicked menu item
             event.target.closest('a').classList.add('active');
-        }
-
-        function saveSettings() {
-            const username = document.getElementById('username').value;
-            const email = document.getElementById('email').value;
-            const volume = document.getElementById('myAudio').volume;
-            const language = document.getElementById('language').value;
-            const theme = document.getElementById('theme').value;
-
-            const settings = {
-                username,
-                email,
-                volume,
-                language,
-                theme
-            };
-
-            localStorage.setItem('userSettings', JSON.stringify(settings));
-            alert('Settings saved!');
         }
 
         function loadSettings() {
@@ -256,3 +216,4 @@
     </script>
 </body>
 </html>
+ 

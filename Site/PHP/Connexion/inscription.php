@@ -59,7 +59,7 @@
     if (isset($_POST['submit'])) {
         $servername = 'localhost'; 
         $username = 'root';
-        $password = 'root';
+            $password = 'root';
         $database = 'projet2';
 
         try {
