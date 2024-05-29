@@ -4,6 +4,7 @@ var config = {
     transparent: true,
     height: 484,
     scene: {
+        preload: preload,
         create: create
     }
 };
@@ -19,15 +20,47 @@ var isAnimating2 = false;
 var background;
 
 let road_pattern = [
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 0, 0],
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0],
+    [8, 8, 8, 8, 8, 8],
+    [8, 0, 0, 0, 0, 8],
+    [8, 0, 0, 0, 0, 8],
+    [8, 0, 0, 0, 0, 8],
+    [8, 0, 0, 0, 0, 8],
+    [8, 8, 8, 8, 8, 8],
 ];
 
-console.log(pattern);
+let imageFiles = [
+    '../../../Document/Image/Jeu/Tuyaux/Entree_Noir.png',
+    '../../../Document/Image/Jeu/Tuyaux/Sortie_Noir.png',
+    '../../../Document/Image/Jeu/Tuyaux/Empty.png' // Image vide
+];
+
+function preload() {
+    for (let i = 0; i < imageFiles.length; i++) {
+        this.load.image('img_' + i, imageFiles[i]);
+    }
+}
+function updateRoadPattern(pattern) {
+    for (let i = 0; i < numRows; i++) {
+        for (let j = 0; j < numCols; j++) {
+            if (pattern[i][j] !== 'E') {
+                road_pattern[i][j] = 1;
+            }
+        }
+    }
+}
+function convertToMatrix(str, rows, cols) {
+    let result = [];
+    let chunks = str.split(",");
+    let index = 0;
+    for (let i = 0; i < rows; i++) {
+        result.push(chunks.slice(index, index + cols));
+        index += cols;
+    }
+    return result;
+}
+
+let img_pattern = convertToMatrix(pattern, 6, 6);
+
 let topRowSelected = false;
 let bottomRowSelected = false;
 
@@ -40,11 +73,66 @@ function createGrid(rows, cols) {
     gridContainer = game.scene.scenes[0].add.container(0, 0);
 
     var graphics = game.scene.scenes[0].add.graphics();
-    
-
 
     // Dessiner les lignes blanches
     graphics.lineStyle(4, 0xffffff); // Définir le style de ligne à blanc
+
+
+    // Remplir les cellules avec la couleur grise
+    graphics.fillStyle(0x566573);
+    for (let i = 0; i < numRows; i++) {
+        for (let j = 0; j < numCols; j++) {
+            let x = j * cellSize + 2; // Ajuster la position x pour les lignes
+            let y = i * cellSize + 2; // Ajuster la position y pour les lignes
+            if (road_pattern[i][j] === 8) {
+                graphics.fillRect(x, y, cellSize - 4, cellSize - 4); // Reduire la taille des carrés gris
+            }
+        }
+    }
+}
+
+function drawPattern(pattern) {
+    for (let row = 0; row < numRows; row++) {
+        for (let col = 0; col < numCols; col++) {
+            let x = col * cellSize + cellSize / 2;
+            let y = row * cellSize + cellSize / 2;
+
+            let image;
+
+            switch (pattern[row][col]) {
+                case 'E':
+                    if (road_pattern[row][col] === 8) {
+                        // Dessiner un rectangle gris pour une case vide avec la valeur 8 dans road_pattern
+                        image = game.scene.scenes[0].add.rectangle(x, y, cellSize, cellSize, 0x566573); // Gris
+                    } else {
+                        // Dessiner un rectangle noir transparent pour une case vide normale
+                        image = game.scene.scenes[0].add.rectangle(x, y, cellSize, cellSize, 0x000000, 0); // Noir transparent
+                    }
+                    break;
+                case 'D':
+                    image = game.scene.scenes[0].add.image(x, y, 'img_0'); // Image d'entrée noir
+                    break;
+                case 'A':
+                    image = game.scene.scenes[0].add.image(x, y, 'img_1'); // Image de sortie noir
+                    break;
+                default:
+                    // Dessiner un rectangle noir transparent par défaut
+                    image = game.scene.scenes[0].add.rectangle(x, y, cellSize, cellSize, 0x000000, 0); // Noir transparent
+                    break;
+            }
+
+            image.setOrigin(0.5);
+            image.displayWidth = cellSize; // Reduire la taille des images
+            image.displayHeight = cellSize; // Reduire la taille des images
+            gridContainer.add(image);
+        }
+    }
+
+    var graphics = game.scene.scenes[0].add.graphics();
+
+    // Dessiner les lignes blanches
+    graphics.lineStyle(4, 0xffffff); // Définir le style de ligne à blanc
+
     // Dessiner les lignes verticales
     for (let i = 0; i < numCols; i++) {
         let x = (i * cellSize) + 2; // Décalage vers la droite de la moitié de l'épaisseur de la ligne
@@ -56,46 +144,13 @@ function createGrid(rows, cols) {
         let y = (i * cellSize) + 2; // Décalage vers le bas de la moitié de l'épaisseur de la ligne
         graphics.lineBetween(0, y, 480, y);
     }
-
-}
-function drawPattern(pattern) {
-    for (let row = 0; row < numRows; row++) {
-        for (let col = 0; col < numCols; col++) {
-            let x = col * cellSize + cellSize / 2;
-            let y = row * cellSize + cellSize / 2;
-
-            let color;
-
-            switch (pattern[row][col]) {
-                case 0: // Correspond à la couleur bleue
-                    color = 0x0000ff; // Bleu
-                    break;
-                case 1: // Correspond à la couleur verte
-                    color = 0x00ff00; // Vert
-                    break;
-                case 2: // Correspond à la couleur rouge
-                    color = 0xff0000; // Rouge
-                    break;
-                default:
-                    color = 0xffffff; // Blanc par défaut
-                    break;
-            }
-
-            let graphics = game.scene.scenes[0].add.graphics();
-            graphics.fillStyle(color);
-            graphics.fillRect(x - cellSize / 2, y - cellSize / 2, cellSize, cellSize);
-            gridContainer.add(graphics); // Ajouter le graphique au conteneur de la grille
-        }
-    }
 }
 
-
-
+updateRoadPattern(img_pattern);
 
 function changeGridSize(rows, cols) {
     createGrid(rows, cols);
 }
-
 
 function create() {
     var graphics = this.add.graphics();
@@ -129,5 +184,5 @@ function create() {
     background = this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0.3)');
 
     createGrid(numRows, numCols);
-    drawPattern(road_pattern);
+    drawPattern(img_pattern);
 }

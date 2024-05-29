@@ -252,6 +252,7 @@ function createGrid(rows, cols) {
             gridContainer.add(cell);
         }
     }
+    
 }
 
 function deactivateSelectedCells() {

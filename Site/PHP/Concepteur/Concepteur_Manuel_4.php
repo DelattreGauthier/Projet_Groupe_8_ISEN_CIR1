@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+ 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,7 +16,7 @@
     $couleur = isset($_GET["color"]) ? $_GET["color"] : "vert";
     // Récupérer la taille choisie sur la page 2
     $taille = isset($_GET["taille"]) ? $_GET["taille"] : 4;
-    $pattern  = isset($_GET["pattern"]) ? $_GET["pattern"] : [];
+    $pattern  = isset($_GET["pattern"]) ? json_encode($_GET["pattern"]) : "[]";
 
 ?>
 <div id="Etapes-Jeu">
@@ -33,7 +33,7 @@
     var couleur = "<?php echo $couleur; ?>";
     var taille = <?php echo $taille; ?>;
     var pattern = <?php echo $pattern; ?>;
-    console.log(pattern);
+
     // Fonction pour changer l'image de fond en fonction de la couleur choisie
     function changeBackgroundImage() {
         var body = document.body;
