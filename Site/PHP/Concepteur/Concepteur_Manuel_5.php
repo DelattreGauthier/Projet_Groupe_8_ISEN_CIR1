@@ -20,10 +20,12 @@
 <body class="Jeu"> 
         
 <?php 
-    // Récupérer la couleur choisie sur la page 2
-    $couleur = isset($_GET["color"]) ? $_GET["color"] : "vert";
-    // Récupérer la taille choisie sur la page 2
-    $taille = isset($_GET["taille"]) ? $_GET["taille"] : 4;
+     // Récupérer la couleur choisie sur la page 2
+     $couleur = isset($_GET["color"]) ? $_GET["color"] : "vert";
+     // Récupérer la taille choisie sur la page 2
+     $taille = isset($_GET["taille"]) ? $_GET["taille"] : 4;
+     $pattern  = isset($_GET["pattern"]) ? json_encode($_GET["pattern"]) : "[]";
+     $road_pattern_split  = isset($_GET["road_pattern"]) ? json_encode($_GET["road_pattern"]) : "[]";
 ?>
 <div id="Etapes-Jeu">
     <h3>
@@ -32,9 +34,10 @@
 </div>
 
 <script>
-    // Récupérer la couleur choisie depuis PHP
     var couleur = "<?php echo $couleur; ?>";
-
+    var taille = <?php echo $taille; ?>;
+    var pattern = <?php echo $pattern; ?>;
+    var road_pattern_split = <?php echo $road_pattern_split; ?>;
     // Fonction pour changer l'image de fond en fonction de la couleur choisie
     function changeBackgroundImage() {
         var body = document.body;
@@ -61,6 +64,12 @@
     changeBackgroundImage();
 
 </script>
+<div class="script-container-trois">
+        <!-- Écran de jeu -->
+        <div id="script-trois">
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.80.1/phaser.min.js"></script>
+            <script src="../../Javascript/Concepteur_manuel_5.js"></script>
+        </div>
+    </div>
 </body>
-
 </html>

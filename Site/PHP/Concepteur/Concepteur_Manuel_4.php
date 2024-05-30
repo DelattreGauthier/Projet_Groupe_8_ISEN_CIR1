@@ -21,15 +21,15 @@
 ?>
 <div id="Etapes-Jeu">
     <h3>
-    Now you will have to trace the path, 
-    be careful to ensure that each square has at least one
-    face in common with another square otherwise the 
-    game will be insolvent. 
+    Now you will have to trace the path, be careful to ensure that each square
+    has at least one face in common with another square otherwise the game 
+    will be insolvent. You must start the path with one of the two blue 
+    square and finish on the other blue square.
     </h3>
 </div>
 
 <script>
-    // Récupérer la couleur choisie depuis PHP
+
     var couleur = "<?php echo $couleur; ?>";
     var taille = <?php echo $taille; ?>;
     var pattern = <?php echo $pattern; ?>;
