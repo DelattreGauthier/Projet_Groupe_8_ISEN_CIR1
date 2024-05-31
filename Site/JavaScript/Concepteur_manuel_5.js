@@ -47,13 +47,21 @@ switch (couleur) {
     case 'bleu':  
         imageFiles = [
             '../../../Document/Image/Jeu/Tuyaux/Entree.png',
-        '../../../Document/Image/Jeu/Tuyaux/Sortie.png',
+            '../../../Document/Image/Jeu/Tuyaux/Sortie.png',
+            '../../../Document/Image/Jeu/Tuyaux/Tuyau_Simple.png',
+            '../../../Document/Image/Jeu/Tuyaux/Tuyau_Courbe.png',
+            '../../../Document/Image/Jeu/Tuyaux/Tuyau_Triple.png',
+            '../../../Document/Image/Jeu/Tuyaux/Tuyau_Quadruple.png',
         ];
         break;
     case 'noir':
         imageFiles = [
             '../../../Document/Image/Jeu/Tuyaux/Entree_Noir.png',
             '../../../Document/Image/Jeu/Tuyaux/Sortie_Noir.png',
+            '../../../Document/Image/Jeu/Tuyaux/Tuyau_Simple_Noir.png',
+            '../../../Document/Image/Jeu/Tuyaux/Tuyau_Courbe_Noir.png',
+            '../../../Document/Image/Jeu/Tuyaux/Tuyau_Triple_Noir.png',
+            '../../../Document/Image/Jeu/Tuyaux/Tuyau_Quadruple_Noir.png',
         
         ];
         break;
@@ -61,18 +69,30 @@ switch (couleur) {
         imageFiles = [
             '../../../Document/Image/Jeu/Tuyaux/Entree_Vert.png',
             '../../../Document/Image/Jeu/Tuyaux/Sortie_Vert.png',
+            '../../../Document/Image/Jeu/Tuyaux/Tuyau_Simple_Vert.png',
+            '../../../Document/Image/Jeu/Tuyaux/Tuyau_Courbe_Vert.png',
+            '../../../Document/Image/Jeu/Tuyaux/Tuyau_Triple_Vert.png',
+            '../../../Document/Image/Jeu/Tuyaux/Tuyau_Quadruple_Vert.png',
         ];
         break;
     case 'cuivre':
         imageFiles = [
             '../../../Document/Image/Jeu/Tuyaux/Entree_Cuivre.png',
             '../../../Document/Image/Jeu/Tuyaux/Sortie_Cuivre.png',
+            '../../../Document/Image/Jeu/Tuyaux/Tuyau_Simple_Cuivre.png',
+            '../../../Document/Image/Jeu/Tuyaux/Tuyau_Courbe_Cuivre.png',
+            '../../../Document/Image/Jeu/Tuyaux/Tuyau_Triple_Cuivre.png',
+            '../../../Document/Image/Jeu/Tuyaux/Tuyau_Quadruple_Cuivre.png',
         ];
         break;
     default:
         imageFiles = [
             '../../../Document/Image/Jeu/Tuyaux/Entree.png',
-        '../../../Document/Image/Jeu/Tuyaux/Sortie.png',
+            '../../../Document/Image/Jeu/Tuyaux/Sortie.png',
+            '../../../Document/Image/Jeu/Tuyaux/Tuyau_Simple.png',
+            '../../../Document/Image/Jeu/Tuyaux/Tuyau_Courbe.png',
+            '../../../Document/Image/Jeu/Tuyaux/Tuyau_Triple.png',
+            '../../../Document/Image/Jeu/Tuyaux/Tuyau_Quadruple.png',
         ]; 
         break;
 }
@@ -310,61 +330,78 @@ let buttonOrange;
 
 function createButtons() {
     // Créez le bouton rouge
-    buttonRed = game.scene.scenes[0].add.rectangle(100, 550, 60, 40, 0xff0000).setInteractive();
+    buttonRed = game.scene.scenes[0].add.image(100, 550, 'img_2').setInteractive(); // Nouvelles coordonnées (50, 550)
+    buttonRed.displayWidth = 60; // Réduire la largeur du bouton
+    buttonRed.displayHeight = 60; // Réduire la hauteur du bouton
     buttonRed.on('pointerdown', function () {
-        updatePattern('S', selectedCell.row, selectedCell.col); // Mettre à jour img_pattern avec la lettre 'S'
+        updatePattern('img_2','S', selectedCell.row, selectedCell.col); // Mettre à jour img_pattern avec la lettre 'S'
         console.log(img_pattern);
     });
 
     // Créez le bouton bleu
-    buttonBlue = game.scene.scenes[0].add.rectangle(200, 550, 60, 40, 0x0000ff).setInteractive();
+    
+    buttonBlue = game.scene.scenes[0].add.image(200, 550, 'img_3').setInteractive(); // Nouvelles coordonnées (50, 550)
+    buttonBlue.displayWidth = 60; // Réduire la largeur du bouton
+    buttonBlue.displayHeight = 60; // Réduire la hauteur du bouton
     buttonBlue.on('pointerdown', function () {
-        updatePattern('C', selectedCell.row, selectedCell.col); // Mettre à jour img_pattern avec la lettre 'C'
+        updatePattern('img_3','C', selectedCell.row, selectedCell.col); // Mettre à jour img_pattern avec la lettre 'C'
         console.log(img_pattern);
     });
 
     // Créez le bouton violet
-    buttonPurple = game.scene.scenes[0].add.rectangle(300, 550, 60, 40, 0x800080).setInteractive();
+    buttonPurple = game.scene.scenes[0].add.image(300, 550, 'img_4').setInteractive(); // Nouvelles coordonnées (50, 550)
+    buttonPurple.displayWidth = 60; // Réduire la largeur du bouton
+    buttonPurple.displayHeight = 60; // Réduire la hauteur du bouton
     buttonPurple.on('pointerdown', function () {
-        updatePattern('T', selectedCell.row, selectedCell.col); // Mettre à jour img_pattern avec la lettre 'T'
+        updatePattern('img_4','T', selectedCell.row, selectedCell.col); // Mettre à jour img_pattern avec la lettre 'T'
         console.log(img_pattern);
     });
 
     // Créez le bouton orange
-    buttonOrange = game.scene.scenes[0].add.rectangle(400, 550, 60, 40, 0xffa500).setInteractive();
+    buttonOrange = game.scene.scenes[0].add.image(400, 550, 'img_5').setInteractive(); // Nouvelles coordonnées (50, 550)
+    buttonOrange.displayWidth = 70; // Réduire la largeur du bouton
+    buttonOrange.displayHeight = 70; // Réduire la hauteur du bouton
     buttonOrange.on('pointerdown', function () {
-        updatePattern('Q', selectedCell.row, selectedCell.col); // Mettre à jour img_pattern avec la lettre 'Q'
+        updatePattern('img_5','Q', selectedCell.row, selectedCell.col); // Mettre à jour img_pattern avec la lettre 'Q'
         console.log(img_pattern);
     });
 }
 
-function updatePattern(letter, row, col) {
+function updatePattern(textureKey,letter, row, col) {
     if (row !== undefined && col !== undefined) {
-        img_pattern[row][col] = letter; // Mettre à jour img_pattern avec la lettre sélectionnée
+        img_pattern[row][col] = letter; // Mettre à jour img_pattern avec la clé de texture du bouton
 
-        // Mettre à jour la couleur de la case en fonction de la lettre dans img_pattern
-        switch (letter) {
-            case 'S':
-                gridImages[row][col].fillColor = 0xff0000; // Rouge
-                break;
-            case 'C':
-                gridImages[row][col].fillColor = 0x0000ff; // Bleu
-                break;
-            case 'T':
-                gridImages[row][col].fillColor = 0x800080; // Violet
-                break;
-            case 'Q':
-                gridImages[row][col].fillColor = 0xffa500; // Orange
-                break;
-            default:
-                gridImages[row][col].fillColor = 0x00ff00; // Vert par défaut
-                break;
-        }
+        // Charger et afficher l'image correspondante à la texture du bouton
+        let image = game.scene.scenes[0].add.image(gridImages[row][col].x, gridImages[row][col].y, textureKey);
+        image.setOrigin(0.5);
+        image.displayWidth = cellSize;
+        image.displayHeight = cellSize;
+        gridContainer.add(image);
+
+        // Supprimer l'ancienne image de la case
+        gridImages[row][col].destroy();
+        gridImages[row][col] = image; // Mettre à jour la référence de l'image dans gridImages
+        console.log(road_pattern);
     } else {
         console.log("Erreur : Les coordonnées de la cellule ne sont pas correctement définies.");
     }
+    checkTexturesReplaced();
 }
 
+
+function checkTexturesReplaced() {
+    // Vérifier si toutes les textures vertes avec des routes actives ont été remplacées
+    for (let row = 0; row < numRows; row++) {
+        for (let col = 0; col < numCols; col++) {
+            if (img_pattern[row][col] === 'E' && road_pattern[row][col] === 1) {
+                // Si une texture verte avec une route active est trouvée, retourner false
+                return false;
+            }
+        }
+    }
+    // Si aucune texture verte avec une route active n'est trouvée, retourner true
+    return true;
+}
 
 function create() {
     var graphics = this.add.graphics();
@@ -398,5 +435,17 @@ function create() {
     background = this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0.3)');
 
     createGrid(numRows, numCols);
-    drawPattern(img_pattern)
+    drawPattern(img_pattern);
+    
+    // Vérifier en boucle si toutes les textures ont été remplacées
+    this.time.addEvent({
+        delay: 1000, // Vérifier toutes les secondes
+        loop: true,
+        callback: function() {
+            if (checkTexturesReplaced()) {
+                // Si toutes les textures ont été remplacées, redirection vers une autre page
+                window.location.href = "Concepteur_manuel_6.php?color=" + couleur + "&taille=" + taille + "&pattern=" + img_pattern + "&road_pattern=" + road_pattern;
+            }
+        }
+    });
 }

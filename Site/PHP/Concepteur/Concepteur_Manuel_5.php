@@ -29,7 +29,9 @@
 ?>
 <div id="Etapes-Jeu">
     <h3>
-
+    Now let's add the textures, select a box and click on the pipe you
+    want to put in its place, be careful: you cannot yet rotate the pipes, so be 
+    sure to place the right pipes in the right place to create the path.
     </h3>
 </div>
 

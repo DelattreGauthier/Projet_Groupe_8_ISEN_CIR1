@@ -179,6 +179,16 @@ function convertToMatrix(str, rows, cols) {
     }
     return result;
 }
+function convertToMatrix_int(int, rows, cols) {
+    let result = [];
+    let chunks = int.split(",").map(Number); // Convertir les chaînes en nombres
+    let index = 0;
+    for (let i = 0; i < rows; i++) {
+        result.push(chunks.slice(index, index + cols));
+        index += cols;
+    }
+    return result;
+}
 
 let img_pattern = [];
 switch (taille) {
@@ -198,6 +208,8 @@ switch (taille) {
         img_pattern = convertToMatrix(pattern, 6, 6);
         break;
 }
+
+
 let topRowSelected = false;
 let bottomRowSelected = false;
 
