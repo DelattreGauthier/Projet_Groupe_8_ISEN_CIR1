@@ -219,7 +219,7 @@ switch (taille) {
         base_pattern[i] = [];
         for (let j = 0; j < numCols; j++) {
             if (pattern[i][j] === 'D' || pattern[i][j] === 'A') {
-                base_pattern[i][j] = 0; // Si la case est 'D' ou 'A', la valeur de base_pattern est 0
+                base_pattern[i][j] = 1; // Si la case est 'D' ou 'A', la valeur de base_pattern est 0
             } else if (road_pattern[i][j] !== 0) {
                 // Si la case de road_pattern n'est pas vide, attribuer une valeur aléatoire entre 1 et 4
                 base_pattern[i][j] = Math.floor(Math.random() * 4) + 1;
@@ -406,8 +406,29 @@ function update() {
             // Créer le sprite du dino seulement s'il n'existe pas déjà
             dinoSprite = this.add.sprite(242, 242 - 24, 'img_7');
             dinoSprite.setOrigin(0.5);
-            dinoSprite.displayWidth = cellSize + 48;
-            dinoSprite.displayHeight = cellSize + 48;
+            switch (taille) {
+                case 4:  
+                    dinoSprite.displayWidth = cellSize + 48;
+                    dinoSprite.displayHeight = cellSize + 48;
+                    break;
+                case 6:
+                    dinoSprite.displayWidth = cellSize+96;
+                    dinoSprite.displayHeight = cellSize+96;
+                    break;
+                case 8:
+                    dinoSprite.displayWidth = cellSize+144;
+                    dinoSprite.displayHeight = cellSize+144;
+                    break;
+                case 10:
+                    dinoSprite.displayWidth = cellSize+192;
+                    dinoSprite.displayHeight = cellSize+192;
+                    break;
+                default:
+                    dinoSprite.displayWidth = cellSize + 48;
+                    dinoSprite.displayHeight = cellSize + 48;
+                    break;
+            }
+            
 
             // Configurer la minuterie pour changer les images de Dino
             this.time.addEvent({
@@ -419,7 +440,24 @@ function update() {
                 loop: true
             });
         }
-        background.setBackgroundColor('rgba(2, 73, 2, 0.7)');
+        switch (couleur) {
+            case 'bleu':
+                background.setBackgroundColor('rgba(0, 127, 166, 0.7)');
+                break;
+            case 'vert':
+                background.setBackgroundColor('rgba(15, 142, 86, 0.7)');
+                break;
+            case 'cuivre':
+                background.setBackgroundColor('rgba(172, 137, 22, 0.7)');
+                break;
+            case 'noir':
+                background.setBackgroundColor('rgba(2, 73, 2, 0.7)');
+                break;
+            default:
+                background.setBackgroundColor('rgba(15, 142, 86, 0.7)');
+                break;
+        }
+        
         if (sortieSprite) {
             sortieSprite.setTexture('img_6');
         }
@@ -433,7 +471,7 @@ function update() {
     } else {
         background.setBackgroundColor('rgba(0, 0, 0, 0.7)');
         if (sortieSprite) {
-            sortieSprite.setTexture('img_6');
+            sortieSprite.setTexture('img_5');
         }
         
     }

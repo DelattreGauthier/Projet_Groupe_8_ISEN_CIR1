@@ -25,7 +25,7 @@
      $pattern  = isset($_GET["pattern"]) ? json_encode($_GET["pattern"]) : "[]";
      $road_pattern_split  = isset($_GET["road_pattern"]) ? json_encode($_GET["road_pattern"]) : "[]";
 ?>
-<div id="Etapes-Jeu">
+<div id="Etapes-Concepteur-5">
     <h3>
     Now let's add the textures, select a box and click on the pipe you
     want to put in its place, be careful: you cannot yet rotate the pipes, so be 
@@ -63,8 +63,8 @@
     changeBackgroundImage();
 
 </script>
-<div class="script-container-trois">
-        <div id="script-trois">
+<div class="script-container" style="height: 630px;">
+        <div id="script">
             <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.80.1/phaser.min.js"></script>
             <script src="../../Javascript/Concepteur_manuel_5.js"></script>
         </div>

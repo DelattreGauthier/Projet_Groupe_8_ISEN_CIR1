@@ -21,7 +21,7 @@
     $couleur = isset($_GET["color"]) ? $_GET["color"] : "vert";
     $taille = isset($_GET["taille"]) ? $_GET["taille"] : 4;
 ?>
-<div id="Etapes-Jeu">
+<div id="Etapes-Concepteur-3">
     <h3>Now you'll have to choose where the game start and where it finish. 
         you must choose the start outside the <?php echo $taille . "x" . $taille; ?>
         grid, on the top and on the bottom of the grid.
@@ -58,8 +58,8 @@
 
 
 </script>
-<div class="script-container-trois">
-        <div id="script-trois">
+<div class="script-container"  style="height: 600px;">
+        <div id="script">
             <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.80.1/phaser.min.js"></script>
             <script src="../../Javascript/Concepteur_manuel_3.js"></script>
         </div>

@@ -52,16 +52,24 @@
             </a>
         </div>
         <div class="content"  id="theme-btn">
-            <div id="profil" class="content-section active">
+        <div id="profil" class="content-section active">
+        <?php if (isset($_SESSION['username'])): ?>
                 <h1>Your profile</h1>
                 <div class="settings-section">
-                    <div class="setting-item">
-                        <label for="username">Username</label>
-                        <input type="text" id="username" name="usernamed" placeholder="My_username">
-                    </div>
-                    <button type="saves" onClick="leclick()" id="testsave" class="save-button" name="saves">Save Edits</button>
+                    <form method="POST" action="">
+                        <div class="setting-item">
+                            <label for="username">Username</label>
+                            <input type="text" id="username" name="username" placeholder="My_username">
+                        </div>
+                        <button type="submit" class="save-button" name="save">Save Edits</button>
+                    </form>
                 </div>
+        <?php else: ?>
+            <div class="setting-item">
+                <label for="password"><a id="resetSett" href="../Connexion/reinitilize.php">Connect to acces at your profile</a></label>
             </div>
+        <?php endif; ?>
+        </div>
             <div id="securite" class="content-section">
                 <h1>Security</h1>
                 <div class="settings-section">
@@ -111,47 +119,42 @@
     </div>
 
     <?php
-function leclick(){
-    $new_password = $_POST["usernamed"];
-    // Vérifier si les nouveaux mots de passe correspondent
-    if ($new_password){
-        // Vérifier si le code de récupération est valide
-        if (isset($_SESSION["recup_mail"])) {
-            $recup_mail = $_SESSION["recup_mail"];
+    session_start();
 
-            // Vérifier si le code entré correspond au code de récupération stocké dans la session
-            // Connexion à la base de données
-            $servername = 'localhost'; 
-            $username = 'root';
-            $password = 'root';
-            $database = 'projet2';
-            $bdd = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
+    if (isset($_POST['save'])) {
+        $new_username = $_POST['username'];
+        if (!empty($new_username)) {
+            if (isset($_SESSION['user_email'])) {
+                $user_email = $_SESSION['user_email'];
 
-            // Mettre à jour le mot de passe dans la table 'adherents'
-            $update_password = $bdd->prepare("UPDATE adherents SET mot_de_passe = ? WHERE email = ?");
-            $update_password->execute(array($new_password, $recup_mail));
+                try {
+                    // Connexion à la base de données
+                    $servername = 'localhost'; 
+                    $username = 'root';
+                    $password = 'root';
+                    $database = 'projet2';
+                    $bdd = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
+                    $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            // Réinitialiser les variables de session
-            unset($_SESSION["recup_mail"]);
+                    // Mettre à jour le pseudo dans la table 'adherents'
+                    $update_username = $bdd->prepare("UPDATE adherents SET username = ? WHERE email = ?");
+                    $update_username->execute(array($new_username, $user_email));
 
-            // Redirection vers une page de confirmation ou de connexion
-            header("Location: connexion.php");
-            exit();
+                    echo "Pseudo mis à jour avec succès";
+
+                } catch (PDOException $e) {
+                    echo "Erreur de connexion : " . $e->getMessage();
+                }
+            } else {
+                echo "Email utilisateur non trouvé";
+            }
         } else {
-            $error = "Mail invalide";
+            echo "Le champ du pseudo est vide";
         }
-    } else {
-        $error = "Mot de passe invalide";
     }
-}
-?>
+    ?>
    
     <script>
-         
-        function leclick(){
-            document.getElementById("testsave").innerHTML = "Saved";
-
-        }
         // Load settings when the page is loaded
         document.addEventListener("DOMContentLoaded", function() {
             loadSettings();
@@ -223,4 +226,3 @@ function leclick(){
 
 </body>
 </html>
- 

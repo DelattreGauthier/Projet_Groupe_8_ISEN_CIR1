@@ -12,7 +12,7 @@
     </style>
 </head>
 
-<body class="Jeu"> 
+<body> 
 
     <div id="Etapes">
         <h3>Welcome to the manual designer. To create your own level,

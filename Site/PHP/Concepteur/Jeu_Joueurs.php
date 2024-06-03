@@ -82,6 +82,7 @@ if (!isset($_SESSION['authentifie'])) {
             <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.80.1/phaser.min.js"></script>
             <script src="../../Javascript/Jeu_Joueurs.js"></script>
         </div>
+        
     </div>
 
 </body>

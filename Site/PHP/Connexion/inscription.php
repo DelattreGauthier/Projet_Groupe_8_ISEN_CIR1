@@ -1,5 +1,4 @@
 <?php include '../Fonctionnement/header.php'; ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +13,6 @@
 <div>
         <div class="Accueil-container">
     </div>
-    <!-- Formulaire d'ajout -->
     <div class="wrapper-body">
             <a id="redirect_singup" href="../../../Site/PHP/Accueil/Accueil.php"><h4>Sign up</h4></a>
             <form method="post" enctype="multipart/form-data">
@@ -33,14 +31,13 @@
                 </div>
                 <div class="password-requirements">
                 <p>The password must contain:</p>
-            <ul>
-            <li>Maximum 10 characters for the username</li>
-            <li>At least 10 characters for the password</li>
-                <li>At least one uppercase letter</li>
-                <li>At least one lowercase letter</li>
-                <li>At least one special character</li>
-            </ul>
-
+                <ul>
+                    <li>Maximum 10 characters for the username</li>
+                    <li>At least 10 characters for the password</li>
+                    <li>At least one uppercase letter</li>
+                    <li>At least one lowercase letter</li>
+                    <li>At least one special character</li>
+                </ul>
                 </div>
                 <div class="profile-pic-container">
                     <img id="profile-pic" src="https://via.placeholder.com/150" alt="Profile Picture">
@@ -54,6 +51,8 @@
     <div id="message-container"></div>
 
     <?php
+    include '../Fonctionnement/header.php'; 
+    session_start();
     $message = '';
 
     if (isset($_POST['submit'])) {
@@ -70,7 +69,6 @@
             $email = $_POST['email'];
             $password = $_POST['password'];
 
-            // Validation des champs du formulaire
             if (empty($username) || empty($email) || empty($password)) {
                 $message = "Tous les champs sont obligatoires.";
             } elseif (strlen($username) > 20) {
@@ -80,39 +78,35 @@
             } elseif (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{10,}$/', $password)) {
                 $message = "Le mot de passe doit contenir au moins 10 caractères, dont une majuscule, une minuscule et un caractère spécial.";
             } else {
-                // Vérifier si l'email ou le pseudo existe déjà
                 $stmt = $conn->prepare("SELECT * FROM adherents WHERE username = :username OR email = :email");
                 $stmt->bindParam(':username', $username);
                 $stmt->bindParam(':email', $email);
                 $stmt->execute();
                 $existingUser = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                if ($existingName) {
+                if ($existingUser['username'] == $username) {
                     $message = "Nom d'utilisateur déjà utilisé. Veuillez en choisir un autre.";
-                } elseif ($existingEmail) {
+                } elseif ($existingUser['email'] == $email) {
                     $message = "Il semble que vous avez déjà un compte avec cette adresse e-mail. Veuillez vous connecter.";
                 } else {
-                    // Gérer l'upload de l'image
                     if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] === UPLOAD_ERR_OK) {
-                        $uploadDir = "uploads/"; // Assurez-vous que ce répertoire est correct et accessible en écriture
+                        $uploadDir = "uploads/";
                         $fileName = basename($_FILES['profile_picture']['name']);
                         $uploadFile = $uploadDir . $fileName;
-                    
+
                         if (move_uploaded_file($_FILES['profile_picture']['tmp_name'], $uploadFile)) {
                             $profilepic = $uploadFile;
                         } else {
                             $message = "Erreur lors du téléchargement de l'image.";
-                            $profilepic = "uploads/default.jpg"; // Chemin d'une image par défaut
+                            $profilepic = "../../../Document/Image/Jeu/Dino/Dino_Vert.png";
                         }
                     } else {
-                        $profilepic = "uploads/default.jpg"; // Si aucun fichier n'a été téléchargé ou en cas d'erreur
+                        $profilepic = "../../../Document/Image/Jeu/Dino/Dino_Vert.png";
                     }
 
-                    // Hachage du mot de passe pour la sécurité
                     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-                    // Insertion de l'utilisateur dans la base de données
-                    $sql = "INSERT INTO adherents (username, email, mot_de_passe, profile_pic) VALUES (:username, :email, :password, :profilepic)";
+                    $sql = "INSERT INTO adherents (username, email, mot_de_passe, profilepic) VALUES (:username, :email, :password, :profilepic)";
                     $stmt = $conn->prepare($sql);
 
                     $stmt->bindParam(':username', $username);
@@ -136,19 +130,16 @@
         } catch (PDOException $e) {
             $message = "Erreur : " . $e->getMessage();
         }
-
         $conn = null;
     }
     ?>
 
     <script>
         document.getElementById('profile-pic').addEventListener('click', function() {
-            // Déclencheur pour le champ de sélection de fichier lorsque l'image de profil est cliquée
             document.getElementById('profile-pic-input').click();
         });
 
         document.getElementById('profile-pic-input').addEventListener('change', function(event) {
-            // Création d'une URL de prévisualisation de l'image sélectionnée et mise à jour de l'image de profil visible
             if (event.target.files.length > 0) {
                 var src = URL.createObjectURL(event.target.files[0]);
                 document.getElementById('profile-pic').src = src;
@@ -156,42 +147,10 @@
         });
 
         <?php if (!empty($message)) { ?>
-            // Injection de messages PHP dans le DOM, utile pour des alertes après un téléchargement
             document.getElementById('message-container').innerHTML = "<p><?php echo $message; ?></p>";
         <?php } ?>
-        document.getElementById('profile-pic-input').addEventListener('change', function(event) {
-    if (event.target.files.length > 0) {
-        var src = URL.createObjectURL(event.target.files[0]);
-        document.getElementById('profile-pic').src = src;
-
-        // Préparation de l'envoi du fichier au serveur
-        var formData = new FormData();
-        formData.append('profile_picture', event.target.files[0]);
-
-        // Envoi de l'image au serveur via AJAX
-        fetch('path/to/your/upload_handler.php', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                // Message de succès ou de mise à jour de l'affichage
-                console.log('Image uploaded successfully');
-            } else {
-                // Gérer les erreurs du serveur ici
-                console.error('Upload failed:', data.error);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    }
-});
-    
     </script>   
-    
-
 </div>
 </body>
 </html>
+ 

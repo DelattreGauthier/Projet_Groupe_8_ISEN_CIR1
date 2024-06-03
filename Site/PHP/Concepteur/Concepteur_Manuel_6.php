@@ -23,11 +23,11 @@
      $pattern  = isset($_GET["pattern"]) ? json_encode($_GET["pattern"]) : "[]";
      $road_pattern_split  = isset($_GET["road_pattern"]) ? json_encode($_GET["road_pattern"]) : "[]";
 ?>
-<div id="Etapes-Jeu">
+<div id="Etapes-Concepteur-6">
     <h3>
-    Now let's add the textures, select a box and click on the pipe you
-    want to put in its place, be careful: you cannot yet rotate the pipes, so be 
-    sure to place the right pipes in the right place to create the path.
+    To complete the creation of your level you have to turn the pipes as if you 
+    are trying to complete the level, if you like the level completed click 
+    COMPLETE, and if you made a mistake click RESET.
     </h3>
 </div>
 
@@ -61,9 +61,9 @@
     changeBackgroundImage();
 
 </script>
-<div class="script-container-trois">
+<div class="script-container" style="height: 630px;">
         <!-- Écran de jeu -->
-        <div id="script-trois">
+        <div id="script-concepteur">
             <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.80.1/phaser.min.js"></script>
             <script src="../../Javascript/Concepteur_manuel_6.js"></script>
         </div>

@@ -337,6 +337,7 @@ body {
 
 /* Afficher le contenu du menu déroulant au survol */
 .dropdown:hover .dropdown-content {
+    background-color: #624584ab; 
     display: block;
     animation: fadeIn 0.3s ease-in-out; /* Ajout d'une animation de fondu pour un effet plus agréable */
 }
@@ -523,7 +524,7 @@ body {
 
 /* FIN de la partie connexion*/
 .Jeu{
-    background-image: url('../../Document/Image/Fond/main-background\ .jpg');
+    background-image: url('../../Document/Image/Fond/main-background.jpg');
     background-size: cover; 
     background-position: center;
     background-repeat: no-repeat;
@@ -591,7 +592,58 @@ body {
     color: white;
 
 }
+#Etapes-Concepteur {
+    padding: 30px;
+    margin-top: 5%;
+    height: 300px;
+    width: 200px;
+    margin-right: 400px;
+    font-size: 15px;
+    text-align: center;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
 
+}
+#Etapes-Concepteur-3 {
+    padding: 30px;
+    margin-top: 5%;
+    height: 200px;
+    width: 200px;
+    margin-right: 400px;
+    font-size: 15px;
+    text-align: center;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+
+}
+#Etapes-Concepteur-5 {
+    padding: 30px;
+    margin-top: 5%;
+    height: 220px;
+    width: 200px;
+    margin-right: 400px;
+    font-size: 15px;
+    text-align: center;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+
+}
+#Etapes-Concepteur-6 {
+    padding: 30px;
+    margin-top: 5%;
+    height: 220px;
+    width: 200px;
+    margin-right: 400px;
+    font-size: 15px;
+    text-align: center;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+
+}
 #stepButton {
     border-radius: 10px;
     background-color: rgba(0, 0, 0, 0.347);
@@ -719,10 +771,8 @@ body {
     grid-auto-rows: minmax(100px, auto);
 }
 
-.script-container-trois{
-    display: grid;
-    grid-gap: 10px;
-    grid-auto-rows: minmax(100px, auto);
+#script-concepteur {
+    margin-top: 100px; /* Déplace le contenu vers le bas de 100 pixels */
 }
 
 button {
@@ -980,7 +1030,7 @@ th:last-child, td:last-child {
 }
 
 .sidebar {
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: #624584dc; 
     width: 13%;
     padding: 20px;
     border-radius: 5px;
@@ -1012,7 +1062,7 @@ th:last-child, td:last-child {
 .content {
     padding: 40px;
     flex-grow: 1;
-    background: rgba(92, 91, 91, 0.7);
+    background-color: #624584ab;
     overflow-y: auto;
 }
 

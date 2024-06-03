@@ -11,22 +11,22 @@
 
 <body class="Jeu"> 
         
-<?php 
-    $couleur = isset($_GET["color"]) ? $_GET["color"] : "vert";
-    $taille = isset($_GET["taille"]) ? $_GET["taille"] : 4;
-    $pattern  = isset($_GET["pattern"]) ? json_encode($_GET["pattern"]) : "[]";
+    <?php 
+        $couleur = isset($_GET["color"]) ? $_GET["color"] : "vert";
+        $taille = isset($_GET["taille"]) ? $_GET["taille"] : 4;
+        $pattern  = isset($_GET["pattern"]) ? json_encode($_GET["pattern"]) : "[]";
 
-?>
-<div id="Etapes-Jeu">
-    <h3>
-    Now you will have to trace the path, be careful to ensure that each square
-    has at least one face in common with another square otherwise the game 
-    will be insolvent. You must start the path with one of the two blue 
-    square and finish on the other blue square.
-    </h3>
-</div>
+    ?>
+    <div id="Etapes-Concepteur" >
+        <h3 >
+        Now you will have to trace the path, be careful to ensure that each square
+        has at least one face in common with another square otherwise the game 
+        will be insolvent. You must start the path with one of the two blue 
+        square and finish on the other blue square.
+        </h3>
+    </div>
 
-<script>
+    <script>
 
     var couleur = "<?php echo $couleur; ?>";
     var taille = <?php echo $taille; ?>;
@@ -55,9 +55,9 @@
 
     changeBackgroundImage();
 
-</script>
-<div class="script-container-trois">
-        <div id="script-trois">
+    </script>
+    <div class="script">
+        <div id="script-container" style="height: 600px;">
             <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.80.1/phaser.min.js"></script>
             <script src="../../Javascript/Concepteur_manuel_4.js"></script>
         </div>

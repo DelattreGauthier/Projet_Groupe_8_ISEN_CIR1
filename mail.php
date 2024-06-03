@@ -13,7 +13,7 @@ $dotenv->safeLoad();
 
 // Vérifier que les variables d'environnement sont bien chargées
 if (!isset($_ENV['EMAIL_USERNAME']) || !isset($_ENV['EMAIL_PASSWORD'])) {
-    die('Les variables d\'environnement ne sont pas correctement definies');
+    die('Les variables d\'environnement ne sont pas correctement définies');
 }
 
 function sendRecoveryMail($to, $code) {
@@ -22,7 +22,6 @@ function sendRecoveryMail($to, $code) {
 
     try {
         // Paramètres du serveur
-        $mail->SMTPDebug  = SMTP::DEBUG_SERVER; // Affiche les informations de débogage du serveur
         $mail->isSMTP();
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
@@ -31,15 +30,24 @@ function sendRecoveryMail($to, $code) {
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = 587;
 
+        // Options du certificat
+        $mail->SMTPOptions = array(
+            'ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+            )
+        );
+
         // Destinataires
         $mail->setFrom('clement.rubin76@gmail.com', 'Support');
         $mail->addAddress($to);
 
         // Contenu
         $mail->isHTML(true);
-        $mail->Subject = 'Demande de reinitialisation du mot de passe ';
+        $mail->Subject = 'Demande de reinitialisation du mot de passe';
         $mail->Body    = "Votre code de recuperation est : <b>$code</b>";
-        $mail->AltBody = "Votre code de recuperation est : $code";
+        $mail->AltBody = "Votre code de recuperation est    : $code";
 
         $mail->send();
         echo 'Le message a été envoyé';
@@ -47,4 +55,3 @@ function sendRecoveryMail($to, $code) {
         echo "Le message n'a pas pu être envoyé. Erreur du mailer : {$mail->ErrorInfo}";
     }
 }
-?>

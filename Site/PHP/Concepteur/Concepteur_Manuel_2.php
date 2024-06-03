@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../../CSS/style.css">
 </head>
 
-<body class="Jeu">
+<body>
 
     <div id="Etapes">
         <h3>You must choose the color of the pipes and the size of the grid on which you will place them</h3>
