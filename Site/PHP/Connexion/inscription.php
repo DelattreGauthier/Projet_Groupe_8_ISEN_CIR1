@@ -59,7 +59,7 @@
     if (isset($_POST['submit'])) {
         $servername = 'localhost'; 
         $username = 'root';
-            $password = 'root';
+        $password = 'root';
         $database = 'projet2';
 
         try {
@@ -87,43 +87,50 @@
                 $stmt->execute();
                 $existingUser = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                if ($existingUser) {
-                    if ($existingUser['email'] === $email) {
-                        $message = "Il semble que vous avez déjà un compte avec cette adresse e-mail. Veuillez vous connecter.";
-                    } elseif ($existingUser['username'] === $username) {
-                        $message = "Nom d'utilisateur déjà utilisé. Veuillez en choisir un autre.";
-                    }
+                if ($existingName) {
+                    $message = "Nom d'utilisateur déjà utilisé. Veuillez en choisir un autre.";
+                } elseif ($existingEmail) {
+                    $message = "Il semble que vous avez déjà un compte avec cette adresse e-mail. Veuillez vous connecter.";
                 } else {
-                    // Hachage du mot de passe pour la sécurité
-                    $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-
-                    // Stocker les données dans une variable de session
-                    $_SESSION['form_data'] = [
-                        'email' => $email,
-                        'username' => $username,
-                    ];
-
-                    $sql = "INSERT INTO adherents (username, email, mot_de_passe) VALUES (:username, :email, :password)";
-                    $stmt = $conn->prepare($sql);
+                    // Gérer l'upload de l'image
+                    if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] === UPLOAD_ERR_OK) {
+                        $uploadDir = "uploads/"; // Assurez-vous que ce répertoire est correct et accessible en écriture
+                        $fileName = basename($_FILES['profile_picture']['name']);
+                        $uploadFile = $uploadDir . $fileName;
                     
+                        if (move_uploaded_file($_FILES['profile_picture']['tmp_name'], $uploadFile)) {
+                            $profilepic = $uploadFile;
+                        } else {
+                            $message = "Erreur lors du téléchargement de l'image.";
+                            $profilepic = "uploads/default.jpg"; // Chemin d'une image par défaut
+                        }
+                    } else {
+                        $profilepic = "uploads/default.jpg"; // Si aucun fichier n'a été téléchargé ou en cas d'erreur
+                    }
+
+                    // Hachage du mot de passe pour la sécurité
+                    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+                    // Insertion de l'utilisateur dans la base de données
+                    $sql = "INSERT INTO adherents (username, email, mot_de_passe, profile_pic) VALUES (:username, :email, :password, :profilepic)";
+                    $stmt = $conn->prepare($sql);
+
                     $stmt->bindParam(':username', $username);
                     $stmt->bindParam(':email', $email);
                     $stmt->bindParam(':password', $hashedPassword);
+                    $stmt->bindParam(':profilepic', $profilepic);
 
                     $stmt->execute();
 
-                    $_SESSION['user'] = $username; // Enregistrer l'utilisateur dans la session
-                    // Insérer un nouvel enregistrement dans la table des scores
-                    $userId = $conn->lastInsertId(); // Récupérer l'ID nouvellement inséré
+                    $_SESSION['user'] = $username; 
+                    $userId = $conn->lastInsertId(); 
 
-                    // Préparer la requête pour insérer un nouvel enregistrement dans la table des scores
                     $sqlScore = "INSERT INTO score (idJoueur) VALUES (:idJoueur)";
                     $stmtScore = $conn->prepare($sqlScore);
                     $stmtScore->bindParam(':idJoueur', $userId);
                     $stmtScore->execute();
-                    header("Location: ../Accueil/Accueil.php"); // Redirection vers la page d'accueil
+                    header("Location: ../Accueil/Accueil.php"); 
                     exit();
-
                 }
             }
         } catch (PDOException $e) {
@@ -136,10 +143,12 @@
 
     <script>
         document.getElementById('profile-pic').addEventListener('click', function() {
+            // Déclencheur pour le champ de sélection de fichier lorsque l'image de profil est cliquée
             document.getElementById('profile-pic-input').click();
         });
 
         document.getElementById('profile-pic-input').addEventListener('change', function(event) {
+            // Création d'une URL de prévisualisation de l'image sélectionnée et mise à jour de l'image de profil visible
             if (event.target.files.length > 0) {
                 var src = URL.createObjectURL(event.target.files[0]);
                 document.getElementById('profile-pic').src = src;
@@ -147,9 +156,42 @@
         });
 
         <?php if (!empty($message)) { ?>
+            // Injection de messages PHP dans le DOM, utile pour des alertes après un téléchargement
             document.getElementById('message-container').innerHTML = "<p><?php echo $message; ?></p>";
         <?php } ?>
-    </script>
+        document.getElementById('profile-pic-input').addEventListener('change', function(event) {
+    if (event.target.files.length > 0) {
+        var src = URL.createObjectURL(event.target.files[0]);
+        document.getElementById('profile-pic').src = src;
+
+        // Préparation de l'envoi du fichier au serveur
+        var formData = new FormData();
+        formData.append('profile_picture', event.target.files[0]);
+
+        // Envoi de l'image au serveur via AJAX
+        fetch('path/to/your/upload_handler.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Message de succès ou de mise à jour de l'affichage
+                console.log('Image uploaded successfully');
+            } else {
+                // Gérer les erreurs du serveur ici
+                console.error('Upload failed:', data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+});
+    
+    </script>   
+    
+
 </div>
 </body>
 </html>

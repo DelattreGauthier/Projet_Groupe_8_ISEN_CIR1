@@ -22,6 +22,7 @@ function sendRecoveryMail($to, $code) {
 
     try {
         // Paramètres du serveur
+        $mail->SMTPDebug  = SMTP::DEBUG_SERVER; // Affiche les informations de débogage du serveur
         $mail->isSMTP();
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;

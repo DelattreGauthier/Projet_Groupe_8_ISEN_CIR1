@@ -8,7 +8,7 @@ $servername = 'localhost';
 $username = 'root';
 $password = 'root';
 $database = 'projet2';
-// Connexion à la base de données (à remplacer avec vos propres informations de connexion)
+
 $bdd = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
 
 if (isset($_POST["recup_submit"], $_POST["recup_mail"])) {

@@ -57,13 +57,9 @@
                 <div class="settings-section">
                     <div class="setting-item">
                         <label for="username">Username</label>
-                        <input type="text" id="username" name="username" placeholder="My_username">
+                        <input type="text" id="username" name="usernamed" placeholder="My_username">
                     </div>
-                    <div class="setting-item">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" placeholder="my@mail.com">
-                    </div>
-                    <button type="saves" class="save-button" name="saves">Save Edits</button>
+                    <button type="saves" onClick="leclick()" id="testsave" class="save-button" name="saves">Save Edits</button>
                 </div>
             </div>
             <div id="securite" class="content-section">
@@ -113,39 +109,49 @@
             </div>
         </div>
     </div>
+
     <?php
+function leclick(){
+    $new_password = $_POST["usernamed"];
+    // Vérifier si les nouveaux mots de passe correspondent
+    if ($new_password){
+        // Vérifier si le code de récupération est valide
+        if (isset($_SESSION["recup_mail"])) {
+            $recup_mail = $_SESSION["recup_mail"];
 
-$error = ""; // Initialisation de la variable d'erreur
+            // Vérifier si le code entré correspond au code de récupération stocké dans la session
+            // Connexion à la base de données
+            $servername = 'localhost'; 
+            $username = 'root';
+            $password = 'root';
+            $database = 'projet2';
+            $bdd = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
 
-if (isset($_POST["saves"])) {
-    $new_username = $_POST["new_username"];
+            // Mettre à jour le mot de passe dans la table 'adherents'
+            $update_password = $bdd->prepare("UPDATE adherents SET mot_de_passe = ? WHERE email = ?");
+            $update_password->execute(array($new_password, $recup_mail));
 
-    // Connexion à la base de données
-    $servername = 'localhost'; 
-    $username = 'root';
-    $password = 'root';
-    $database = 'projet2';
-    $bdd = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
+            // Réinitialiser les variables de session
+            unset($_SESSION["recup_mail"]);
 
-    // Mettre à jour le nom d'utilisateur dans la table 'adherents'
-    $update_username = $bdd->prepare("UPDATE adherents SET nom_utilisateur = ? WHERE email = ?");
-    $update_username->execute(array($new_username, $_SESSION["recup_mail"]));
-
-    // Réinitialiser les variables de session
-    unset($_SESSION["recup_mail"]);
-
-    // Redirection vers une page de confirmation ou de connexion
-    header("Location: connexion.php");
-    exit();
+            // Redirection vers une page de confirmation ou de connexion
+            header("Location: connexion.php");
+            exit();
+        } else {
+            $error = "Mail invalide";
+        }
+    } else {
+        $error = "Mot de passe invalide";
+    }
 }
 ?>
-
-
-
-
-
-    
+   
     <script>
+         
+        function leclick(){
+            document.getElementById("testsave").innerHTML = "Saved";
+
+        }
         // Load settings when the page is loaded
         document.addEventListener("DOMContentLoaded", function() {
             loadSettings();
@@ -214,6 +220,7 @@ if (isset($_POST["saves"])) {
             }
         });
     </script>
+
 </body>
 </html>
  

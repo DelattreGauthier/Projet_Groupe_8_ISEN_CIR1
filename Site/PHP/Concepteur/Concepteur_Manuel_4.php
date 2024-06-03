@@ -12,9 +12,7 @@
 <body class="Jeu"> 
         
 <?php 
-    // Récupérer la couleur choisie sur la page 2
     $couleur = isset($_GET["color"]) ? $_GET["color"] : "vert";
-    // Récupérer la taille choisie sur la page 2
     $taille = isset($_GET["taille"]) ? $_GET["taille"] : 4;
     $pattern  = isset($_GET["pattern"]) ? json_encode($_GET["pattern"]) : "[]";
 
@@ -34,7 +32,6 @@
     var taille = <?php echo $taille; ?>;
     var pattern = <?php echo $pattern; ?>;
 
-    // Fonction pour changer l'image de fond en fonction de la couleur choisie
     function changeBackgroundImage() {
         var body = document.body;
         switch (couleur) {
@@ -42,26 +39,24 @@
                 body.style.backgroundImage = 'url("../../../Document/Image/Fond/loading_screen/future.jpg")';
                 break;
             case 'vert':
-                body.style.backgroundImage = 'url("../../../Document/Image/Fond/loading_screen/paris.png")'; // Remplacez par l'image verte
+                body.style.backgroundImage = 'url("../../../Document/Image/Fond/loading_screen/paris.png")'; 
                 break;
             case 'cuivre':
-                body.style.backgroundImage = 'url("../../../Document/Image/Fond/loading_screen/versailles.png")'; // Remplacez par l'image cuivre
+                body.style.backgroundImage = 'url("../../../Document/Image/Fond/loading_screen/versailles.png")'; 
                 break;
             case 'noir':
-                body.style.backgroundImage = 'url("../../../Document/Image/Fond/loading_screen/jurisen.png")'; // Remplacez par l'image noire
+                body.style.backgroundImage = 'url("../../../Document/Image/Fond/loading_screen/jurisen.png")'; 
                 break;
             default:
-                body.style.backgroundImage = 'url("../../../Document/Image/Fond/loading_screen/paris.png")'; // Image de fond par défaut
+                body.style.backgroundImage = 'url("../../../Document/Image/Fond/loading_screen/paris.png")'; 
                 break;
         }
     }
 
-    // Appeler la fonction pour changer l'image de fond
     changeBackgroundImage();
 
 </script>
 <div class="script-container-trois">
-        <!-- Écran de jeu -->
         <div id="script-trois">
             <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.80.1/phaser.min.js"></script>
             <script src="../../Javascript/Concepteur_manuel_4.js"></script>

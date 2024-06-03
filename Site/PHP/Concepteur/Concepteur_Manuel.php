@@ -9,7 +9,6 @@
     <title>Manual Designer Step 1</title>
     <link rel="stylesheet" href="../../CSS/style.css">
     <style>
-        /* Ajoutez ici vos styles CSS */
     </style>
 </head>
 
@@ -21,12 +20,9 @@
             We recommend that you first sketch out your level on paper.</h3>
     </div>
   
-    <!-- Bouton pour changer la tête de la page -->
     <button onclick="navigateToConcepteur2()" id="stepButton" style="position: fixed; bottom: 20px; right: 20px;">Next Step</button>
-    <!-- Fin du bouton -->
 
     <script>
-        // Fonction pour naviguer vers Concepteur_Manuel_2.php
         function navigateToConcepteur2() {
             window.location.href = 'Concepteur_Manuel_2.php';
         }

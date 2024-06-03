@@ -8,9 +8,7 @@
     <title>Manual Designer Step 3</title>
     <link rel="stylesheet" href="../../CSS/style.css">
     <style>
-        /* Ajoutez ici vos styles CSS */
         body {
-            /* Ajoutez ici le style pour l'image de fond en fonction de la couleur */
             background-image: url('../../../Document/Image/Jeu/Dino/Dino_Vert.png'); /* Image de fond par défaut */
             background-size: cover;
         }
@@ -20,9 +18,7 @@
 <body class="Jeu"> 
         
 <?php 
-    // Récupérer la couleur choisie sur la page 2
     $couleur = isset($_GET["color"]) ? $_GET["color"] : "vert";
-    // Récupérer la taille choisie sur la page 2
     $taille = isset($_GET["taille"]) ? $_GET["taille"] : 4;
 ?>
 <div id="Etapes-Jeu">
@@ -33,10 +29,9 @@
 </div>
 <button id="nextButton" style="display: none;">Next Step</button>
 <script>
-    // Récupérer la couleur choisie depuis PHP
     var couleur = "<?php echo $couleur; ?>";
     var taille = <?php echo $taille; ?>;
-    // Fonction pour changer l'image de fond en fonction de la couleur choisie
+
     function changeBackgroundImage() {
         var body = document.body;
         switch (couleur) {
@@ -58,14 +53,12 @@
         }
     }
 
-    // Appeler la fonction pour changer l'image de fond
     changeBackgroundImage();
 
 
 
 </script>
 <div class="script-container-trois">
-        <!-- Écran de jeu -->
         <div id="script-trois">
             <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.80.1/phaser.min.js"></script>
             <script src="../../Javascript/Concepteur_manuel_3.js"></script>

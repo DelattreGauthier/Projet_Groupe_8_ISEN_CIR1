@@ -23,13 +23,18 @@
             <div class="user-info">
             <?php if (isset($_SESSION['username'])): ?>
                 <div class="dropdown">
-                    <!-- Display only icon for the dropdown button -->
-                    <button class="dropbtn"><i class="fas fa-user-circle"></i></button>
-                    <div class="dropdown-content">
-                        <a href="../Settings/Settings.php">Profile</a>
-                        <a href="../Connexion/logout.php">Disconnect</a>
-                    </div>
-                 </div>
+                <!-- Display profile picture for the dropdown button -->
+                <button class="dropbtn">
+                    <!-- Image de profil intégrée dans le bouton -->
+                    <img src="<?php echo htmlspecialchars($profilePicUrl); ?>" alt="Profile Picture" style="width: 30px; height: 30px; border-radius: 50%;">
+                </button>
+                <div class="dropdown-content">
+                    <a href="../Settings/Settings.php">Profile</a>
+                    <a href="../Connexion/logout.php">Disconnect</a>
+                </div>
+            </div>
+            </div>
+            
             <?php else: ?>
                 <div class="dropdown">
                     <!-- Display only icon for the dropdown button -->

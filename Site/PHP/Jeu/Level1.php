@@ -3,6 +3,12 @@ if (!isset($_SESSION['authentifie'])) {
     header("Location: ../Connexion/logout.php");
     exit();
 }
+
+if (!isset($_COOKIE['rules_accepted'])) {
+    header("Location: rules.php");
+    exit();
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en"> 
@@ -28,13 +34,11 @@ if (!isset($_SESSION['authentifie'])) {
         }
     </style>
     <script>
-        // Function to get cookie value by name
         function getCookie(name) {
             let match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
             if (match) return match[2];
         }
 
-        // Function to set cookie
         function setCookie(name, value, days) {
             const d = new Date();
             d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
@@ -42,7 +46,6 @@ if (!isset($_SESSION['authentifie'])) {
             document.cookie = name + "=" + value + ";" + expires + ";path=/";
         }
 
-        // Function to check and disable level links
         function checkLevels() {
             for (let i = 2; i <= 8; i++) {
                 let levelLink = document.getElementById("level" + i);
@@ -74,9 +77,10 @@ if (!isset($_SESSION['authentifie'])) {
     </div>
     <div class="concepteur-container">
         <div id="color-buttons" style="display: flex; flex-direction: column; align-items: center;">
-            <a href="../Concepteur/Concepteur_Manuel.php"><button>Concepteur Manuel</button></a>
-            <a href="../Concepteur/Concepteur_Auto.php"><button>Concepteur Auto</button></a>
-            <a href="Level1.php"><button>Solveur</button></a>
+            <a href="../Concepteur/Concepteur_Manuel.php"><button>Manual Designer</button></a>
+            <a href="../Concepteur/Concepteur_Auto.php"><button>Auto Designer</button></a>
+            <a href="../Concepteur/Niveaux_Joueurs.php"><button>Players Levels</button></a>
+            <a href="Level1.php"><button>Solver</button></a>
         </div>
     </div>
     <div class="script-container">

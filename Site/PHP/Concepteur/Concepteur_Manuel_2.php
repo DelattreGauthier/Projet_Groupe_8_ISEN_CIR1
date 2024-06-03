@@ -14,15 +14,12 @@
     <div id="Etapes">
         <h3>You must choose the color of the pipes and the size of the grid on which you will place them</h3>
         <?php
-        // Définir les valeurs par défaut
         $color = 'vert';
         $taille = 6;
 
-        // Mettre à jour les valeurs si des données sont soumises
         if (isset($_POST['color']) && isset($_POST['size'])) {
             $color = $_POST['color'];
             $taille = $_POST['size'];
-            // Redirection vers la page suivante avec les valeurs sélectionnées
             header("Location: Concepteur_Manuel_3.php?color=$color&taille=$taille");
             exit();
         }
@@ -55,9 +52,7 @@
                     <input type="radio" id="dixxdix" name="size" value="10" <?php if ($taille == 10) echo 'checked'; ?>>
                     <label for="dixxdix" class="button">10x10</label>
                 </div>
-                <!-- Bouton pour changer la tête de la page -->
                 <button type="submit" id="stepButton" style="position: fixed; bottom: 20px; right: 20px;">Next Step</button>
-                <!-- Fin du bouton -->
             </form>
         </div>
     </div>
