@@ -90,7 +90,10 @@ if (!isset($_COOKIE['rules_accepted'])) {
             <script src="../../Javascript/LVL1.js"></script>
         </div>
     </div>
-
+    <?php 
+    $output = shell_exec('./main');
+    echo "<pre>$output</pre>";
+    ?>
 </body>
 </html>
 

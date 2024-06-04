@@ -87,6 +87,7 @@ function createGrid(rows, cols) {
         ['E', 'C', 'C', 'S', 'E', 'E'],
         ['E', 'E', 'E', 'A', 'E', 'E']
     ];
+
     road_pattern = [
         [0, 0, 1, 0, 0, 0],
         [0, 4, 2, 0, 0, 0],
@@ -95,6 +96,7 @@ function createGrid(rows, cols) {
         [0, 3, 2, 2, 0, 0],
         [0, 0, 0, 1, 0, 0]
     ];
+    
     base_pattern = [
         [0, 0, 1, 0, 0, 0],
         [0, 3, 4, 0, 0, 0],

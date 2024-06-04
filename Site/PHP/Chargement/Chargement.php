@@ -72,8 +72,8 @@ $images = [
         setInterval(changeBackground, 5000);
 
         setTimeout(function() {
-            window.location.href = '../Accueil/Accueil.php';
-        }, 20000);
+            window.location.href = '../Jeu/Level1.php';
+        }, 6000);
     });
 </script>
 

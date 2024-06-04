@@ -53,20 +53,22 @@
         </div>
         <div class="content"  id="theme-btn">
         <div id="profil" class="content-section active">
-        <?php if (isset($_SESSION['username'])): ?>
+        <?php
+        session_start();
+        if (isset($_SESSION['username'])): ?>
                 <h1>Your profile</h1>
                 <div class="settings-section">
                     <form method="POST" action="">
                         <div class="setting-item">
                             <label for="username">Username</label>
-                            <input type="text" id="username" name="username" placeholder="My_username">
+                            <input type="text" id="username" name="username" placeholder='Username'>
                         </div>
                         <button type="submit" class="save-button" name="save">Save Edits</button>
                     </form>
                 </div>
         <?php else: ?>
             <div class="setting-item">
-                <label for="password"><a id="resetSett" href="../Connexion/reinitilize.php">Connect to acces at your profile</a></label>
+                <label for="password"><a id="resetSett" href="../Connexion/connexion.php">Connect to acces at your profile</a></label>
             </div>
         <?php endif; ?>
         </div>
@@ -119,8 +121,6 @@
     </div>
 
     <?php
-    session_start();
-
     if (isset($_POST['save'])) {
         $new_username = $_POST['username'];
         if (!empty($new_username)) {

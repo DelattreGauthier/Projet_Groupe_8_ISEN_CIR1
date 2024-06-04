@@ -57,7 +57,7 @@ header .username a:hover {
 /* FOOTER - MAIN */
 .footer-main {
     position: relative;
-    right: 10%;
+    right: 2%;
     top: 395px;
     width: 100%;
     display: flex;
