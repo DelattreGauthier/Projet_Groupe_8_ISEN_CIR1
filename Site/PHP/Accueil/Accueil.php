@@ -15,7 +15,7 @@ $profilePicUrl = isset($_SESSION['profilepic']) ? $_SESSION['profilepic'] : 'pat
 </head>
 <body>
     <div class="header-main">
-        <a href="../Chargement/Chargement.php" class="on">PLAY</a>
+        <a href="../Jeu/Level1.php" class="on">PLAY</a>
         <a href="../Settings/Settings.php" class="on">SETTINGS</a>
         <a href="../Credits/Credits.html" class="on">CREDITS</a>
     </div>  
@@ -27,8 +27,8 @@ $profilePicUrl = isset($_SESSION['profilepic']) ? $_SESSION['profilepic'] : 'pat
             <!-- Display profile picture for the dropdown button -->
             <button class="dropbtn"><i class="fas fa-user-circle"></i></button>
             <div class="dropdown-content">
-                <a href="../Settings/Settings.php">Profile</a>
-                <a href="../Connexion/logout.php">Disconnect</a>
+                <a class="dropdown-content-profile" href="../Settings/Settings.php">Profile</a>
+                <a class="dropdown-content-disconnct" href="../Connexion/logout.php">Disconnect</a>
             </div>
         </div>
         <?php else: ?>

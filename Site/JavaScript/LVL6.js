@@ -310,3 +310,42 @@ function saveScore(score, level) {
         xhr.send();
     }
 }
+
+function getHint() {
+    score += 9;
+    let hintFound = false; // Indicateur pour arrêter la recherche après avoir trouvé un indice
+    for (let i = 0; i < numRows; i++) {
+        for (let j = 0; j < numCols; j++) {
+            // Comparaison de la valeur dans road_pattern avec base_pattern
+            if (road_pattern[i][j] !== base_pattern[i][j]) {
+                if (!(pattern[i][j] === 'S' && (road_pattern[i][j] % 2 !== base_pattern[i][j] % 2))) {
+                    if (pattern[i][j] !== 'Q') {
+                        // Calcul de la différence de clics nécessaires
+                        let clicksNeeded = (road_pattern[i][j] - base_pattern[i][j] + 4) % 4; // 4 - (road_pattern - base_pattern)
+
+                        // Afficher la fenêtre d'indice
+                        showHintWindow("Click the cell in [" + i + "][" + j + "] " + clicksNeeded + " time(s) to align it correctly.");
+
+                        hintFound = true; // Marquer qu'un indice a été trouvé
+                        break; // Sortir de la boucle interne
+                    }
+                }
+            }
+        }
+        if (hintFound) {
+            break; // Sortir de la boucle externe si un indice a été trouvé
+        }
+    }
+}
+function showHintWindow(message) {
+    let hintWindow = document.getElementById("hintWindow");
+    let hintText = document.getElementById("hintText");
+
+    hintText.innerText = message;
+    hintWindow.classList.add("show");
+
+    // Masquer la fenêtre d'indice après 3 secondes
+    setTimeout(function() {
+        hintWindow.classList.remove("show");
+    }, 3000);
+}

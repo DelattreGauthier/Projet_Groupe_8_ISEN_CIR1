@@ -80,7 +80,10 @@ if (!isset($_COOKIE['rules_accepted'])) {
             <a href="../Concepteur/Concepteur_Manuel.php"><button>Manual Designer</button></a>
             <a href="../Concepteur/Concepteur_Auto.php"><button>Auto Designer</button></a>
             <a href="../Concepteur/Niveaux_Joueurs.php"><button>Players Levels</button></a>
-            <a href="Level1.php"><button>Solver</button></a>
+            <button onclick="getHint()">Hint</button>
+            <div id="hintWindow" class="hintWindow">
+                <span id="hintText"></span>
+            </div>
         </div>
     </div>
     <div class="script-container">

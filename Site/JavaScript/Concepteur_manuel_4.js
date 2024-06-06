@@ -247,7 +247,7 @@ let redRectY_A= 0;
 
 function handleCellClick(image, row, col) {
     // Vérifier si la case cliquée est rouge (couleur hexadécimale : 0xff0000)
-    if (image.fillColor === 0xff0000 || image.fillColor ===0x3498DB) {
+    if (image.fillColor === 0xff0000 || image.fillColor === 0x3498DB) {
         // Changer la couleur de la case en vert
         image.setFillStyle(0x00ff00);
         // Mettre à jour road_pattern pour marquer cette case comme occupée
@@ -267,15 +267,19 @@ function handleCellClick(image, row, col) {
         if (startRedClicked && endRedClicked) {
             disableAllCells();
             checkPathConnected();
+
         }
     }
 }
+
 function disableAllCells() {
     // Parcourir toutes les cases et désactiver l'interaction
     gridContainer.iterate(function (child) {
         child.disableInteractive();
     });
 }
+
+
 function checkPathConnected() {
     // Trouver les coordonnées de la case 'D' et de la case 'A' dans img_pattern
     let startCoords, endCoords;
@@ -290,13 +294,73 @@ function checkPathConnected() {
     }
 
     // Vérifier si les deux chemins sont connectés
-    if (isPathConnected(startCoords, endCoords)) {
-        // Si les chemins sont connectés, vous pouvez rediriger vers une autre page ici si nécessaire
+    if (isPathConnected(startCoords, endCoords) && checkRoadFunctionality()) {
+            // Si les chemins sont connectés, vous pouvez rediriger vers une autre page ici si nécessaire
         window.location.href = "Concepteur_manuel_5.php?color=" + couleur + "&taille=" + taille + "&pattern=" + img_pattern + "&road_pattern=" + road_pattern;
+
     } else {
         // Si les chemins ne sont pas connectés, recharger la page actuelle
         window.location.reload();
     }
+}
+
+function checkRoadFunctionality() {
+    for (let i = 0; i < numRows; i++) {
+        for (let j = 0; j < numCols; j++) {
+            // Vérifier uniquement les cases avec la valeur 1 dans road_pattern
+            if (road_pattern[i][j] === 1) {
+                // Vérifier si la case n'est pas la case de départ ou d'arrivée
+                if (img_pattern[i][j] !== 'D' && img_pattern[i][j] !== 'A') {
+                    // Vérifier les cases adjacentes
+                    let adjacentCells = getAdjacentCells(i, j);
+                    let countAdjacentOnes = 0;
+                    for (let cell of adjacentCells) {
+                        let row = cell.row;
+                        let col = cell.col;
+                        if (road_pattern[row][col] === 1) {
+                            countAdjacentOnes++;
+                        }
+                    }
+                    // Si la case actuelle n'a pas au moins deux cases adjacentes avec la valeur 1, la route n'est pas fonctionnelle
+                    if (countAdjacentOnes < 2) {
+                        alert("Each green square must have at least 2 green neighbors on the grid");
+                        return false;
+                    }
+                }
+            }
+        }
+    }
+    // Si toutes les cases 1 (sauf les cases de départ et d'arrivée) ont au moins deux cases adjacentes 1, la route est fonctionnelle
+    return true;
+}
+
+
+
+
+
+function getAdjacentCells(row, col) {
+    let adjacentCells = [];
+
+    // Coordonnées des cases adjacentes horizontalement et verticalement
+    let directions = [
+        { row: row - 1, col: col }, // Case au-dessus
+        { row: row + 1, col: col }, // Case en-dessous
+        { row: row, col: col - 1 }, // Case à gauche
+        { row: row, col: col + 1 }  // Case à droite
+    ];
+
+    // Vérifier chaque direction pour les cases valides
+    for (let dir of directions) {
+        let newRow = dir.row;
+        let newCol = dir.col;
+
+        // Vérifier les limites de la grille
+        if (newRow >= 0 && newRow < numRows && newCol >= 0 && newCol < numCols) {
+            adjacentCells.push({ row: newRow, col: newCol });
+        }
+    }
+
+    return adjacentCells;
 }
 
 
@@ -318,7 +382,7 @@ function isPathConnected(startCoords, endCoords) {
 
             // Marquer la case actuelle comme visitée
             visited[row][col] = true;
-
+            
             // Vérifier les cases adjacentes
             let neighbors = getAdjacentGreenCells(row, col); // Fonction à implémenter pour obtenir les cases vertes adjacentes
             for (let neighbor of neighbors) {
@@ -338,6 +402,7 @@ function isPathConnected(startCoords, endCoords) {
                     queue.push({ row: nRow, col: nCol });
                 }
             }
+            
         }
     }
 
@@ -385,6 +450,8 @@ function checkAndMakeClickable(row, col) {
         });
     }
 }
+
+
 function checkAndDrawAdjacent(row, col) {
     if (row >= 0 && row < numRows && col >= 0 && col < numCols && road_pattern[row][col] === 0) {
         let x = col * cellSize + cellSize / 2;
@@ -398,6 +465,8 @@ function checkAndDrawAdjacent(row, col) {
         });
     }
 }
+
+
 function drawPattern(pattern) {
     for (let row = 0; row < numRows; row++) {
         for (let col = 0; col < numCols; col++) {

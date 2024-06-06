@@ -15,7 +15,7 @@
         <div class="Accueil-container">
     </div>
     <!-- Formulaire d'ajout -->
-    <div class="wrapper-body">
+    <div class="wrapper-body" style="margin-top: 100%;">
             <a id="redirect_singup" href="../../../Site/PHP/Accueil/Accueil.php"><h4>Sign up</h4></a>
             <form method="post" enctype="multipart/form-data">
                 <hr>
