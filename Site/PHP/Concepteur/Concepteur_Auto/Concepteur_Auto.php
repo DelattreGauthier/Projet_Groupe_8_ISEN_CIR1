@@ -1,3 +1,45 @@
+<?php
+$color = 'vert';
+$taille = 6;
+
+$pattern_php = "[]"; // Initialiser les variables par défaut
+$road_pattern_php = "[]";
+
+if (isset($_POST['color']) && isset($_POST['size'])) {
+    $color = $_POST['color'];
+    $taille = $_POST['size'];
+
+    // Écriture des données dans le fichier input.txt
+    $data = $taille;
+    file_put_contents('input.txt', $data);
+
+    // Exécution du programme principal
+    exec(__DIR__ . '/main 2>&1', $output, $return_value);
+
+    // Vérifier si l'exécution s'est bien déroulée
+    if ($return_value !== 0) {
+        foreach ($output as $line) {
+            echo $line . "<br>";
+        }
+    } 
+
+    include 'index.php';
+    
+    // Assigner les valeurs des tableaux PHP aux variables pour JavaScript
+    $pattern_php = json_encode($pattern);
+    $road_pattern_php = json_encode($road_pattern);
+    ?>
+    <script>
+    var couleur = "<?php echo $color; ?>";
+    var taille = <?php echo $taille; ?>;
+    var pattern = <?php echo $pattern_php; ?>;
+    var road_pattern = <?php echo $road_pattern_php; ?>;
+    window.location.href = "Concepteur_Auto_2.php?color=" + couleur + "&taille=" + taille + "&pattern=" + pattern + "&road_pattern=" + road_pattern;
+    </script>
+<?php
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,18 +55,9 @@
 
     <div id="Etapes">
         <h3>You must choose the color of the pipes and the size of the grid on which you will place them</h3>
-        <?php
-        $color = 'vert';
-        $taille = 6;
-
-        if (isset($_POST['color']) && isset($_POST['size'])) {
-            $color = $_POST['color'];
-            $taille = $_POST['size'];
-            exit();
-        }
-        ?>
+        
         <div class="controls-container-concepteur">
-            <form method="post">
+        <form method="post">
                 <div id="color-buttons" class="color-buttons-concepteur">
                     <input type="radio" id="bleuButton" name="color" value="bleu" <?php if ($color === 'bleu') echo 'checked'; ?>>
                     <label for="bleuButton" class="button">Blue</label>
@@ -59,4 +92,6 @@
 </body>
 
 </html>
+
+
 

@@ -78,7 +78,7 @@ if (!isset($_COOKIE['rules_accepted'])) {
     <div class="concepteur-container">
         <div id="color-buttons" style="display: flex; flex-direction: column; align-items: center;">
             <a href="../Concepteur/Concepteur_Manuel.php"><button>Manual Designer</button></a>
-            <a href="../Concepteur/Concepteur_Auto.php"><button>Auto Designer</button></a>
+            <a href="../Concepteur/Concepteur_Auto/Concepteur_Auto.php"><button>Auto Designer</button></a>
             <a href="../Concepteur/Niveaux_Joueurs.php"><button>Players Levels</button></a>
             <button onclick="getHint()">Hint</button>
             <div id="hintWindow" class="hintWindow">
