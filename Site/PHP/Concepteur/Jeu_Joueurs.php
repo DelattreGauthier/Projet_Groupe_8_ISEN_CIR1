@@ -12,7 +12,11 @@ if (!isset($_SESSION['authentifie'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../../../Document/Image/Jeu/Dino/Dino_Vert.png" type="image/png">
-    <title>Level 1</title>
+    <?php
+    $level = isset($_GET["level"]) ? $_GET["level"] : "Level";
+    $IdJeu = isset($_GET["IdJeu"]) ? $_GET["IdJeu"] : "IdJeu";
+    echo"<title>$level</title>";
+    ?>
     <link rel="stylesheet" href="../../CSS/style.css">
     <style>
         #game-container {
@@ -72,8 +76,11 @@ if (!isset($_SESSION['authentifie'])) {
 </script>
     <div class="concepteur-container">
         <div id="color-buttons" style="display: flex; flex-direction: column; align-items: center;">
-            <a href="../Accueil/Accueil.php"><button>Home</button></a>
+        <?php
+            echo '<a href="../../../Site/PHP/Leaderboard/leaderboard_players.php?level=' . $level . '&IdJeu=' . $IdJeu . '"><button>Leaderboard</button></a>';
+        ?>
             <a href="../Concepteur/Niveaux_Joueurs.php"><button>Players Levels</button></a>
+            
         </div>
     </div>
     <div class="script-container">

@@ -9,7 +9,7 @@ header {
     align-items: center;
     padding: 0 10px;
     box-sizing: border-box;
-    z-index: 1000;
+    z-index: 5;
 }
 
 header .username {
@@ -280,9 +280,10 @@ body {
     bottom: -100px; /* Initial position, en dehors de l'écran */
     left: 50%;
     transform: translateX(-50%);
-    background-color: #f0f0f0;
+    background-color: rgba(0, 0, 0, 0.5);
     padding: 10px 20px;
-    border-radius: 10px;
+    border-radius: 5px;
+    color: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     transition: bottom 0.5s ease; /* Animation de transition */
 }
@@ -290,7 +291,23 @@ body {
 .hintWindow.show {
     bottom: 20px; /* Position visible */
 }
+.popup {
+    z-index: 10;
+    position: fixed;
+    top: -50px; /* Déplacez la fenêtre contextuelle hors de la vue initialement */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: top 0.5s ease; /* Animation pour faire glisser la fenêtre contextuelle */
+}
 
+.popup.show {
+    top: 100px; /* Faites glisser la fenêtre contextuelle vers le bas pour l'afficher */
+} 
+                        
 .Accueil-container {
     display: flex;
     justify-content: space-between;
@@ -758,7 +775,7 @@ body {
 .concepteur-container {
     position: fixed;
     left: 75%;
-    top: 35% 
+    top: 35%;
 }
 #level1 {
     border-top-right-radius: 15px;

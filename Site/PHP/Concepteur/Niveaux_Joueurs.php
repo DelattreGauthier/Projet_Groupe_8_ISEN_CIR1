@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../../../Document/Image/Jeu/Dino/Dino_Vert.png" type="image/png">
-    <title>Level 1</title>
+    <title>Players Levels</title>
     <link rel="stylesheet" href="../../CSS/style.css">
     <style>
         h2 {
@@ -49,14 +49,14 @@
     </style>
 </head>
 <body class="lbody">
-    <h2>Liste des niveaux</h2>
+    <h2>List of levels</h2>
     <table>
         <thead>
             <tr>
-                <th>Nom du niveau</th>
-                <th>Taille de la grille</th>
-                <th>Couleur de la grille</th>
-                <th>Classement</th> <!-- Nouvelle colonne -->
+                <th>Level Name</th>
+                <th>Size of the grid</th>
+                <th>Color of the pipes</th>
+                <th>Leaderboard</th> <!-- Nouvelle colonne -->
             </tr>
         </thead>
         <tbody>
@@ -84,6 +84,13 @@
                 // Récupération de tous les niveaux sauvegardés dans la table 'concepteur'
                 $stmt = $conn->query("SELECT concepteur.*, adherents.username FROM concepteur JOIN adherents ON concepteur.IdJoueur = adherents.id");
 
+
+                $color_translations = array(
+                    "cuivre" => "Copper",
+                    "noir" => "Black",
+                    "vert" => "Green",
+                    "bleu" => "Blue"
+                );
                 // Affichage de la liste des niveaux
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     $nom_niveau = $row['username'] . "_" . $row['IdJeu'];
@@ -97,12 +104,12 @@
                     if (isset($_SESSION['played_levels']) && in_array($nom_niveau, $_SESSION['played_levels'])) {
                         $played_class = 'visited'; // Ajouter la classe 'visited' si le niveau a déjà été joué
                     }
-
+                    $translated_color = isset($color_translations[$couleur]) ? $color_translations[$couleur] : $couleur;
                     echo "<tr>";
-                    echo "<td><a style='text-decoration: none;color: red;display: block;' href='Jeu_Joueurs.php?color=$couleur&taille=$taille&pattern=$pattern&road_pattern=$road_pattern&IdJeu={$row['IdJeu']}&IdJoueur=$userId'><span class='$played_class'>$nom_niveau</span></a></td>";
+                    echo "<td><a style='text-decoration: none;color: red;display: block;' href='Jeu_Joueurs.php?level=$nom_niveau&color=$couleur&taille=$taille&pattern=$pattern&road_pattern=$road_pattern&IdJeu={$row['IdJeu']}&IdJoueur=$userId'><span class='$played_class'>$nom_niveau</span></a></td>";
 
-                    echo "<td>$taille</td>"; // Afficher la taille de la grille
-                    echo "<td>$couleur</td>"; // Afficher la couleur de la grille
+                    echo "<td>$taille X $taille</td>"; // Afficher la taille de la grille
+                    echo "<td>$translated_color</td>"; // Afficher la couleur de la grille
                     echo '<td style="text-align: center;"><a style="text-decoration: none; color: blue; display: block;" href="../../../Site/PHP/Leaderboard/leaderboard_players.php?level=' . $nom_niveau . '&IdJeu=' . $row['IdJeu'] . '" onclick="window.location.reload();"><img src="../../../Document/Image/Leaderboard/leaderboard.png" alt="Classement_' . $nom_niveau . '" class="' . $played_class . '" style="width: 20px; height: 20px;" /></a></td>';
 
 

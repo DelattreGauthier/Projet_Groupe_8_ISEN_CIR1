@@ -300,31 +300,44 @@ function saveScore(score, level) {
     }
 }
 
-
 function getHint() {
-    if(score<=999){
+    if(score <= 999){
         score += 9;
-    }
-    else{
-        scoe=999;
+    } else {
+        score = 999;
     }
     let hintFound = false; // Indicateur pour arrêter la recherche après avoir trouvé un indice
     for (let i = 0; i < numRows; i++) {
         for (let j = 0; j < numCols; j++) {
             // Comparaison de la valeur dans road_pattern avec base_pattern
-            if (road_pattern[i][j] !== base_pattern[i][j]) {
-                if (!(pattern[i][j] === 'S' && (road_pattern[i][j] % 2 !== base_pattern[i][j] % 2))) {
-                    if (pattern[i][j] !== 'Q') {
-                        // Calcul de la différence de clics nécessaires
-                        let clicksNeeded = (road_pattern[i][j] - base_pattern[i][j] + 4) % 4; // 4 - (road_pattern - base_pattern)
+            if (road_pattern[i][j] !== base_pattern[i][j] && pattern[i][j] !== 'Q') {
+                let clicksNeeded = 0; // Initialiser le nombre de clics nécessaires
 
-                        // Afficher la fenêtre d'indice
-                        showHintWindow("Click the cell in [" + i + "][" + j + "] " + clicksNeeded + " time(s) to align it correctly.");
-
-                        hintFound = true; // Marquer qu'un indice a été trouvé
-                        break; // Sortir de la boucle interne
+                if (pattern[i][j] === 'S') {
+                    // Si c'est un tuyau simple, calculer la différence en tenant compte de l'orientation
+                    let diff = Math.abs(road_pattern[i][j] - base_pattern[i][j]);
+                    // Si la différence est de 1, tourner le tuyau une fois
+                    if (diff === 1) {
+                        clicksNeeded += 1;
+                    } else if (diff === 2) {
+                        // Ne rien faire, car 2 est déjà égal à 4 (pas besoin de rotation)
+                        continue; // Passer au tuyau suivant
+                    } else {
+                        // Les autres différences nécessitent une rotation normale
+                        clicksNeeded += diff;
                     }
+                } else {
+                    // Calcul de la différence de clics nécessaires pour les autres types de tuyaux
+                    let diff = (road_pattern[i][j] - base_pattern[i][j] + 4) % 4; // 4 - (road_pattern - base_pattern)
+                    // Ajouter cette différence au nombre de clics nécessaires
+                    clicksNeeded += diff;
                 }
+
+                // Afficher la fenêtre d'indice
+                showHintWindow("Click the cell in [" + i + "][" + j + "] " + clicksNeeded + " time(s) to align it correctly.");
+
+                hintFound = true; // Marquer qu'un indice a été trouvé
+                break; // Sortir de la boucle interne
             }
         }
         if (hintFound) {
@@ -346,7 +359,97 @@ function showHintWindow(message) {
     }, 3000);
 }
 
+function countClicksNeeded() {
+    let clicksNeeded = 0; // Initialisation du nombre de clics nécessaires
+
+    // Parcours de toutes les cellules de la grille
+    for (let i = 0; i < numRows; i++) {
+        for (let j = 0; j < numCols; j++) {
+            // Comparaison de la valeur dans road_pattern avec base_pattern
+            if (road_pattern[i][j] !== base_pattern[i][j] && pattern[i][j] !== 'Q') {
+                if (pattern[i][j] === 'S') {
+                    // Si c'est un tuyau simple
+                    // Vérifiez d'abord s'il est déjà correctement orienté
+                    if ((road_pattern[i][j] % 2) === (base_pattern[i][j] % 2)) {
+                        // Si oui, aucun clic n'est nécessaire
+                        continue;
+                    }
+
+                    // Sinon, il faut ajuster la rotation
+                    let diff = Math.abs(road_pattern[i][j] - base_pattern[i][j]);
+                    // Ajoutez le nombre minimum de clics pour ramener le tuyau à la bonne orientation
+                    clicksNeeded += Math.min(diff, 4 - diff);
+                } else {
+                    // Pour les autres types de tuyaux, le calcul reste le même
+                    let diff = (road_pattern[i][j] - base_pattern[i][j] + 4) % 4; // 4 - (road_pattern - base_pattern)
+                    clicksNeeded += diff;
+                }
+            }
+        }
+    }
+
+    return clicksNeeded;
+}
 
 
+function getBestScore() {
+    // Appeler la fonction countClicksNeeded pour obtenir le nombre de clics nécessaires
+    let clicksNeeded = countClicksNeeded();
 
+    // Afficher le résultat dans une fenêtre contextuelle
+    showPopup("You need to do at least " + clicksNeeded + " more clicks to finish the level");
+}
 
+function showPopup(message) {
+    let popup = document.getElementById("popup");
+    let popupText = document.getElementById("popupText");
+
+    popupText.innerText = message;
+    popup.classList.add("show");
+
+    setTimeout(function() {
+        popup.classList.remove("show");
+    }, 3000); // Disparaît après 5 secondes
+}
+
+function getSolution() {
+    let totalClicks = 0; // Initialiser le nombre total de clics nécessaires
+    let maxTries = 1000; // Nombre maximal de tentatives pour éviter une boucle infinie
+    let tryCount; // Déclaration de tryCount à l'extérieur de la boucle
+
+    // Boucle jusqu'à ce que road_pattern soit égal à base_pattern ou jusqu'à ce que maxTries soit atteint
+    for (tryCount = 0; tryCount < maxTries; tryCount++) {
+        // Parcours de toutes les cellules de la grille
+        for (let i = 0; i < numRows; i++) {
+            for (let j = 0; j < numCols; j++) {
+                // Comparaison de la valeur dans road_pattern avec base_pattern
+                if (road_pattern[i][j] !== base_pattern[i][j]) {
+                    // Effectuer une rotation sur cette cellule
+                    rotateCell(i, j);
+                    updateBasePattern(i, j);
+                    totalClicks++; // Incrémenter le nombre total de clics nécessaires
+                }
+            }
+        }
+
+        // Vérifier si road_pattern est maintenant égal à base_pattern
+        if (checkPatternMatch()) {
+            // Si oui, mettre le score à 999 et sortir de la boucle
+            score = 999;
+            scoreText.setText('Score: ' + score);
+            break;
+        }
+    }
+
+    // Si maxTries est atteint sans que les motifs ne soient alignés, afficher un message d'erreur
+    if (tryCount === maxTries) {
+        showPopup("Unable to find solution within the maximum number of tries.");
+    }
+}
+function rotateCell(row, col) {
+    // Récupérer la référence à l'image de la cellule
+    let cellImage = gridImages[row][col];
+
+    // Faire tourner l'image de 90 degrés
+    cellImage.angle += 90;
+}

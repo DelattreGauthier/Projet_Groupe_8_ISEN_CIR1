@@ -72,12 +72,14 @@
     </div>
     <div class="concepteur-container">
         <div id="color-buttons" style="display: flex; flex-direction: column; align-items: center;">
-            <a href="../Concepteur/Concepteur_Manuel.php"><button>Manual Designer</button></a>
-            <a href="../Concepteur/Concepteur_Auto/Concepteur_Auto.php"><button>Auto Designer</button></a>
-            <a href="../Concepteur/Niveaux_Joueurs.php"><button>Players Levels</button></a>
             <button onclick="getHint()">Hint</button>
             <div id="hintWindow" class="hintWindow">
                 <span id="hintText"></span>
+            </div>
+            <button onclick="getSolution()">Give Solution</button>
+            <button onclick="getBestScore()">Best score possible</button>
+            <div id="popup" class="popup">
+                <span id="popupText" class="popup-text"></span>
             </div>
         </div>
     </div>

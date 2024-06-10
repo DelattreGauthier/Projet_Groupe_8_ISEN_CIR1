@@ -20,7 +20,7 @@
         </div>
 
         <!-- Le lien pour démarrer le niveau 1 -->
-        <a class="start-button" href="Level1.php" onclick="acceptRules()">Start Level 1</a>
+        <a class="start-button" href="Selecteur.php" onclick="acceptRules()">Start Playing</a>
 
         <!-- Script JavaScript pour créer un cookie pour accepter les règles -->
         <script>

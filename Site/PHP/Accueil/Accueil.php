@@ -15,7 +15,7 @@ $profilePicUrl = isset($_SESSION['profilepic']) ? $_SESSION['profilepic'] : 'pat
 </head>
 <body>
     <div class="header-main">
-        <a href="../Jeu/Level1.php" class="on">PLAY</a>
+        <a href="../Jeu/Selecteur.php" class="on">PLAY</a>
         <a href="../Settings/Settings.php" class="on">SETTINGS</a>
         <a href="../Credits/Credits.html" class="on">CREDITS</a>
     </div>  

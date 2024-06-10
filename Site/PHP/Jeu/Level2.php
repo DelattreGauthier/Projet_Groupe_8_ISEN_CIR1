@@ -56,8 +56,11 @@
     </script>
 </head>
 
-<body class="Jeu-Jurassic" onload="checkLevels()">
-
+<body id='playMusicButton' class="Jeu-Jurassic" onload="checkLevels()">
+    <audio id="myAudio" autoplay loop>
+        <source src="../../../Document/Sons/Musique/Tem_music.mp4" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
     <div class="level-container">
         <div id="color-buttons" style="display: flex; flex-direction: column; align-items: center;">
             <a id="level1" href="Level1.php"><button>Level 1</button></a>
@@ -72,12 +75,14 @@
     </div>
     <div class="concepteur-container">
         <div id="color-buttons" style="display: flex; flex-direction: column; align-items: center;">
-            <a href="../Concepteur/Concepteur_Manuel.php"><button>Manual Designer</button></a>
-            <a href="../Concepteur/Concepteur_Auto/Concepteur_Auto.php"><button>Auto Designer</button></a>
-            <a href="../Concepteur/Niveaux_Joueurs.php"><button>Players Levels</button></a>
             <button onclick="getHint()">Hint</button>
             <div id="hintWindow" class="hintWindow">
                 <span id="hintText"></span>
+            </div>
+            <button onclick="getSolution()">Give Solution</button>
+            <button onclick="getBestScore()">Best score possible</button>
+            <div id="popup" class="popup">
+                <span id="popupText" class="popup-text"></span>
             </div>
         </div>
     </div>
@@ -89,6 +94,35 @@
         </div>
         
     </div>
+    <script>
+        // Fonction pour démarrer la lecture de la musique
+        function playMusic() {
+            var audio = document.getElementById("myAudio");
+            audio.muted = false;
+            audio.play();
+            // Enregistrez l'état de la musique dans le stockage local
+            localStorage.setItem("musicState", "playing");
+        }
 
+        // Fonction pour arrêter la lecture de la musique
+        function stopMusic() {
+            var audio = document.getElementById("myAudio");
+            audio.pause();
+            // Enregistrez l'état de la musique dans le stockage local
+            localStorage.setItem("musicState", "paused");
+        }
+
+        // Récupérez l'état de la musique dans le stockage local lors du chargement de la page
+        document.addEventListener("DOMContentLoaded", function() {
+            var musicState = localStorage.getItem("musicState");
+            if (musicState === "playing") {
+                playMusic();
+            }
+        });
+
+        // Ajoutez des gestionnaires d'événements pour les clics sur les boutons
+        document.getElementById("playMusicButton").addEventListener("click", playMusic);
+        document.getElementById("stopMusicButton").addEventListener("click", stopMusic);
+    </script>
 </body>
 </html>

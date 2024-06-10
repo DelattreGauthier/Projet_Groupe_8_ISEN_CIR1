@@ -39,7 +39,7 @@
             $joueurs = $stmt->fetchAll(PDO::FETCH_ASSOC);
             ?>
 
-            <h2 style='padding-top:30px; color:white;'>Classement des joueurs - Niveau <?php echo $selected_level; ?></h2>
+            <h2 style='padding-top:30px; color:white;'>Players rankings - Level <?php echo $selected_level; ?></h2>
 
             <table>
                 <thead>

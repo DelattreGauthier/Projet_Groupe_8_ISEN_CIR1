@@ -100,8 +100,27 @@ if (isset($_POST['submit'])) {
                     $fileName = basename($_FILES['profile_picture']['name']);
                     $uploadFile = $uploadDir . $fileName;
 
-                    if (move_uploaded_file($_FILES['profile_picture']['tmp_name'], $uploadFile)) {
+                
+                    if (move_uploaded_file($_FILES['profile_order']['tmp_name'], $uploadFile)) {
                         $profilepic = $uploadFile;
+                
+                        // Ajouter ici le code pour enregistrer $profilepic dans la base de données
+                        $mysqli = new mysqli("host", "username", "password", "database"); // Remplacez avec vos paramètres de connexion
+                        if ($mysqli->connect_error) {
+                            die("Connexion échouée : " . $mysqli->connect_error);
+                        }
+                
+                        $sql = "INSERT INTO profilpic (image_path) VALUES (?)";
+                        $stmt = $mysqli->prepare($sql);
+                        $stmt->bind_param("s", $profilepic);
+                        if ($stmt->execute()) {
+                            echo "Image enregistrée avec succès dans la base de données.";
+                        } else {
+                            echo "Erreur lors de l'enregistrement dans la base de données: " . $stmt->error;
+                        }
+                        $stmt->close();
+                        $mysqli->close();
+                
                     } else {
                         $message = "Erreur lors du téléchargement de l'image.";
                         $profilepic = "uploads/default.jpg"; // Chemin d'une image par défaut
@@ -109,6 +128,7 @@ if (isset($_POST['submit'])) {
                 } else {
                     $profilepic = "uploads/default.jpg"; // Si aucun fichier n'a été téléchargé ou en cas d'erreur
                 }
+                
 
                 // Hachage du mot de passe pour la sécurité
                 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);

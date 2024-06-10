@@ -4,11 +4,6 @@ if (!isset($_SESSION['authentifie'])) {
     exit();
 }
 
-if (!isset($_COOKIE['rules_accepted'])) {
-    header("Location: rules.php");
-    exit();
-}
-
 ?>
 <!DOCTYPE html>
 <html lang="en"> 
@@ -18,7 +13,7 @@ if (!isset($_COOKIE['rules_accepted'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Level 1</title>
     <link rel="stylesheet" href="../../CSS/style.css">
-    <link rel="icon" href="..\..\..\Document\Image\Jeu\Dino\Dino_Vert.png" type="image/png">
+    <link rel="icon" href="../../../Document/Image/Jeu/Dino/Dino_Vert.png" type="image/png">
     
     <style>
         #game-container {
@@ -62,7 +57,11 @@ if (!isset($_COOKIE['rules_accepted'])) {
     </script>
 </head>
 
-<body class="Jeu-Jurassic" onload="checkLevels()">
+<body id='playMusicButton' class="Jeu-Jurassic" onload="checkLevels()">
+    <audio id="myAudio" autoplay loop>
+        <source src="../../../Document/Sons/Musique/Tem_music.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
 
     <div class="level-container">
         <div id="color-buttons" style="display: flex; flex-direction: column; align-items: center;">
@@ -78,12 +77,14 @@ if (!isset($_COOKIE['rules_accepted'])) {
     </div>
     <div class="concepteur-container">
         <div id="color-buttons" style="display: flex; flex-direction: column; align-items: center;">
-            <a href="../Concepteur/Concepteur_Manuel.php"><button>Manual Designer</button></a>
-            <a href="../Concepteur/Concepteur_Auto/Concepteur_Auto.php"><button>Auto Designer</button></a>
-            <a href="../Concepteur/Niveaux_Joueurs.php"><button>Players Levels</button></a>
             <button onclick="getHint()">Hint</button>
             <div id="hintWindow" class="hintWindow">
                 <span id="hintText"></span>
+            </div>
+            <button onclick="getSolution()">Give Solution</button>
+            <button onclick="getBestScore()">Best score possible</button>
+            <div id="popup" class="popup">
+                <span id="popupText" class="popup-text"></span>
             </div>
         </div>
     </div>
@@ -98,6 +99,18 @@ if (!isset($_COOKIE['rules_accepted'])) {
     $output = shell_exec('./main');
     echo "<pre>$output</pre>";
     ?>
+    <script>
+        // Fonction pour démarrer la lecture de la musique
+        function playMusic() {
+            var audio = document.getElementById("myAudio");
+            audio.muted = false;
+            audio.play();
+        }
+
+        // Ajoutez un gestionnaire d'événements pour le clic sur le bouton
+        document.getElementById("playMusicButton").addEventListener("click", playMusic);
+    </script>
+
 </body>
 </html>
 
