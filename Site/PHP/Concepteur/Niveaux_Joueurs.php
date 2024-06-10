@@ -1,3 +1,6 @@
+<?php include '../Fonctionnement/header.php'; ?>
+<!DOCTYPE html>
+<html lang="en"> 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -53,11 +56,11 @@
                 <th>Nom du niveau</th>
                 <th>Taille de la grille</th>
                 <th>Couleur de la grille</th>
+                <th>Classement</th> <!-- Nouvelle colonne -->
             </tr>
         </thead>
         <tbody>
             <?php
-            session_start();
             $servername = 'localhost'; 
             $username = 'root';
             $password = 'root';
@@ -74,7 +77,10 @@
                     header("Location: ../Accueil/Accueil.php");
                     exit();
                 }
-
+                $stmt_userId = $conn->prepare("SELECT id FROM adherents WHERE username = :username");
+                $stmt_userId->bindParam(':username', $_SESSION['username']);
+                $stmt_userId->execute();
+                $userId = $stmt_userId->fetchColumn();
                 // Récupération de tous les niveaux sauvegardés dans la table 'concepteur'
                 $stmt = $conn->query("SELECT concepteur.*, adherents.username FROM concepteur JOIN adherents ON concepteur.IdJoueur = adherents.id");
 
@@ -93,9 +99,16 @@
                     }
 
                     echo "<tr>";
-                    echo "<td><a style='text-decoration: none;color: red;display: block;' href='Jeu_Joueurs.php?color=$couleur&taille=$taille&pattern=$pattern&road_pattern=$road_pattern'><span class='$played_class'>$nom_niveau</span></a></td>";
+                    echo "<td><a style='text-decoration: none;color: red;display: block;' href='Jeu_Joueurs.php?color=$couleur&taille=$taille&pattern=$pattern&road_pattern=$road_pattern&IdJeu={$row['IdJeu']}&IdJoueur=$userId'><span class='$played_class'>$nom_niveau</span></a></td>";
+
                     echo "<td>$taille</td>"; // Afficher la taille de la grille
                     echo "<td>$couleur</td>"; // Afficher la couleur de la grille
+                    echo '<td style="text-align: center;"><a style="text-decoration: none; color: blue; display: block;" href="../../../Site/PHP/Leaderboard/leaderboard_players.php?level=' . $nom_niveau . '&IdJeu=' . $row['IdJeu'] . '" onclick="window.location.reload();"><img src="../../../Document/Image/Leaderboard/leaderboard.png" alt="Classement_' . $nom_niveau . '" class="' . $played_class . '" style="width: 20px; height: 20px;" /></a></td>';
+
+
+
+
+
                     echo "</tr>";
                 }
             } catch (PDOException $e) {
@@ -105,3 +118,4 @@
         </tbody>
     </table>
 </body>
+</html>

@@ -310,14 +310,14 @@ body {
     align-items: center;
     margin-left: auto; /* Alignement à droite */
     text-align: center;
-    padding-right: 10px;
+    padding-right: 30%;
 }
 
 .dropdown {
     position: relative;
     display: inline-block;
-    right: 35%;
-    top : 10%;
+    right: 55%;
+    top : 15%;
 }
 
 .dropbtn { 
@@ -329,6 +329,7 @@ body {
     color: rgb(255, 255, 255);
     font-weight: bold;
     padding: 10px;
+    margin-left: 0;
     display: inline-block;
 }
 

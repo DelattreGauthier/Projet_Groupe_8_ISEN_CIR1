@@ -54,92 +54,94 @@
     <div id="message-container"></div>
 
     <?php
-    $message = '';
+$message = '';
 
-    if (isset($_POST['submit'])) {
-        $servername = 'localhost'; 
-        $username = 'root';
-        $password = 'root';
-        $database = 'projet2';
+if (isset($_POST['submit'])) {
+    $servername = 'localhost'; 
+    $username = 'root';
+    $password = 'root';
+    $database = 'projet2';
 
-        try {
-            $conn = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    try {
+        $conn = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            $username = $_POST['username'];
-            $email = $_POST['email'];
-            $password = $_POST['password'];
+        $username = $_POST['username'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
 
-            // Validation des champs du formulaire
-            if (empty($username) || empty($email) || empty($password)) {
-                $message = "Tous les champs sont obligatoires.";
-            } elseif (strlen($username) > 20) {
-                $message = "Le nom d'utilisateur ne doit pas dépasser 20 caractères.";
-            } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $message = "Adresse e-mail invalide.";
-            } elseif (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{10,}$/', $password)) {
-                $message = "Le mot de passe doit contenir au moins 10 caractères, dont une majuscule, une minuscule et un caractère spécial.";
+        // Validation des champs du formulaire
+        if (empty($username) || empty($email) || empty($password)) {
+            $message = "Tous les champs sont obligatoires.";
+        } elseif (strlen($username) > 20) {
+            $message = "Le nom d'utilisateur ne doit pas dépasser 20 caractères.";
+        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $message = "Adresse e-mail invalide.";
+        } elseif (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{10,}$/', $password)) {
+            $message = "Le mot de passe doit contenir au moins 10 caractères, dont une majuscule, une minuscule et un caractère spécial.";
+        } else {
+            // Vérifier si l'email ou le pseudo existe déjà
+            $stmt = $conn->prepare("SELECT * FROM adherents WHERE username = :username OR email = :email");
+            $stmt->bindParam(':username', $username);
+            $stmt->bindParam(':email', $email);
+            $stmt->execute();
+            $existingUser = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($existingUser) {
+                if ($existingUser['username'] === $username) {
+                    $message = "Nom d'utilisateur déjà utilisé. Veuillez en choisir un autre.";
+                } elseif ($existingUser['email'] === $email) {
+                    $message = "Il semble que vous avez déjà un compte avec cette adresse e-mail. Veuillez vous connecter.";
+                }
             } else {
-                // Vérifier si l'email ou le pseudo existe déjà
-                $stmt = $conn->prepare("SELECT * FROM adherents WHERE username = :username OR email = :email");
+                // Gérer l'upload de l'image
+                if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] === UPLOAD_ERR_OK) {
+                    $uploadDir = "uploads/"; // Assurez-vous que ce répertoire est correct et accessible en écriture
+                    $fileName = basename($_FILES['profile_picture']['name']);
+                    $uploadFile = $uploadDir . $fileName;
+
+                    if (move_uploaded_file($_FILES['profile_picture']['tmp_name'], $uploadFile)) {
+                        $profilepic = $uploadFile;
+                    } else {
+                        $message = "Erreur lors du téléchargement de l'image.";
+                        $profilepic = "uploads/default.jpg"; // Chemin d'une image par défaut
+                    }
+                } else {
+                    $profilepic = "uploads/default.jpg"; // Si aucun fichier n'a été téléchargé ou en cas d'erreur
+                }
+
+                // Hachage du mot de passe pour la sécurité
+                $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+                // Insertion de l'utilisateur dans la base de données
+                $sql = "INSERT INTO adherents (username, email, mot_de_passe, profilepic) VALUES (:username, :email, :password, :profilepic)";
+                $stmt = $conn->prepare($sql);
+
                 $stmt->bindParam(':username', $username);
                 $stmt->bindParam(':email', $email);
+                $stmt->bindParam(':password', $hashedPassword);
+                $stmt->bindParam(':profilepic', $profilepic);
+
                 $stmt->execute();
-                $existingUser = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                if ($existingName) {
-                    $message = "Nom d'utilisateur déjà utilisé. Veuillez en choisir un autre.";
-                } elseif ($existingEmail) {
-                    $message = "Il semble que vous avez déjà un compte avec cette adresse e-mail. Veuillez vous connecter.";
-                } else {
-                    // Gérer l'upload de l'image
-                    if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] === UPLOAD_ERR_OK) {
-                        $uploadDir = "uploads/"; // Assurez-vous que ce répertoire est correct et accessible en écriture
-                        $fileName = basename($_FILES['profile_picture']['name']);
-                        $uploadFile = $uploadDir . $fileName;
-                    
-                        if (move_uploaded_file($_FILES['profile_picture']['tmp_name'], $uploadFile)) {
-                            $profilepic = $uploadFile;
-                        } else {
-                            $message = "Erreur lors du téléchargement de l'image.";
-                            $profilepic = "uploads/default.jpg"; // Chemin d'une image par défaut
-                        }
-                    } else {
-                        $profilepic = "uploads/default.jpg"; // Si aucun fichier n'a été téléchargé ou en cas d'erreur
-                    }
+                $_SESSION['user'] = $username; 
+                $userId = $conn->lastInsertId(); 
 
-                    // Hachage du mot de passe pour la sécurité
-                    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-                    // Insertion de l'utilisateur dans la base de données
-                    $sql = "INSERT INTO adherents (username, email, mot_de_passe, profilepic) VALUES (:username, :email, :password, :profilepic)";
-                    $stmt = $conn->prepare($sql);
-
-                    $stmt->bindParam(':username', $username);
-                    $stmt->bindParam(':email', $email);
-                    $stmt->bindParam(':password', $hashedPassword);
-                    $stmt->bindParam(':profilepic', $profilepic);
-
-                    $stmt->execute();
-
-                    $_SESSION['user'] = $username; 
-                    $userId = $conn->lastInsertId(); 
-
-                    $sqlScore = "INSERT INTO score (idJoueur) VALUES (:idJoueur)";
-                    $stmtScore = $conn->prepare($sqlScore);
-                    $stmtScore->bindParam(':idJoueur', $userId);
-                    $stmtScore->execute();
-                    header("Location: ../Accueil/Accueil.php"); 
-                    exit();
-                }
+                $sqlScore = "INSERT INTO score (idJoueur) VALUES (:idJoueur)";
+                $stmtScore = $conn->prepare($sqlScore);
+                $stmtScore->bindParam(':idJoueur', $userId);
+                $stmtScore->execute();
+                header("Location: ../Accueil/Accueil.php"); 
+                exit();
             }
-        } catch (PDOException $e) {
-            $message = "Erreur : " . $e->getMessage();
         }
-
-        $conn = null;
+    } catch (PDOException $e) {
+        $message = "Erreur : " . $e->getMessage();
     }
-    ?>
+
+    $conn = null;
+}
+?>
 
     <script>
         document.getElementById('profile-pic').addEventListener('click', function() {

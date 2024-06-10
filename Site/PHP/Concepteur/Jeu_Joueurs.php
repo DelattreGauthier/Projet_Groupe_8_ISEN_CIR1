@@ -31,7 +31,7 @@ if (!isset($_SESSION['authentifie'])) {
 </head>
 
 <body class="Jeu"> 
-        
+         
 <?php 
      // Récupérer la couleur choisie sur la page 2
      $couleur = isset($_GET["color"]) ? $_GET["color"] : "vert";

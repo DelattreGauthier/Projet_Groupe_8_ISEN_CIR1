@@ -12,7 +12,7 @@ try {
     // Vérification de la session pour obtenir le nom d'utilisateur
     if (!isset($_SESSION['username'])) {
         // Redirection vers la page de connexion si l'utilisateur n'est pas connecté
-        header("Location: ../Accueil/Accueil.php");
+        header("Location: ../../PHP/Connexion/connexion.php");
         exit();
     }
 
@@ -20,7 +20,12 @@ try {
     $couleur = isset($_GET["color"]) ? $_GET["color"] : "vert";
     $taille = isset($_GET["taille"]) ? $_GET["taille"] : 4;
     $pattern  = isset($_GET["pattern"]) ? json_encode($_GET["pattern"]) : "[]";
-    $road_pattern  = isset($_GET["road_pattern"]) ? json_encode($_GET["road_pattern"]) : "[]";
+    if (isset($_GET["road_pattern"])) {
+        $road_pattern = json_encode($_GET["road_pattern"]);
+    } else {
+        header("Location: ../../PHP/Connexion/connexion.php");
+        exit();
+    }
 
     // Préparation de la requête SQL
     $stmt = $conn->prepare("INSERT INTO concepteur (IdJoueur, couleur, taille, pattern, road_pattern) VALUES ((SELECT id FROM adherents WHERE username = :username), :couleur, :taille, :pattern, :road_pattern)");

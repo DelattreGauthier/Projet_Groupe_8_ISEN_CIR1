@@ -16,9 +16,10 @@ if (!isset($_COOKIE['rules_accepted'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../../../Document/Image/Jeu/Dino/Dino_Vert.png" type="image/png">
     <title>Level 1</title>
     <link rel="stylesheet" href="../../CSS/style.css">
+    <link rel="icon" href="..\..\..\Document\Image\Jeu\Dino\Dino_Vert.png" type="image/png">
+    
     <style>
         #game-container {
             background-color: rgba(0, 0, 0, 0.7);

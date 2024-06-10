@@ -19,7 +19,12 @@
         
 <?php 
     $couleur = isset($_GET["color"]) ? $_GET["color"] : "vert";
-    $taille = isset($_GET["taille"]) ? $_GET["taille"] : 4;
+    if (isset($_GET["taille"])) {
+        $taille = $_GET["taille"];
+    } else {
+        header("Location: Concepteur_Manuel_2.php");
+        exit();
+    }
 ?>
 <div id="Etapes-Concepteur-3">
     <h3>Now you'll have to choose where the game start and where it finish. 

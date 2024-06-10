@@ -22,8 +22,19 @@
      $couleur = isset($_GET["color"]) ? $_GET["color"] : "vert";
      // Récupérer la taille choisie sur la page 2
      $taille = isset($_GET["taille"]) ? $_GET["taille"] : 4;
-     $pattern  = isset($_GET["pattern"]) ? json_encode($_GET["pattern"]) : "[]";
-     $road_pattern_split  = isset($_GET["road_pattern"]) ? json_encode($_GET["road_pattern"]) : "[]";
+     if (isset($_GET["pattern"])) {
+        $pattern = json_encode($_GET["pattern"]);
+    } else {
+        header("Location: Concepteur_Manuel_2.php");
+        exit();
+    }
+
+    if (isset($_GET["road_pattern"])) {
+        $road_pattern_split = json_encode($_GET["road_pattern"]);
+    } else {
+        header("Location: Concepteur_Manuel_2.php");
+        exit();
+    }
 ?>
 <div id="Etapes-Concepteur-5">
     <h3>

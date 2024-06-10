@@ -34,7 +34,7 @@ switch (taille) {
         break;
 }
 
-
+ 
 let succes = false; // Définir succès comme une variable globale
 let END =false;
 let cellSize = 480 / numCols;
@@ -304,7 +304,7 @@ function createGrid(rows, cols) {
                             if(score<999){
                                 score++;
                             }
-
+                            scoreText.setText('Score: ' + score);
                             this.scene.tweens.add({
                                 targets: this,
                                 angle: this.angle + 90,
@@ -368,33 +368,77 @@ function create() {
     background = this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0.7)');
 
     createGrid(numRows, numCols);
+    
     switch (taille) {
-        case 4:  
-
-            // Ajouter le rectangle noir de victoire mais le rendre invisible pour l'instant
+        case 4:
+            if (pattern[5][0] == 'A' || pattern[5][1] == 'A' || pattern[5][2] == 'A') {
+                scoreText = this.add.text(320, 420, 'Score: ' + score, {
+                    fontSize: '32px',
+                    fill: '#FFFFFF',
+                    fontFamily: 'Arial, sans-serif'
+                });
+            } else {
+                scoreText = this.add.text(20, 420, 'Score: ' + score, {
+                    fontSize: '32px',
+                    fill: '#FFFFFF',
+                    fontFamily: 'Arial, sans-serif'
+                });
+            }
             victoryRect = this.add.rectangle(240, 240, 320, 320, 0x000000, 0.5);
             break;
         case 6:
-
-            //Ajouter le rectangle noir de victoire mais le rendre invisible pour l'instant
+            if (pattern[7][0] == 'A' || pattern[7][1] == 'A' || pattern[7][2] == 'A' || pattern[7][3] == 'A') {
+                scoreText = this.add.text(320, 430, 'Score: ' + score, {
+                    fontSize: '32px',
+                    fill: '#FFFFFF',
+                    fontFamily: 'Arial, sans-serif'
+                });
+            } else {
+                scoreText = this.add.text(20, 430, 'Score: ' + score, {
+                    fontSize: '32px',
+                    fill: '#FFFFFF',
+                    fontFamily: 'Arial, sans-serif'
+                });
+            }
             victoryRect = this.add.rectangle(240, 240, 360, 360, 0x000000, 0.5);
             break;
         case 8:
-
-            // Ajouter le rectangle noir de victoire mais le rendre invisible pour l'instant
+            if (pattern[9][0] == 'A' || pattern[9][1] == 'A' || pattern[9][2] == 'A' || pattern[9][3] == 'A' || pattern[9][4] == 'A') {
+                scoreText = this.add.text(320, 440, 'Score: ' + score, {
+                    fontSize: '32px',
+                    fill: '#FFFFFF',
+                    fontFamily: 'Arial, sans-serif'
+                });
+            } else {
+                scoreText = this.add.text(20, 440, 'Score: ' + score, {
+                    fontSize: '32px',
+                    fill: '#FFFFFF',
+                    fontFamily: 'Arial, sans-serif'
+                });
+            }
             victoryRect = this.add.rectangle(240, 240, 384, 384, 0x000000, 0.5);
             break;
         case 10:
-
-            // Ajouter le rectangle noir de victoire mais le rendre invisible pour l'instant
-            victoryRect = this.add.rectangle(240, 240, 400, 400, 0x000000, 0.5); 
+            if (pattern[11][0] == 'A' || pattern[11][1] == 'A' || pattern[11][2] == 'A' || pattern[11][3] == 'A' || pattern[11][4] == 'A' || pattern[11][5] == 'A') {
+                scoreText = this.add.text(320, 442.5, 'Score: ' + score, {
+                    fontSize: '32px',
+                    fill: '#FFFFFF',
+                    fontFamily: 'Arial, sans-serif'
+                });
+            } else {
+                scoreText = this.add.text(20, 442.5, 'Score: ' + score, {
+                    fontSize: '32px',
+                    fill: '#FFFFFF',
+                    fontFamily: 'Arial, sans-serif'
+                });
+            }
+            victoryRect = this.add.rectangle(240, 240, 400, 400, 0x000000, 0.5);
             break;
         default:
-
-            // Ajouter le rectangle noir de victoire mais le rendre invisible pour l'instant
             victoryRect = this.add.rectangle(240, 240, 360, 360, 0x000000, 0.5);
             break;
     }
+    
     victoryRect.setVisible(false);
 
 
@@ -467,6 +511,7 @@ function update() {
             succes = true; // Marquer que la sauvegarde a été tentée
             END=true;
             victoryRect.setVisible(true);
+            saveScore(score);
         }
     } else {
         background.setBackgroundColor('rgba(0, 0, 0, 0.7)');
@@ -478,4 +523,21 @@ function update() {
 }
 
 
-
+function saveScore(score) {
+    if (!succes) {
+        alert("You must be logged in to save your score.");
+    } else {
+        const urlParams = new URLSearchParams(window.location.search);
+        const IdJeu = urlParams.get('IdJeu');
+        const IdJoueur = urlParams.get('IdJoueur');
+        let xhr = new XMLHttpRequest();
+        xhr.open("GET", "save_score_players.php?score=" + score + "&IdJeu=" + IdJeu + "&IdJoueur=" + IdJoueur, true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                console.log("Score saved successfully.");
+                // Traiter la réponse du serveur si nécessaire
+            }
+        };
+        xhr.send();
+    }
+}

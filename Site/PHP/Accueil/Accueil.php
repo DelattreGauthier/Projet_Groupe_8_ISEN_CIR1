@@ -10,7 +10,7 @@ $profilePicUrl = isset($_SESSION['profilepic']) ? $_SESSION['profilepic'] : 'pat
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HOME</title>
     <link rel="stylesheet" href="../../CSS/style.css">
-    <link rel="icon" href="../../../Document/Image/Jeu/Dino/Dino_Vert.png" type="image/png">
+    <link rel="icon" href="..\..\..\Document\Image\Jeu\Dino\Dino_Vert.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 </head>
 <body>
@@ -43,10 +43,23 @@ $profilePicUrl = isset($_SESSION['profilepic']) ? $_SESSION['profilepic'] : 'pat
         <?php endif; ?>
     </div>
     
-    <div class="footer-main">
-        <a href="../Leaderboard/leaderboard.php" class="on">LEADERBOARD</a>
-        <a href="../Connexion/connexion.php" class="on">CONNECTION</a>
-    </div>
+    <?php if (isset($_SESSION['username'])): ?>
+
+        <div class="footer-main">
+            <a href="../Leaderboard/leaderboard.php" class="on">LEADERBOARD</a>
+            <a href="../Connexion/logout.php" class="on">DISCONNECTION</a>
+        </div>
+
+    <?php else: ?>
+
+            <div class="footer-main">
+                <a href="../Leaderboard/leaderboard.php" class="on">LEADERBOARD</a>
+                <a href="../Connexion/connexion.php" class="on">CONNECTION</a>
+            </div>
+
+    <?php endif; ?>
+
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js" integrity="sha512-t5g4L6UU4tVpuSEmBZp8bi3DttQz8mjEphs4Zp72jx8H6Qsk14C4nNkGZXyb6N7SLc/fO91e2lFKSUE0XfcS8A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>

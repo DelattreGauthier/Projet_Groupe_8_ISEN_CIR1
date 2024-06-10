@@ -302,7 +302,12 @@ function saveScore(score, level) {
 
 
 function getHint() {
-    score += 9;
+    if(score<=999){
+        score += 9;
+    }
+    else{
+        scoe=999;
+    }
     let hintFound = false; // Indicateur pour arrêter la recherche après avoir trouvé un indice
     for (let i = 0; i < numRows; i++) {
         for (let j = 0; j < numCols; j++) {

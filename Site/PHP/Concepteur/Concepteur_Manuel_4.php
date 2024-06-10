@@ -14,7 +14,12 @@
     <?php 
         $couleur = isset($_GET["color"]) ? $_GET["color"] : "vert";
         $taille = isset($_GET["taille"]) ? $_GET["taille"] : 4;
-        $pattern  = isset($_GET["pattern"]) ? json_encode($_GET["pattern"]) : "[]";
+        if (isset($_GET["pattern"])) {
+            $pattern = json_encode($_GET["pattern"]);
+        } else {
+            header("Location: Concepteur_Manuel_2.php");
+            exit();
+        }
 
     ?>
     <div id="Etapes-Concepteur" >
