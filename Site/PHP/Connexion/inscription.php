@@ -10,6 +10,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap" rel="stylesheet">
     <link rel="icon" href="../../../Document/Image/Jeu/Dino/Dino_Vert.png" type="image/png">
 </head>
+
+<?php include '../Fonctionnement/body.php'; ?>
 <body>
 <div>
         <div class="Accueil-container">

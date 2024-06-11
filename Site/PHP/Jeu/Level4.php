@@ -56,6 +56,7 @@
     </script>
 </head>
 
+<?php include '../Fonctionnement/body.php'; ?>
 <body class="Jeu-Médieval" onload="checkLevels()">
 
     <div class="level-container">

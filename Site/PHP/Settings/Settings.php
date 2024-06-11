@@ -36,7 +36,28 @@
         <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
-    
+    <div class="centremoiça">
+        <div class="user-info">
+        <?php if (isset($_SESSION['username'])): ?>
+            <div class="dropdown">
+            <!-- Display profile picture for the dropdown button -->
+            <button class="dropbtn"><i class="fas fa-user-circle"></i></button>
+            <div class="dropdown-content">
+                <a class="dropdown-content-profile" href="../Settings/Settings.php">Profile</a>
+                <a class="dropdown-content-disconnct" href="../Connexion/logout.php">Disconnect</a>
+            </div>
+        </div>
+        <?php else: ?>
+            <div class="dropdown">
+                <!-- Display only icon for the dropdown button -->
+                <button class="dropbtn"><i class="fas fa-user-circle"></i></button>
+                <div class="dropdown-content">
+                    <a href="../Settings/Settings.php">Profile</a>
+                    <a href="../Connexion/connexion.php">Connect</a>
+                </div>
+            </div>
+        <?php endif; ?>
+    </div>
     <div class="container" class="black" id="theme-btn">
         <div class="sidebar">
             <a href="#" class="active" onclick="showSection(event, 'profil')">

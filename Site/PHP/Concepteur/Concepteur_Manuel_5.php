@@ -15,6 +15,7 @@
     </style>
 </head>
 
+<?php include '../Fonctionnement/body.php'; ?>
 <body class="Jeu"> 
         
 <?php 

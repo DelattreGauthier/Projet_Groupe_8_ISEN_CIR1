@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../../CSS/style.css">
 </head>
 
+<?php include '../Fonctionnement/body.php'; ?>
 <body class="Jeu"> 
         
     <?php 

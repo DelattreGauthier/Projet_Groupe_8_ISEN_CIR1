@@ -38,7 +38,7 @@ try {
         ':pattern' => $pattern,
         ':road_pattern' => $road_pattern
     ));
-    header("Location: ../Jeu/Level1.php");
+    header("Location: ../Jeu/Selecteur.php");
 } catch (PDOException $e) {
     echo "Erreur : " . $e->getMessage(); // Afficher l'erreur PDO
 }

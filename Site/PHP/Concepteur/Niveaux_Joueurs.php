@@ -48,8 +48,10 @@
         }
     </style>
 </head>
+
+<?php include '../Fonctionnement/body.php'; ?>
 <body class="lbody">
-    <h2>List of levels</h2>
+    <h2 style="padding-top: 10%;">List of levels</h2>
     <table>
         <thead>
             <tr>

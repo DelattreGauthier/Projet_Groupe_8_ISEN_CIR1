@@ -104,6 +104,7 @@ if (!isset($_COOKIE['rules_accepted'])) {
     </style>
 </head>
 
+<?php include '../Fonctionnement/body.php'; ?>
 <body>
     <div class="level-container">
         <div id="color-buttons">

@@ -13,6 +13,8 @@ $profilePicUrl = isset($_SESSION['profilepic']) ? $_SESSION['profilepic'] : 'pat
     <link rel="icon" href="..\..\..\Document\Image\Jeu\Dino\Dino_Vert.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 </head>
+
+<?php include '../Fonctionnement/body.php'; ?>
 <body>
     <div class="header-main">
         <a href="../Jeu/Selecteur.php" class="on">PLAY</a>

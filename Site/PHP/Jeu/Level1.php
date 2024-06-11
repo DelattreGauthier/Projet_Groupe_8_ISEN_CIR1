@@ -57,11 +57,8 @@ if (!isset($_SESSION['authentifie'])) {
     </script>
 </head>
 
-<body id='playMusicButton' class="Jeu-Jurassic" onload="checkLevels()">
-    <audio id="myAudio" autoplay loop>
-        <source src="../../../Document/Sons/Musique/Tem_music.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
+<?php include '../Fonctionnement/body.php'; ?>
+<body class="Jeu-Jurassic" onload="checkLevels()">
 
     <div class="level-container">
         <div id="color-buttons" style="display: flex; flex-direction: column; align-items: center;">
@@ -95,22 +92,6 @@ if (!isset($_SESSION['authentifie'])) {
             <script src="../../Javascript/LVL1.js"></script>
         </div>
     </div>
-    <?php 
-    $output = shell_exec('./main');
-    echo "<pre>$output</pre>";
-    ?>
-    <script>
-        // Fonction pour démarrer la lecture de la musique
-        function playMusic() {
-            var audio = document.getElementById("myAudio");
-            audio.muted = false;
-            audio.play();
-        }
-
-        // Ajoutez un gestionnaire d'événements pour le clic sur le bouton
-        document.getElementById("playMusicButton").addEventListener("click", playMusic);
-    </script>
-
 </body>
 </html>
 

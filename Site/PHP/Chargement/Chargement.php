@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="../../CSS/chargement.css">
     <link rel="icon" href="../../../Document/Image/Jeu/Dino/Dino_Vert.png" type="image/png">
 </head>
+
+<?php include '../Fonctionnement/body.php'; ?>
 <body>
 
 <div class="loader"></div>

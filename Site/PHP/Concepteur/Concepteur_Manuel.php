@@ -12,6 +12,7 @@
     </style>
 </head>
 
+<?php include '../Fonctionnement/body.php'; ?>
 <body> 
 
     <div id="Etapes">

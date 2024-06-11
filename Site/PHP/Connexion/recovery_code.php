@@ -95,6 +95,8 @@ if (isset($_POST["recup_submit"], $_POST["recup_mail"])) {
         window.onload = startCountdown;
     </script>
 </head>
+
+<?php include '../Fonctionnement/body.php'; ?>
 <body>
 <div class="Accueil-container">
   <a  class="Logo" href="../../../Site/PHP/Accueil/Accueil.php"><img src="../../../Document/Image/connect/home.png" alt="accueil"></a> 

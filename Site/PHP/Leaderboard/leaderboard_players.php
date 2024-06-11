@@ -12,6 +12,8 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
+
+<?php include '../Fonctionnement/body.php'; ?>
 <body>
 <div class="lbody">
     <i id="Leader" class="fas fa-trophy trophy-left"></i>

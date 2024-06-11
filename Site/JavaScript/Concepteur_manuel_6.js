@@ -5,7 +5,7 @@ var config = {
     height: 600,
     scene: {
         preload: preload,
-        create:create
+        create: create
     }
 };
 
@@ -101,7 +101,6 @@ function preload() {
     }
 }
 
-
 function convertToMatrix(str, rows, cols) {
     let result = [];
     let chunks = str.split(",");
@@ -112,6 +111,7 @@ function convertToMatrix(str, rows, cols) {
     }
     return result;
 }
+
 function convertToMatrix_int(int, rows, cols) {
     let result = [];
     let chunks = int.split(",").map(Number); // Convertir les chaînes en nombres
@@ -122,7 +122,6 @@ function convertToMatrix_int(int, rows, cols) {
     }
     return result;
 }
-
 
 let img_pattern = [];
 switch (taille) {
@@ -192,27 +191,27 @@ function createGrid(rows, cols) {
             switch (img_pattern[i][j]) {
                 case 'S':
                     imageKey = 'img_2';
-                    can_move=true;
+                    can_move = true;
                     break;
                 case 'C':
                     imageKey = 'img_3';
-                    can_move=true;
+                    can_move = true;
                     break;
                 case 'T':
                     imageKey = 'img_4';
-                    can_move=true;
+                    can_move = true;
                     break;
                 case 'Q':
                     imageKey = 'img_5';
-                    can_move=true;
+                    can_move = true;
                     break;
                 case 'D':
                     imageKey = 'img_0';
-                    can_move=false;
+                    can_move = false;
                     break;
                 case 'A':
                     imageKey = 'img_1';
-                    can_move=false;
+                    can_move = false;
                     break;
                 case 'E':
                 default:
@@ -247,6 +246,7 @@ function createGrid(rows, cols) {
                         }
                     });
                 }
+                image.angle = (road_pattern[i][j] - 1) * 90;
             } else {
                 image = game.scene.scenes[0].add.rectangle(j * cellSize + cellSize / 2, i * cellSize + cellSize / 2, cellSize, cellSize, 0x000000, 0);
             }
@@ -257,7 +257,6 @@ function createGrid(rows, cols) {
     }
 }
 
-
 for (let i = 0; i < numRows; i++) {
     for (let j = 0; j < numCols; j++) {
         if (road_pattern[i][j] === 8) {
@@ -265,6 +264,7 @@ for (let i = 0; i < numRows; i++) {
         }
     }
 }
+
 function create() {
     var graphics = this.add.graphics();
     switch (taille) {
@@ -296,6 +296,7 @@ function create() {
     background = this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0.3)');
 
     createGrid(numRows, numCols);
+
     // Création du bouton RESET
     resetButton = this.add.rectangle(150, 550, 100, 50, 0xff0000);
     resetButton.setOrigin(0.5);
@@ -314,10 +315,38 @@ function create() {
     completeButton.setOrigin(0.5);
     completeButton.setInteractive();
     completeButton.on('pointerdown', function () {
-        window.location.href = "Save_in_BD.php?color=" + couleur + "&taille=" + taille + "&pattern=" + img_pattern + "&road_pattern=" + road_pattern;
+        saveToFile();
     });
 
     // Texte du bouton COMPLETE
     let completeText = this.add.text(330, 550, 'COMPLETE', { fontFamily: 'Arial', fontSize: 20, color: '#000000' });
     completeText.setOrigin(0.5);
+}
+
+function convertMatrixToString(matrix) {
+    return matrix.map(row => row.join(' ')).join('\n');
+}
+
+function saveToFile() {
+    // Convertir les tableaux en chaînes JSON pour les sérialiser
+    let roadPatternString = JSON.stringify(road_pattern);
+    let imgPatternString = JSON.stringify(img_pattern);
+
+    // Former le contenu complet avec la taille, road_pattern et img_pattern
+    let content = taille + "\n" + roadPatternString + "\n" + imgPatternString;
+
+    fetch('save_file.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: 'content=' + encodeURIComponent(content)
+    })
+    .then(response => response.text())
+    .then(data => {
+        console.log('File saved successfully.');
+    })
+    .catch(error => {
+        console.error('Error saving file:', error);
+    });
 }

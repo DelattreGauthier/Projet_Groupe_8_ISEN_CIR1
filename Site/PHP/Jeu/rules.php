@@ -7,6 +7,8 @@
     <link rel="icon" href="../../../Document/Image/Jeu/Dino/Dino_Vert.png" type="image/png">
     <title>Rules</title>
 </head>
+
+<?php include '../Fonctionnement/body.php'; ?>
 <body>
 
     <div class="rules-div">

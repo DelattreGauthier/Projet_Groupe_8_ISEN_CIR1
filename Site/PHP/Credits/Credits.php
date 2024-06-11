@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="../../CSS/style.css">
     <link rel="icon" href="../../../Document/Image/Jeu/Dino/Dino_Vert.png" type="image/png">
 </head>
+
+<?php include '../Fonctionnement/body.php'; ?>
 <body>
 <div class="Accueil-container">
   <a  class="Logo" href="../../../Site/PHP/Accueil/Accueil.php"><img src="../../../Document/Image/Jeu/Dino/Dino_Vert.png" alt="accueil"></a> 
