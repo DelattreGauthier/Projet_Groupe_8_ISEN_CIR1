@@ -1,15 +1,16 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Récupérer la taille, road_pattern et img_pattern postés
+    // Récupérer le contenu posté
     $content = $_POST["content"];
 
-    // Séparer le contenu en lignes
-    $contentLines = explode("\n", $content);
+    // Séparer le contenu par le séparateur choisi
+    $separator = '|';
+    $contentParts = explode($separator, $content);
 
     // Récupérer la taille, road_pattern et img_pattern
-    $taille = $contentLines[0];
-    $roadPattern = $contentLines[1];
-    $imgPattern = $contentLines[2];
+    $taille = $contentParts[0];
+    $roadPattern = $contentParts[1];
+    $imgPattern = $contentParts[2];
 
     // Former le contenu complet avec des sauts de ligne
     $data = $taille . "\n" . $roadPattern . "\n" . $imgPattern;

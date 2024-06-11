@@ -328,8 +328,22 @@ function convertMatrixToString(matrix) {
 }
 
 function saveToFile() {
-    // Enregistrer la taille, road_pattern et img_pattern
-    let content = taille + "\n" + road_pattern + "\n" + img_pattern;
+    // Concatenate taille, road_pattern, and img_pattern without separators
+    let roadPatternStr = '';
+    for (let i = 0; i < road_pattern.length; i++) {
+        for (let j = 0; j < road_pattern[i].length; j++) {
+            roadPatternStr += road_pattern[i][j];
+        }
+    }
+
+    let imgPatternStr = '';
+    for (let i = 0; i < img_pattern.length; i++) {
+        for (let j = 0; j < img_pattern[i].length; j++) {
+            imgPatternStr += img_pattern[i][j];
+        }
+    }
+
+    let content = taille + "\n" + roadPatternStr + "\n" + imgPatternStr;
 
     fetch('save_file.php', {
         method: 'POST',
@@ -340,9 +354,12 @@ function saveToFile() {
     })
     .then(response => response.text())
     .then(data => {
-        console.log('File saved successfully.');
+        console.log(data);  // Log the response from the PHP script
     })
     .catch(error => {
         console.error('Error saving file:', error);
     });
 }
+
+
+
