@@ -1,6 +1,6 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Récupérer le contenu envoyé depuis le formulaire
+    // Récupérer la taille, road_pattern et img_pattern postés
     $content = $_POST["content"];
 
     // Séparer le contenu en lignes
@@ -8,11 +8,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Récupérer la taille, road_pattern et img_pattern
     $taille = $contentLines[0];
-    $road_pattern = $contentLines[1];
-    $img_pattern = $contentLines[2];
+    $roadPattern = $contentLines[1];
+    $imgPattern = $contentLines[2];
 
     // Former le contenu complet avec des sauts de ligne
-    $data = $taille . "\n" . $road_pattern . "\n" . $img_pattern;
+    $data = $taille . "\n" . $roadPattern . "\n" . $imgPattern;
 
     // Enregistrer le contenu dans un fichier (en écrasant le contenu existant)
     $file_path = "input.txt";

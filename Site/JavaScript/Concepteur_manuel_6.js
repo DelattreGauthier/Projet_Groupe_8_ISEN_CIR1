@@ -328,12 +328,8 @@ function convertMatrixToString(matrix) {
 }
 
 function saveToFile() {
-    // Convertir les tableaux en chaînes JSON pour les sérialiser
-    let roadPatternString = JSON.stringify(road_pattern);
-    let imgPatternString = JSON.stringify(img_pattern);
-
-    // Former le contenu complet avec la taille, road_pattern et img_pattern
-    let content = taille + "\n" + roadPatternString + "\n" + imgPatternString;
+    // Enregistrer la taille, road_pattern et img_pattern
+    let content = taille + "\n" + road_pattern + "\n" + img_pattern;
 
     fetch('save_file.php', {
         method: 'POST',
