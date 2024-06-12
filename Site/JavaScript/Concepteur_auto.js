@@ -314,10 +314,55 @@ function create() {
     completeButton.setOrigin(0.5);
     completeButton.setInteractive();
     completeButton.on('pointerdown', function () {
-        window.location.href = "../Save_in_BD.php?color=" + couleur + "&taille=" + taille + "&pattern=" + img_pattern + "&road_pattern=" + road_pattern;
+        saveToFile().then(response => {
+            if (response.success) {
+                if (response.Checkroadcorrect) {
+                    window.location.href = "../Save_in_BD.php?color=" + couleur + "&taille=" + taille + "&pattern=" + img_pattern + "&road_pattern=" + road_pattern;
+                } else {
+                    alert("Incorrect");
+                }
+            } else {
+                alert("Error: " + response.message);
+            }
+        });
     });
 
     // Texte du bouton COMPLETE
     let completeText = this.add.text(330, 550, 'COMPLETE', { fontFamily: 'Arial', fontSize: 20, color: '#000000' });
     completeText.setOrigin(0.5);
+}
+
+function saveToFile() {
+    // Initialize the patterns as strings
+    let roadPatternStr = '';
+    for (let i = 0; i < road_pattern.length; i++) {
+        for (let j = 0; j < road_pattern[i].length; j++) {
+            roadPatternStr += road_pattern[i][j];
+        }
+        roadPatternStr += '\n'; // Add separator for each row
+    }
+
+    let imgPatternStr = '';
+    for (let i = 0; i < img_pattern.length; i++) {
+        for (let j = 0; j < img_pattern[i].length; j++) {
+            imgPatternStr += img_pattern[i][j];
+        }
+        imgPatternStr += '\n'; // Add separator for each row
+    }
+
+    // Concatenate taille, roadPatternStr, and imgPatternStr with a unique separator
+    let content = (taille+2) + '\n' + roadPatternStr + imgPatternStr;
+
+    return fetch('save_file_auto.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: 'content=' + encodeURIComponent(content)
+    })
+    .then(response => response.json())
+    .catch(error => {
+        console.error('Error saving file:', error);
+        return { success: false, message: 'Error saving file.' };
+    });
 }

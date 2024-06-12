@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -17,7 +17,7 @@
 
 <?php include '../Fonctionnement/body.php'; ?>
 <body class="Jeu"> 
-        
+ 
 <?php 
      $couleur = isset($_GET["color"]) ? $_GET["color"] : "vert";
      $taille = isset($_GET["taille"]) ? $_GET["taille"] : 4;
@@ -72,12 +72,14 @@
     changeBackgroundImage();
 
 </script>
+
+
 <div class="script-container" style="height: 630px;">
         <!-- Écran de jeu -->
         <div id="script-concepteur">
             <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.80.1/phaser.min.js"></script>
             <script src="../../Javascript/Concepteur_manuel_6.js"></script>
         </div>
-    </div>
+</div>
 </body>
 </html>
