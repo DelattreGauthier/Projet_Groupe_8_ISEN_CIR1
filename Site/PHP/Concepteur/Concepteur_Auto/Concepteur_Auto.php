@@ -55,7 +55,8 @@ if (isset($_POST['color']) && isset($_POST['size'])) {
 
     <div id="Etapes">
         <h3>You must choose the color of the pipes and the size of the grid on which you will place them</h3>
-        
+    </div>
+
         <div class="controls-container-concepteur">
         <form method="post">
                 <div id="color-buttons" class="color-buttons-concepteur">
@@ -87,7 +88,6 @@ if (isset($_POST['color']) && isset($_POST['size'])) {
                 <button type="submit" id="stepButton" style="position: fixed; bottom: 20px; right: 20px;">Next Step</button>
             </form>
         </div>
-    </div>
 
 </body>
 

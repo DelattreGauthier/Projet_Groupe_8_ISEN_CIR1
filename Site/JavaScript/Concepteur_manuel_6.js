@@ -320,7 +320,7 @@ function create() {
                 if (response.Checkroadcorrect) {
                     window.location.href = "Save_in_BD.php?color=" + couleur + "&taille=" + taille + "&pattern=" + img_pattern + "&road_pattern=" + road_pattern;
                 } else {
-                    alert("Incorrect");
+                    alert("Error : You did not turn correctly or you placed the pipes incorrectly in the previous step, if this is the case click on RESET");
                 }
             } else {
                 alert("Error: " + response.message);

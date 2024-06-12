@@ -663,7 +663,18 @@ body {
 }
 #Etapes-Concepteur-6 {
     padding: 30px;
-    margin-top: 5%;
+    height: 220px;
+    width: 200px;
+    margin-right: 400px;
+    font-size: 15px;
+    text-align: center;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+
+}
+#Etapes-Concepteur-Auto {
+    padding: 30px;
     height: 220px;
     width: 200px;
     margin-right: 400px;
@@ -695,7 +706,21 @@ body {
 .color-buttons-concepteur,
 .size-buttons-concepteur {
     display: flex;
+    flex-wrap: wrap;
     gap: 10px;
+    justify-content: center;
+}
+
+.color-buttons-concepteur .button, .size-buttons-concepteur .button {
+    display: block;
+    padding: 10px 20px;
+    color: white;
+    text-align: center;
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
 }
 
 .color-buttons-concepteur input[type="radio"],
@@ -753,20 +778,15 @@ body {
     background-color: black;
 }
 
-.controls-container {
-    position: fixed;
-    left: 5%;
-    top: 25%;
-}
+
 
 .controls-container-concepteur {
     position: fixed;
-    left: 35%;
     top: 50%;
+    align-items: center;
     align-content: center;
     text-align: center;
 }
-
 .level-container {
     position: fixed;
     left: 5%;
@@ -1290,16 +1310,18 @@ volume-bar-container{
         margin-top: 20%;
     }
 
-    .controls-container, .controls-container-concepteur, .level-container, .concepteur-container {
-        position: static;
-        width: 100%;
-        margin-top: 20px;
-    }
+    
 
-    #Etapes, #Etapes-Jeu, #Etapes-Concepteur, #Etapes-Concepteur-3, #Etapes-Concepteur-5, #Etapes-Concepteur-6 {
+    #Etapes, #Etapes-Jeu, #Etapes-Concepteur, #Etapes-Concepteur-3, #Etapes-Concepteur-5, #Etapes-Concepteur-6, #Etapes-Concepteur-Auto {
         width: 80%;
         margin: 20px auto;
     }
 }
 
 /* Add more media queries as needed for other elements and breakpoints */
+@media (max-width: 400px) {
+    .controls-container, .controls-container-concepteur, .level-container, .concepteur-container {
+        width: 100%;
+        margin-top: 20px;
+    }
+}

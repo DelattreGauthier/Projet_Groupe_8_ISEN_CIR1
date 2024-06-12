@@ -23,7 +23,7 @@
      $pattern = isset($_GET["pattern"]) ? json_encode($_GET["pattern"]) : "[]";
     $road_pattern = isset($_GET["road_pattern"]) ? json_encode($_GET["road_pattern"]) : "[]";
 ?>
-<div id="Etapes-Concepteur-6">
+<div id="Etapes-Concepteur-Auto">
     <h3>
     To complete the creation of your level you have to turn the pipes as if you 
     are trying to complete the level, if you like the level completed click 
@@ -60,7 +60,7 @@
     changeBackgroundImage();
 
 </script>
-<div class="script-container" style="height: 630px;">
+<div class="script-container" style="height: 600px;">
         <!-- Écran de jeu -->
         <div id="script-concepteur">
             <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.80.1/phaser.min.js"></script>

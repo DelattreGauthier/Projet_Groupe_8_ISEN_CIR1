@@ -25,6 +25,7 @@
             exit();
         }
         ?>
+    </div>
         <div class="controls-container-concepteur">
             <form method="post">
                 <div id="color-buttons" class="color-buttons-concepteur">
@@ -56,7 +57,7 @@
                 <button type="submit" id="stepButton" style="position: fixed; bottom: 20px; right: 20px;">Next Step</button>
             </form>
         </div>
-    </div>
+    
 
 </body>
 
