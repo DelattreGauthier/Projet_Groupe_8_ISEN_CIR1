@@ -86,7 +86,6 @@ if (!isset($_SESSION['authentifie'])) {
         </div>
     </div>
     <div class="script-container">
-        <!-- Écran de jeu -->
         <div id="script">
             <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.80.1/phaser.min.js"></script>
             <script src="../../Javascript/LVL1.js"></script>

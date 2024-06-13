@@ -174,7 +174,7 @@ function createGrid(rows, cols) {
                         if (!isAnimating && !END) {
                             
                             isAnimating = true;
-                            updateBasePattern(i, j); // Déplacez ceci ici
+                            updateBasePattern(i, j); 
                             if(score<999){
                                 score++;
                             }

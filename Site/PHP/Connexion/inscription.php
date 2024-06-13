@@ -16,7 +16,6 @@
 <div>
         <div class="Accueil-container">
     </div>
-    <!-- Formulaire d'ajout -->
     <div class="wrapper-body" style="margin-top: 100%;">
             <a id="redirect_singup" href="../../../Site/PHP/Accueil/Accueil.php"><h4>Sign up</h4></a>
             <form method="post" enctype="multipart/form-data">
@@ -96,7 +95,6 @@ if (isset($_POST['submit'])) {
                     $message = "Il semble que vous avez déjà un compte avec cette adresse e-mail. Veuillez vous connecter.";
                 }
             } else {
-                // Gérer l'upload de l'image
                 if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] === UPLOAD_ERR_OK) {
                     $uploadDir = "uploads/"; // Assurez-vous que ce répertoire est correct et accessible en écriture
                     $fileName = basename($_FILES['profile_picture']['name']);

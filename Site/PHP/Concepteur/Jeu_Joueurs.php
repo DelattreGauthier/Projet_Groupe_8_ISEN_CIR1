@@ -38,9 +38,7 @@ if (!isset($_SESSION['authentifie'])) {
 <body class="Jeu"> 
          
 <?php 
-     // Récupérer la couleur choisie sur la page 2
      $couleur = isset($_GET["color"]) ? $_GET["color"] : "vert";
-     // Récupérer la taille choisie sur la page 2
      $taille = isset($_GET["taille"]) ? $_GET["taille"] : 4;
      $pattern  = isset($_GET["pattern"]) ? json_encode($_GET["pattern"]) : "[]";
      $road_pattern_split  = isset($_GET["road_pattern"]) ? json_encode($_GET["road_pattern"]) : "[]";
@@ -85,7 +83,6 @@ if (!isset($_SESSION['authentifie'])) {
         </div>
     </div>
     <div class="script-container">
-        <!-- Écran de jeu -->
         <div id="script">
             <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.80.1/phaser.min.js"></script>
             <script src="../../Javascript/Jeu_Joueurs.js"></script>

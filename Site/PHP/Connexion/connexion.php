@@ -80,7 +80,6 @@ if (isset($_POST['submit'])) {
     </div>
   <?php endif; ?>
 </div>
-    <!-- Formulaire de connexion -->
     <div class="wrapper-body">
             <h4>Log in</h4>
             <form method="post">

@@ -84,7 +84,6 @@
         </div>
     </div>
     <div class="script-container">
-        <!-- Écran de jeu -->
         <div id="script">
             <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.80.1/phaser.min.js"></script>
             <script src="../../Javascript/LVL2.js"></script>

@@ -19,9 +19,8 @@
 <body class="Jeu"> 
         
 <?php 
-     // Récupérer la couleur choisie sur la page 2
      $couleur = isset($_GET["color"]) ? $_GET["color"] : "vert";
-     // Récupérer la taille choisie sur la page 2
+
      $taille = isset($_GET["taille"]) ? $_GET["taille"] : 4;
      if (isset($_GET["pattern"])) {
         $pattern = json_encode($_GET["pattern"]);

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h> 
 
+//On d√©fini la structure Case avec les 4 directions diff√©rentes
 typedef struct {
     bool top;
     bool right;
@@ -9,6 +10,7 @@ typedef struct {
     bool bottom;
 } Case;
 
+//On change les valeur de direction de chaque case en fonction de letter
 Case init_case(char letter) {
     Case c;
     switch (letter) {
@@ -64,6 +66,7 @@ Case init_case(char letter) {
     return c;
 }
 
+//On d√©cale les valeurs de direction d'une case en fonction de la rotation
 void rotate_case(Case* c, int rotation) {
     rotation = (rotation - 1) % 4;
     for (int i = 0; i < rotation; i++) {
@@ -74,7 +77,7 @@ void rotate_case(Case* c, int rotation) {
         c->right = temp;
     }
 }
-
+//Compare 2 cases en fonction de side (T pour top, R pour right etc...)
 bool check_sides(Case* current, Case* neighbor, char side) {
     switch (side) {
     case 'T':
@@ -94,21 +97,22 @@ int main() {
     FILE* fptr;
     int taille;
     char temp[1000];
-
+    //On ouvre input.txt
     errno_t err = fopen_s(&fptr, "input.txt", "r");
     if (err != 0) {
         printf("Impossible d'ouvrir le fichier input.txt.\n");
         return 1;
     }
-
+    //On prend la taille dans input.txt
     fscanf_s(fptr, "%d", &taille);
     if (taille != 6 && taille != 8 && taille != 10 && taille != 12) {
-        printf("Taille invalide. La taille doit Ítre 6, 8, 10 ou 12.\n");
+        printf("Taille invalide. La taille doit ÔøΩtre 6, 8, 10 ou 12.\n");
         fclose(fptr);
         return 1;
     }
     printf("Taille : %d\n", taille);
 
+    //On initialise road_pattern et pattern
     int** road_pattern = (int**)malloc((taille + 2) * sizeof(int*));
     for (int i = 0; i < taille + 2; i++) {
         road_pattern[i] = (int*)malloc((taille + 2) * sizeof(int));
@@ -139,6 +143,7 @@ int main() {
 
     fclose(fptr);
 
+    //On change la valeur de rotation en fonction de la valeur dans road_pattern
     for (int i = 1; i < taille + 1; i++) {
         for (int j = 1; j < taille + 1; j++) {
             int rotation = road_pattern[i][j];
@@ -170,7 +175,7 @@ int main() {
         printf("ERROR\n");
     }
 
-    // …criture dans le fichier output.php
+    // Ecriture dans le fichier output.php
     FILE* out_ptr;
     err = fopen_s(&out_ptr, "output.php", "w");
     if (err != 0) {

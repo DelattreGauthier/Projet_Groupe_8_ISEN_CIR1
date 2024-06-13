@@ -20,17 +20,17 @@ int main() {
     FILE* file;
     errno_t err;
 
-    // Ouvrir le fichier d'entrée en lecture
+    // Ouvrir le fichier d'entrÃ©e en lecture
     err = fopen_s(&file, "input.txt", "r");
     if (err != 0) {
-        perror("Impossible d'ouvrir le fichier d'entrée");
+        perror("Impossible d'ouvrir le fichier d'entrÃ©e");
         return 1;
     }
     int taille;
     fscanf_s(file, "%d", &taille);
     fclose(file);
 
-    // Initialisation du générateur de nombres aléatoires
+    // Initialisation du generateur de nombres alÃ©atoires
     srand(time(NULL));
 
     // Ajustement de la taille des grilles
@@ -49,22 +49,22 @@ int main() {
         pattern[i] = (char*)malloc(colonnes * sizeof(char));
     }
 
-    // Remplissage de la grille road_pattern avec des zéros
+    // Remplissage de la grille road_pattern avec des zÃ©ros
     for (int i = 0; i < lignes; i++) {
         for (int j = 0; j < colonnes; j++) {
             road_pattern[i][j] = 0;
         }
     }
 
-    // Génération de la position de départ de la colonne
-    int colonne = rand() % (colonnes - 4) + 2; // La plage de valeurs est ajustée en fonction de la taille de la grille
+    // Generation de la position de dÃ©part de la colonne
+    int colonne = rand() % (colonnes - 4) + 2; // La plage de valeurs est ajustÃ©e en fonction de la taille de la grille
 
-    // Coordonnées du premier et du dernier '1' placés
+    // CoordonnÃ©es du premier et du dernier '1' placÃ©s
     int premier_un_x = colonne;
     int dernier_un_x;
 
-    // Calcul du décalage en fonction de la taille de la grille
-    int decalage = (colonnes - 6) / 2; // colonnes - 6 donne la différence de taille avec une grille de 6x6, puis divisé par 2
+    // Calcul du dÃ©calage en fonction de la taille de la grille
+    int decalage = (colonnes - 6) / 2; // colonnes - 6 donne la diffÃ©rence de taille avec une grille de 6x6, puis divisÃ© par 2
 
     // Calcul du pas en fonction de la taille de la grille
     int pas_min;
@@ -88,17 +88,17 @@ int main() {
 
     // Boucle pour parcourir chaque ligne de la grille road_pattern
     for (int i = 1; i < lignes - 1; i++) {
-        // Déterminer aléatoirement le nombre de pas (entre pas_min et pas_max)
+        // DÃ©terminer alÃ©atoirement le nombre de pas (entre pas_min et pas_max)
         int pas = rand() % (pas_max - pas_min + 1) + pas_min;
 
-        // Déterminer aléatoirement si nous allons à droite ou à gauche
+        // DÃ©terminer alÃ©atoirement si nous allons Ã© droite ou Ã© gauche
         int direction = rand() % 2; // 0 pour droite, 1 pour gauche
 
-        // Mettre à jour la position de la colonne en fonction de la direction
+        // Mettre Ã© jour la position de la colonne en fonction de la direction
         if (direction == DROITE) {
             for (int j = 0; j < pas; j++) {
                 road_pattern[i][colonne] = 1;
-                dernier_un_x = colonne; // Mettre à jour la coordonnée du dernier '1'
+                dernier_un_x = colonne; // Mettre Ã© jour la coordonnÃ©e du dernier '1'
                 colonne++;
                 if (colonne >= colonnes - 1) {
                     colonne = colonnes - 2;
@@ -110,7 +110,7 @@ int main() {
         else {
             for (int j = 0; j < pas; j++) {
                 road_pattern[i][colonne] = 1;
-                dernier_un_x = colonne; // Mettre à jour la coordonnée du dernier '1'
+                dernier_un_x = colonne; // Mettre Ã© jour la coordonnÃ©e du dernier '1'
                 colonne--;
                 if (colonne <= 0) {
                     colonne = 1;
@@ -122,9 +122,9 @@ int main() {
     }
     dernier_un_x = colonne;
 
-    // Placer un '1' en Y=0 et X=coordonné du premier '1'
+    // Placer un '1' en Y=0 et X=coordonnÃ© du premier '1'
     road_pattern[0][premier_un_x] = 1;
-    // Placer un '1' en Y=colonnes-1 et X=coordonné du dernier '1'
+    // Placer un '1' en Y=colonnes-1 et X=coordonnÃ© du dernier '1'
     road_pattern[colonnes - 1][dernier_un_x] = 1;
 
     // Remplir la grille pattern avec des 'E' et 'S'
@@ -139,20 +139,20 @@ int main() {
         }
     }
 
-    // Analyser les cases S pour déterminer leurs nouveaux états
+    // Analyser les cases S pour dÃ©terminer leurs nouveaux Ã©tats
     for (int i = 1; i < lignes - 1; i++) {
         for (int j = 1; j < colonnes - 1; j++) {
             if (pattern[i][j] == 'S') {
                 int E_count = 0;
-                int E_left = pattern[i][j - 1] == 'E'; // Case à gauche est E
-                int E_right = pattern[i][j + 1] == 'E'; // Case à droite est E
+                int E_left = pattern[i][j - 1] == 'E'; // Case Ã© gauche est E
+                int E_right = pattern[i][j + 1] == 'E'; // Case Ã© droite est E
                 int E_up = pattern[i - 1][j] == 'E'; // Case en haut est E
                 int E_down = pattern[i + 1][j] == 'E'; // Case en bas est E
                 if (pattern[i - 1][j] == 'E') E_count++; // Case au-dessus
                 if (pattern[i + 1][j] == 'E') E_count++; // Case en dessous
-                if (pattern[i][j - 1] == 'E') E_count++; // Case à gauche
-                if (pattern[i][j + 1] == 'E') E_count++; // Case à droite
-                // Vérifier si les 'E' adjacents sont opposés ou collés
+                if (pattern[i][j - 1] == 'E') E_count++; // Case Ã© gauche
+                if (pattern[i][j + 1] == 'E') E_count++; // Case Ã© droite
+                // VÃ©rifier si les 'E' adjacents sont opposÃ©s ou collÃ©s
                 if ((E_left && E_right) || (E_up && E_down)) {
                     // Laisser S
                     pattern[i][j] = 'S';
@@ -173,12 +173,12 @@ int main() {
         }
     }
 
-    // Placer un 'D' en Y=0 et X=coordonné du premier '1' dans pattern
+    // Placer un 'D' en Y=0 et X=coordonnÃ© du premier '1' dans pattern
     pattern[0][premier_un_x] = 'D';
-    // Placer un 'A' en Y=colonnes-1 et X=coordonné du dernier '1' dans pattern
+    // Placer un 'A' en Y=colonnes-1 et X=coordonnÃ© du dernier '1' dans pattern
     pattern[colonnes - 1][dernier_un_x] = 'A';
 
-    // Enregistrement des grilles road_pattern et pattern dans une chaîne de caractères
+    // Enregistrement des grilles road_pattern et pattern dans une chaÃ©ne de caractÃ©res
     char buffer[5000]; // Taille suffisante pour contenir les grilles
     snprintf(buffer, sizeof(buffer), "<?php\n");
     snprintf(buffer, sizeof(buffer), "%s$pattern = [\n", buffer);
@@ -224,13 +224,13 @@ int main() {
     fprintf(php_file, "%s", buffer);
     fclose(php_file);
 
-    // Libération de la mémoire allouée pour la grille road_pattern
+    // LibÃ©ration de la mÃ©moire allouÃ©e pour la grille road_pattern
     for (int i = 0; i < lignes; i++) {
         free(road_pattern[i]);
     }
     free(road_pattern);
 
-    // Libération de la mémoire allouée pour la grille pattern
+    // LibÃ©ration de la mÃ©moire allouÃ©e pour la grille pattern
     for (int i = 0; i < lignes; i++) {
         free(pattern[i]);
     }

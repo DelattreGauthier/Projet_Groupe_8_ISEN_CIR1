@@ -2,7 +2,7 @@
 $color = 'vert';
 $taille = 6;
 
-$pattern_php = "[]"; // Initialiser les variables par défaut
+$pattern_php = "[]"; 
 $road_pattern_php = "[]";
 
 if (isset($_POST['color']) && isset($_POST['size'])) {

@@ -61,7 +61,6 @@
 
 </script>
 <div class="script-container" style="height: 600px;">
-        <!-- Écran de jeu -->
         <div id="script-concepteur">
             <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.80.1/phaser.min.js"></script>
             <script src="../../../Javascript/Concepteur_auto.js"></script>

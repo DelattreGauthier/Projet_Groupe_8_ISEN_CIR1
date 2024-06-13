@@ -1,6 +1,5 @@
 <?php
 session_start();
-// Définissez l'URL de l'image de profil ou une image par défaut
 $profilePicUrl = isset($_SESSION['profilepic']) ? $_SESSION['profilepic'] : 'path/to/default/profile_pic.png';
 ?>
 <!DOCTYPE html>
@@ -26,7 +25,6 @@ $profilePicUrl = isset($_SESSION['profilepic']) ? $_SESSION['profilepic'] : 'pat
         <div class="user-info">
         <?php if (isset($_SESSION['username'])): ?>
             <div class="dropdown">
-            <!-- Display profile picture for the dropdown button -->
             <button class="dropbtn"><i class="fas fa-user-circle"></i></button>
             <div class="dropdown-content">
                 <a class="dropdown-content-profile" href="../Settings/Settings.php">Profile</a>
@@ -35,7 +33,6 @@ $profilePicUrl = isset($_SESSION['profilepic']) ? $_SESSION['profilepic'] : 'pat
         </div>
         <?php else: ?>
             <div class="dropdown">
-                <!-- Display only icon for the dropdown button -->
                 <button class="dropbtn"><i class="fas fa-user-circle"></i></button>
                 <div class="dropdown-content">
                     <a href="../Settings/Settings.php">Profile</a>

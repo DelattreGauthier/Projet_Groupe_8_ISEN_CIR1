@@ -8,11 +8,11 @@
     <link rel="stylesheet" href="../../CSS/style.css">
     <style>
         h2 {
-            text-align: center; /* Centre le titre */
+            text-align: center; 
         }
         
         .table-wrapper {
-            height: 400px; /* Hauteur fixe du conteneur */
+            height: 400px; 
             overflow-y:auto;
             -ms-overflow-style:none;
             border-radius: 10px;
@@ -21,38 +21,38 @@
             display:none;
         }
         table {
-            border-collapse: collapse; /* Fusionne les bordures de la table */
+            border-collapse: collapse;
             width:100%;
         }
 
         th, td {
-            padding: 10px; /* Ajoute de l'espace autour du contenu de la cellule */
-            text-align: left; /* Alignement du texte à gauche */
-            border-bottom: 1px solid #ddd; /* Bordure inférieure pour chaque ligne */
+            padding: 10px; 
+            text-align: left; 
+            border-bottom: 1px solid #ddd; 
         }
 
         th {
-            background-color: #f2f2f2; /* Couleur de fond pour les en-têtes */
+            background-color: #f2f2f2; 
         }
 
         ul {
-            list-style-type: none; /* Supprime les puces de liste */
+            list-style-type: none; 
             padding: 0;
             margin: 0;
         }
 
         ul li a {
-            text-decoration: none; /* Supprime les soulignements des liens */
-            color: red; /* Couleur du texte des liens */
-            display: block; /* Les liens occupent toute la largeur disponible */
+            text-decoration: none;
+            color: red;
+            display: block;
         }
 
         ul li a:hover {
-            color: darkred; /* Changement de couleur au survol */
+            color: darkred;
         }
 
         ul li a.visited {
-            color: darkred; /* Lien visité */
+            color: darkred;
         }
     </style>
 </head>
@@ -68,7 +68,7 @@
                     <th>Level Name</th>
                     <th>Size of the grid</th>
                     <th>Color of the pipes</th>
-                    <th>Leaderboard</th> <!-- Nouvelle colonne -->
+                    <th>Leaderboard</th> 
                 </tr>
             </thead>
             <tbody>
@@ -111,7 +111,6 @@
                         $pattern = $row['pattern'];
                         $road_pattern = $row['road_pattern'];
 
-                        // Vérifier si le niveau a déjà été joué
                         $played_class = '';
                         if (isset($_SESSION['played_levels']) && in_array($nom_niveau, $_SESSION['played_levels'])) {
                             $played_class = 'visited'; // Ajouter la classe 'visited' si le niveau a déjà été joué
@@ -120,13 +119,13 @@
                         echo "<tr>";
                         echo "<td><a style='text-decoration: none;color: red;display: block;' href='Jeu_Joueurs.php?level=$nom_niveau&color=$couleur&taille=$taille&pattern=$pattern&road_pattern=$road_pattern&IdJeu={$row['IdJeu']}&IdJoueur=$userId'><span class='$played_class'>$nom_niveau</span></a></td>";
 
-                        echo "<td>$taille X $taille</td>"; // Afficher la taille de la grille
-                        echo "<td>$translated_color</td>"; // Afficher la couleur de la grille
+                        echo "<td>$taille X $taille</td>";
+                        echo "<td>$translated_color</td>";
                         echo '<td style="text-align: center;"><a style="text-decoration: none; color: blue; display: block;" href="../../../Site/PHP/Leaderboard/leaderboard_players.php?level=' . $nom_niveau . '&IdJeu=' . $row['IdJeu'] . '" onclick="window.location.reload();"><img src="../../../Document/Image/Leaderboard/leaderboard.png" alt="Classement_' . $nom_niveau . '" class="' . $played_class . '" style="width: 20px; height: 20px;" /></a></td>';
                         echo "</tr>";
                     }
                 } catch (PDOException $e) {
-                    echo "Erreur : " . $e->getMessage(); // Afficher l'erreur PDO
+                    echo "Erreur : " . $e->getMessage(); 
                 }
                 ?>
             </tbody>
