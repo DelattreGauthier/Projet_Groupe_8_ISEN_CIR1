@@ -1,9 +1,9 @@
 var config = {
-    type: Phaser.AUTO,
+    type: Phaser.AUTO,//permet de faire un jeu via Phaser
     width: 484,
     transparent: true,
     height: 600,
-    scene: {
+    scene: {//fonctions qui s'activent au lancement du jeu
         preload: preload,
         create:create
     }
@@ -11,6 +11,7 @@ var config = {
 
 let numRows = 6;
 let numCols = 6;
+//On modifie la taille de la grille en fonction de taille
 switch (taille) {
     case 4:  
         numRows = 6;
@@ -36,11 +37,13 @@ switch (taille) {
 
 let cellSize = 484 / numCols;
 let gridContainer;
-let gridImages = []; // Ajout d'une variable pour stocker les références des cellules
+let gridImages = []; 
+//Jeu phaser en fonction de config
 var game = new Phaser.Game(config);
 var background;
 var isAnimating = false;
 let imageFiles = [];
+//On change les images a utilisé en fonction du paramètre couleur
 switch (couleur) {
     case 'bleu':  
         imageFiles = [
@@ -95,13 +98,14 @@ switch (couleur) {
         break;
 }
 
+//On charge les images
 function preload() {
     for (let i = 0; i < imageFiles.length; i++) {
         this.load.image('img_' + i, imageFiles[i]);
     }
 }
 
-
+//Fonction qui permet de crée une matrice en fonction d'une taille et d'un chaine de caractère
 function convertToMatrix(str, rows, cols) {
     let result = [];
     let chunks = str.split(",");
@@ -112,6 +116,7 @@ function convertToMatrix(str, rows, cols) {
     }
     return result;
 }
+//Fonction qui permet de crée une matrice d'entier en fonction d'une taille et d'un chaine de caractère
 function convertToMatrix_int(int, rows, cols) {
     let result = [];
     let chunks = int.split(",").map(Number); // Convertir les chaînes en nombres
@@ -123,7 +128,7 @@ function convertToMatrix_int(int, rows, cols) {
     return result;
 }
 
-
+//On crée une matrice img_pattern en fonction de pattern et de taille 
 let img_pattern = [];
 switch (taille) {
     case 4:  
@@ -142,7 +147,7 @@ switch (taille) {
         img_pattern = convertToMatrix(pattern, 6, 6);
         break;
 }
-
+//On crée une matrice road_pattern en fonction de road_pattern_split et de taille 
 let road_pattern = [];
 switch (taille) {
     case 4:  
@@ -162,6 +167,8 @@ switch (taille) {
         break;
 }
 
+//Fonction qui met a jour road_pattern, mettant pour chaque case un valeur 
+//entre 1 et 4 (en fonction du sens du tuyau)
 function updateRoadPattern(row,col) {
     if (img_pattern[row][col] !== 'E') {
         road_pattern[row][col]++;
@@ -171,14 +178,15 @@ function updateRoadPattern(row,col) {
     }
 }
 
-console.log(img_pattern);
 
+//Fonction qui va crée la grille de jeu 
 function createGrid(rows, cols) {
     numRows = rows;
     numCols = cols;
     cellSize = 480 / numCols;
-
+    //On supprime la grille précédente si elle existe
     if (gridContainer) gridContainer.removeAll(true);
+    //On ajoute un nouveau conteneur pour la grille
     gridContainer = game.scene.scenes[0].add.container(0, 0);
 
     gridImages = []; // Pour stocker les références aux images affichées sur chaque case
@@ -189,6 +197,7 @@ function createGrid(rows, cols) {
             let imageKey;
             let can_move;
             let angle = 0; // Angle initial de l'image
+            //On fonction de la lettre dans img_pattern, on change l'image de la case
             switch (img_pattern[i][j]) {
                 case 'S':
                     imageKey = 'img_2';
@@ -222,17 +231,20 @@ function createGrid(rows, cols) {
             let image;
 
             if (imageKey !== 'empty') {
+                //On met l'image à la même taille que la case et au bonne coordonnées
                 image = game.scene.scenes[0].add.sprite(j * cellSize + cellSize / 2, i * cellSize + cellSize / 2, imageKey);
                 image.setOrigin(0.5);
                 image.displayWidth = cellSize;
                 image.displayHeight = cellSize;
+                //si les images peuvent bouger, et qu'on clique dessus, elles effectuent une rotation de 90°
                 if (can_move) {
                     image.setInteractive();
                     image.on('pointerdown', function () {
+                        //Fait en sorte que les images ne puissent pas tourné en même temps
                         if (!isAnimating) {
                             isAnimating = true;
+                            //On modifie road_pattern 
                             updateRoadPattern(i, j);
-                            console.log(road_pattern);
                             this.scene.tweens.add({
                                 targets: this,
                                 angle: this.angle + 90,
@@ -248,6 +260,7 @@ function createGrid(rows, cols) {
                     });
                 }
             } else {
+                //On met une case vide si imageKey est empty
                 image = game.scene.scenes[0].add.rectangle(j * cellSize + cellSize / 2, i * cellSize + cellSize / 2, cellSize, cellSize, 0x000000, 0);
             }
 
@@ -257,7 +270,7 @@ function createGrid(rows, cols) {
     }
 }
 
-
+//On modifie road_pattern pour mettre toutes les cases vides à 0.
 for (let i = 0; i < numRows; i++) {
     for (let j = 0; j < numCols; j++) {
         if (road_pattern[i][j] === 8) {
@@ -265,8 +278,10 @@ for (let i = 0; i < numRows; i++) {
         }
     }
 }
+//Fonction de création des éléments du jeu
 function create() {
     var graphics = this.add.graphics();
+    //On change les bordures intérieur de la grille en fonciton de la taille de celle-ci
     switch (taille) {
         case 4:
             graphics.lineStyle(4, 0xffffff);
@@ -290,18 +305,20 @@ function create() {
             break;
     }
 
+    //Bordures extérieur
     var graphics2 = this.add.graphics();
     graphics2.lineStyle(4, 0xffffff); 
     graphics2.strokeRect(2, 2, 480, 480);
     background = this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0.3)');
 
+    //On crée la grille de jeu
     createGrid(numRows, numCols);
     // Création du bouton RESET
     resetButton = this.add.rectangle(150, 550, 100, 50, 0xff0000);
     resetButton.setOrigin(0.5);
     resetButton.setInteractive();
     resetButton.on('pointerdown', function () {
-        // Redirection vers Concepteur_Manuel_3.php avec les paramètres de couleur et de taille
+        // Redirection vers Concepteur_Auto.php 
         window.location.href = `Concepteur_Auto.php`;
     });
 
@@ -314,12 +331,14 @@ function create() {
     completeButton.setOrigin(0.5);
     completeButton.setInteractive();
     completeButton.on('pointerdown', function () {
+        //En fonction du résultat du solveur, on renvoie soit un message d'erreur,
+        //soit on sauvegarde les données dans la base de données via Save_in_BD.php
         saveToFile().then(response => {
             if (response.success) {
                 if (response.Checkroadcorrect) {
                     window.location.href = "../Save_in_BD.php?color=" + couleur + "&taille=" + taille + "&pattern=" + img_pattern + "&road_pattern=" + road_pattern;
                 } else {
-                    alert("Incorrect");
+                    alert("Error : You did not turn correctly or you placed the pipes incorrectly in the previous step, if this is the case click on RESET");
                 }
             } else {
                 alert("Error: " + response.message);
@@ -332,14 +351,16 @@ function create() {
     completeText.setOrigin(0.5);
 }
 
+//Fonction qui enregistre road_pattern img_pattern et taille en string pour les 
+//utiliser ensuite dans le solveur
 function saveToFile() {
-    // Initialize the patterns as strings
+    //Convertie les matrices en string 
     let roadPatternStr = '';
     for (let i = 0; i < road_pattern.length; i++) {
         for (let j = 0; j < road_pattern[i].length; j++) {
             roadPatternStr += road_pattern[i][j];
         }
-        roadPatternStr += '\n'; // Add separator for each row
+        roadPatternStr += '\n';
     }
 
     let imgPatternStr = '';
@@ -347,12 +368,12 @@ function saveToFile() {
         for (let j = 0; j < img_pattern[i].length; j++) {
             imgPatternStr += img_pattern[i][j];
         }
-        imgPatternStr += '\n'; // Add separator for each row
+        imgPatternStr += '\n'; 
     }
 
-    // Concatenate taille, roadPatternStr, and imgPatternStr with a unique separator
+    //Chaine de caractères contenant tout les éléments nécessaire au fonctionnement du solveur
     let content = (taille+2) + '\n' + roadPatternStr + imgPatternStr;
-
+    //On envoie content dans save_file_auto.php qui exécutera le solveur
     return fetch('save_file_auto.php', {
         method: 'POST',
         headers: {

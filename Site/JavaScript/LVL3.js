@@ -26,17 +26,17 @@ let imageFiles = [
     '../../../Document/Image/Jeu/Tuyaux/Sortie_Cuivre_True.png',
     '../../../Document/Image/Jeu/Dino/Dino_Rouge.png',
     '../../../Document/Image/Jeu/Dino/Dino_Rouge2.png',
-    'empty' // Valeur pour les cases vides
+    'empty'
 ];
 
 var game = new Phaser.Game(config);
 var isAnimating = false;
 var background;
-var sortieSprite;  // Référence au sprite de la case 'A'
-var dinoSprite; // Référence au sprite du dino
+var sortieSprite;  
+var dinoSprite; 
 var dinoFrame = 0;
-var victoryText; // Référence au texte de victoire
-var victoryRect; // Référence au rectangle de victoire
+var victoryText; 
+var victoryRect;
 var score = 0;
 var scoreText;
 function preload() {
@@ -48,7 +48,7 @@ function preload() {
 function updateBasePattern(row, col) {
     if (pattern[row][col] !== 'E') {
         base_pattern[row][col]++;
-        if (base_pattern[row][col] >= 5) { // Changement ici pour permettre d'aller jusqu'à 4
+        if (base_pattern[row][col] >= 5) { 
             base_pattern[row][col] = 1;
         }
     }
@@ -111,15 +111,15 @@ function createGrid(rows, cols) {
     ];
     
 
-    gridImages = []; // Pour stocker les références aux images affichées sur chaque case
+    gridImages = []; 
 
     for (let i = 0; i < numRows; i++) {
-        gridImages[i] = []; // Initialiser le tableau interne
+        gridImages[i] = []; 
         for (let j = 0; j < numCols; j++) {
             let imageKey;
             let can_move;
-            let angle = 0; // Angle initial de l'image
-            checkPatternMatch(); // Appel pour vérifier si le motif initial est correct
+            let angle = 0;
+            checkPatternMatch(); 
             switch (pattern[i][j]) {
                 case 'S':
                     imageKey = '../../../Document/Image/Jeu/Tuyaux/Tuyau_Simple_Cuivre.png';
@@ -165,7 +165,7 @@ function createGrid(rows, cols) {
                     image.on('pointerdown', function () {
                         if (!isAnimating && !END) {
                             isAnimating = true;
-                            updateBasePattern(i, j); // Déplacez ceci ici
+                            updateBasePattern(i, j); 
 
                             if(score<999){
                                 score++;
@@ -191,10 +191,10 @@ function createGrid(rows, cols) {
             }
 
             if (pattern[i][j] === 'A') {
-                sortieSprite = image;  // Stocker la référence au sprite 'A'
+                sortieSprite = image;  
             }
 
-            gridImages[i][j] = image; // Stocker la référence à l'image dans le tableau
+            gridImages[i][j] = image; 
             gridContainer.add(image);
         }
     }
@@ -205,14 +205,13 @@ function changeGridSize(rows, cols) {
 }
 
 function create() {
-    // Création du cadre autour de la grille
     var graphics = this.add.graphics();
-    graphics.lineStyle(4, 0xffffff); // Définir l'épaisseur et la couleur de la ligne du cadre
-    graphics.strokeRect(58, 58, 364, 364); // Dessiner un rectangle autour de la zone de la grille
+    graphics.lineStyle(4, 0xffffff); 
+    graphics.strokeRect(58, 58, 364, 364); 
 
     var graphics2 = this.add.graphics();
-    graphics2.lineStyle(4, 0xffffff); // Définir l'épaisseur et la couleur de la ligne du cadre
-    graphics2.strokeRect(2, 2, 480, 480); // Dessiner un rectangle autour de la zone de la grille
+    graphics2.lineStyle(4, 0xffffff); 
+    graphics2.strokeRect(2, 2, 480, 480); 
     createGrid(numRows, numCols);
 
     background = this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0.7)');
@@ -226,7 +225,7 @@ function create() {
         fontFamily: 'Arial, sans-serif'
     });
 
-    // Ajouter le rectangle noir de victoire mais le rendre invisible pour l'instant
+    
     victoryRect = this.add.rectangle(240, 240, 360, 360, 0x000000, 0.5);
     victoryRect.setVisible(false);
     victoryText = this.add.text(242, 120, 'Score : ' + score,{
@@ -243,15 +242,15 @@ function create() {
 function update() {
     if (checkPatternMatch()) {
         if (!dinoSprite) {
-            // Créer le sprite du dino seulement s'il n'existe pas déjà
+            
             dinoSprite = this.add.sprite(242, 242-24, '../../../Document/Image/Jeu/Dino/Dino_Rouge.png');
             dinoSprite.setOrigin(0.5);
             dinoSprite.displayWidth = cellSize+96;
             dinoSprite.displayHeight = cellSize+96;
 
-            // Configurer la minuterie pour changer les images de Dino
+
             this.time.addEvent({
-                delay: 300, // 0.3 seconde
+                delay: 300, 
                 callback: function () {
                     dinoFrame = (dinoFrame + 1) % 2;
                     dinoSprite.setTexture(dinoFrame === 0 ? '../../../Document/Image/Jeu/Dino/Dino_Rouge.png' : '../../../Document/Image/Jeu/Dino/Dino_Rouge2.png');
@@ -265,7 +264,7 @@ function update() {
         }
 
         if (!succes) {
-            succes = true; // Marquer que la sauvegarde a été tentée
+            succes = true; 
             END=true;
             victoryRect.setVisible(true);
             victoryText.setText('Score : ' + score);

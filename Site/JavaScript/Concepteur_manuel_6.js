@@ -315,6 +315,8 @@ function create() {
     completeButton.setOrigin(0.5);
     completeButton.setInteractive();
     completeButton.on('pointerdown', function () {
+        //En fonction du résultat du solveur, on renvoie soit un message d'erreur,
+        //soit on sauvegarde les données dans la base de données via Save_in_BD.php
         saveToFile().then(response => {
             if (response.success) {
                 if (response.Checkroadcorrect) {
@@ -334,14 +336,16 @@ function create() {
     completeText.setOrigin(0.5);
 }
 
+//Fonction qui enregistre road_pattern img_pattern et taille en string pour les 
+//utiliser ensuite dans le solveur
 function saveToFile() {
-    // Initialize the patterns as strings
+    //Convertie les matrices en string 
     let roadPatternStr = '';
     for (let i = 0; i < road_pattern.length; i++) {
         for (let j = 0; j < road_pattern[i].length; j++) {
             roadPatternStr += road_pattern[i][j];
         }
-        roadPatternStr += '\n'; // Add separator for each row
+        roadPatternStr += '\n'; 
     }
 
     let imgPatternStr = '';
@@ -349,12 +353,12 @@ function saveToFile() {
         for (let j = 0; j < img_pattern[i].length; j++) {
             imgPatternStr += img_pattern[i][j];
         }
-        imgPatternStr += '\n'; // Add separator for each row
+        imgPatternStr += '\n'; 
     }
 
-    // Concatenate taille, roadPatternStr, and imgPatternStr with a unique separator
+    //Chaine de caractères contenant tout les éléments nécessaire au fonctionnement du solveur
     let content = (taille+2) + '\n' + roadPatternStr + imgPatternStr;
-
+    //On envoie content dans save_file.php qui exécutera le solveur
     return fetch('save_file.php', {
         method: 'POST',
         headers: {

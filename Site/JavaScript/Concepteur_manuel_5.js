@@ -114,6 +114,7 @@ function convertToMatrix(str, rows, cols) {
     }
     return result;
 }
+
 function convertToMatrix_int(int, rows, cols) {
     let result = [];
     let chunks = int.split(",").map(Number); // Convertir les chaînes en nombres
@@ -165,7 +166,7 @@ switch (taille) {
 }
 let selectedCell = null; // Variable pour stocker la case actuellement sélectionnée
 
-// Ajoutez un événement de clic à chaque case de la grille
+// Ajoutez un événement de clic à chaque case de la grille à 1 dans road_pattern
 function addClickEventsToCells() {
     for (let row = 0; row < numRows; row++) {
         for (let col = 0; col < numCols; col++) {
@@ -212,7 +213,7 @@ function createGrid(rows, cols) {
     // Dessiner les lignes blanches
     graphics.lineStyle(4, 0xffffff); // Définir le style de ligne à blanc
 
-    // Remplir les cellules avec la couleur grise
+    // Remplir les cellules de valeur 8 dans road_pattern avec la couleur grise 
     graphics.fillStyle(0x566573);
     for (let i = 0; i < numRows; i++) {
         for (let j = 0; j < numCols; j++) {
@@ -323,45 +324,45 @@ function drawPattern(pattern) {
         // Ajouter des événements de clic aux cases interactives
         addClickEventsToCells();
 }
-let buttonRed;
-let buttonBlue;
-let buttonPurple;
-let buttonOrange;
+let buttonSimple;
+let buttonCourbe;
+let buttonTriple;
+let buttonQuadruple;
 
 function createButtons() {
-    // Créez le bouton rouge
-    buttonRed = game.scene.scenes[0].add.image(100, 550, 'img_2').setInteractive(); // Nouvelles coordonnées (50, 550)
-    buttonRed.displayWidth = 60; // Réduire la largeur du bouton
-    buttonRed.displayHeight = 60; // Réduire la hauteur du bouton
-    buttonRed.on('pointerdown', function () {
+    // Créez le bouton simple
+    buttonSimple = game.scene.scenes[0].add.image(100, 550, 'img_2').setInteractive(); // Nouvelles coordonnées (50, 550)
+    buttonSimple.displayWidth = 60; // Réduire la largeur du bouton
+    buttonSimple.displayHeight = 60; // Réduire la hauteur du bouton
+    buttonSimple.on('pointerdown', function () {
         updatePattern('img_2','S', selectedCell.row, selectedCell.col); // Mettre à jour img_pattern avec la lettre 'S'
         console.log(img_pattern);
     });
 
-    // Créez le bouton bleu
+    // Créez le bouton courbe
     
-    buttonBlue = game.scene.scenes[0].add.image(200, 550, 'img_3').setInteractive(); // Nouvelles coordonnées (50, 550)
-    buttonBlue.displayWidth = 60; // Réduire la largeur du bouton
-    buttonBlue.displayHeight = 60; // Réduire la hauteur du bouton
-    buttonBlue.on('pointerdown', function () {
+    buttonCourbe = game.scene.scenes[0].add.image(200, 550, 'img_3').setInteractive(); // Nouvelles coordonnées (50, 550)
+    buttonCourbe.displayWidth = 60; // Réduire la largeur du bouton
+    buttonCourbe.displayHeight = 60; // Réduire la hauteur du bouton
+    buttonCourbe.on('pointerdown', function () {
         updatePattern('img_3','C', selectedCell.row, selectedCell.col); // Mettre à jour img_pattern avec la lettre 'C'
         console.log(img_pattern);
     });
 
-    // Créez le bouton violet
-    buttonPurple = game.scene.scenes[0].add.image(300, 550, 'img_4').setInteractive(); // Nouvelles coordonnées (50, 550)
-    buttonPurple.displayWidth = 60; // Réduire la largeur du bouton
-    buttonPurple.displayHeight = 60; // Réduire la hauteur du bouton
-    buttonPurple.on('pointerdown', function () {
+    // Créez le bouton triple
+    buttonTriple = game.scene.scenes[0].add.image(300, 550, 'img_4').setInteractive(); // Nouvelles coordonnées (50, 550)
+    buttonTriple.displayWidth = 60; // Réduire la largeur du bouton
+    buttonTriple.displayHeight = 60; // Réduire la hauteur du bouton
+    buttonTriple.on('pointerdown', function () {
         updatePattern('img_4','T', selectedCell.row, selectedCell.col); // Mettre à jour img_pattern avec la lettre 'T'
         console.log(img_pattern);
     });
 
-    // Créez le bouton orange
-    buttonOrange = game.scene.scenes[0].add.image(400, 550, 'img_5').setInteractive(); // Nouvelles coordonnées (50, 550)
-    buttonOrange.displayWidth = 70; // Réduire la largeur du bouton
-    buttonOrange.displayHeight = 70; // Réduire la hauteur du bouton
-    buttonOrange.on('pointerdown', function () {
+    // Créez le bouton quadruple
+    buttonQuadruple = game.scene.scenes[0].add.image(400, 550, 'img_5').setInteractive(); // Nouvelles coordonnées (50, 550)
+    buttonQuadruple.displayWidth = 70; // Réduire la largeur du bouton
+    buttonQuadruple.displayHeight = 70; // Réduire la hauteur du bouton
+    buttonQuadruple.on('pointerdown', function () {
         updatePattern('img_5','Q', selectedCell.row, selectedCell.col); // Mettre à jour img_pattern avec la lettre 'Q'
         console.log(img_pattern);
     });

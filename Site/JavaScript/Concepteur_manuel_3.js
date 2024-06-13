@@ -1,14 +1,15 @@
 var config = {
-    type: Phaser.AUTO,
+    type: Phaser.AUTO,//permet de faire un jeu via Phaser
     width: 484,
     transparent: true,
     height: 484,
-    scene: {
+    scene: {//fonction qui s'activent au lancement du jeu
         create: create
     }
 };
 let numRows = 6;
 let numCols = 6;
+//On modifie la taille de la grille en fonction de taille
 switch (taille) {
     case 4:  
         numRows = 6;
@@ -35,11 +36,14 @@ switch (taille) {
 
 let cellSize = 484 / numCols;
 let gridContainer;
-let gridImages = []; // Ajout d'une variable pour stocker les références des cellules
+let gridImages = [];
+//Jeu phaser en fonction de config
 var game = new Phaser.Game(config);
 var isAnimating1 = false;
 var isAnimating2 = false;
 var background;
+
+//On crée une matrice remplie de E
 let pattern = [
     ['E', 'E', 'E', 'E', 'E', 'E'],
     ['E', 'E', 'E', 'E', 'E', 'E'],
@@ -48,6 +52,7 @@ let pattern = [
     ['E', 'E', 'E', 'E', 'E', 'E'],
     ['E', 'E', 'E', 'E', 'E', 'E'],
 ];
+//On crée une matrice remplie de 8 sauf aux endroits où on pourra placer le début et la fin
 let road_pattern = [
     [8, 0, 0, 0, 0, 8],
     [8, 8, 8, 8, 8, 8],
@@ -56,6 +61,7 @@ let road_pattern = [
     [8, 8, 8, 8, 8, 8],
     [8, 0, 0, 0, 0, 8],
 ];
+//On change la taille des grilles en fonction de taille
 switch (taille) {
     case 4:  
         pattern = [
@@ -176,21 +182,23 @@ switch (taille) {
         break;
 }
 
-
+//variables pour savoir si le début et la fin sont placé
 let topRowSelected = false;
 let bottomRowSelected = false;
 
+//Fonction qui va crée la grille de jeu 
 function createGrid(rows, cols) {
     numRows = rows;
     numCols = cols;
     cellSize = 480 / numCols;
-
+    //On supprime la grille précédente si elle existe
     if (gridContainer) gridContainer.removeAll(true);
+    //On ajoute un nouveau conteneur pour la grille
     gridContainer = game.scene.scenes[0].add.container(0, 0);
 
     var graphics = game.scene.scenes[0].add.graphics();
     
-    // Remplir les cellules avec la couleur grise
+    // Remplir les cases étant à 8 dans road_pattern avec la couleur grise
     graphics.fillStyle(0x566573);
     for (let i = 0; i < numRows; i++) {
         for (let j = 0; j < numCols; j++) {
@@ -215,7 +223,7 @@ function createGrid(rows, cols) {
         let y = (i * cellSize) + 2; // Décalage vers le bas de la moitié de l'épaisseur de la ligne
         graphics.lineBetween(0, y, 480, y);
     }
-    // Créer les cases interactives pour la ligne du haut
+    // Créer les cases interactives pour la ligne du haut et du bas
     for (let i = 0; i < numRows; i++) {
         gridImages[i] = []; // Initialiser le tableau interne
         for (let j = 0; j < numCols; j++) {
@@ -227,6 +235,7 @@ function createGrid(rows, cols) {
             if (road_pattern[i][j] !== 8 && i === 0) {
                 cell.setInteractive(); // Rend la case cliquable
                 cell.on('pointerdown', function () {
+                    //Si la case de départ n'est pas déjà placé
                     if (!isAnimating1 && road_pattern[i][j] !== 1 && !topRowSelected) {
                         isAnimating1 = true;
                         pattern[i][j] = 'D'; // Si la case est sur la ligne du haut
@@ -239,6 +248,7 @@ function createGrid(rows, cols) {
             } else if (road_pattern[i][j] !== 8 && i === numRows - 1) { // Ajout de la condition pour la ligne du bas
                 cell.setInteractive(); // Rend la case cliquable
                 cell.on('pointerdown', function () {
+                    //Si la case de fin n'est pas déjà placé
                     if (!isAnimating2 && road_pattern[i][j] !== 1 && !bottomRowSelected) {
                         isAnimating2 = true;
                         pattern[i][j] = 'A'; // Si la case est sur la ligne du bas
@@ -267,22 +277,21 @@ function deactivateSelectedCells() {
     }
 }
 
-function changeGridSize(rows, cols) {
-    createGrid(rows, cols);
-}
-
+//Vérifie si la case de début et de fin sont bien sélectionné, si c'est le cas nous
+//envoie sur la prochaine page
 function checkSelectionComplete() {
     if (topRowSelected && bottomRowSelected) {
         deactivateSelectedCells();
 
-    // Envoyer les données à PHP avec la taille et le pattern
+    // Envoyer les données à PHP avec la taille la couleur et le pattern
     window.location.href = "Concepteur_manuel_4.php?color=" + couleur + "&taille=" + taille + "&pattern=" + pattern;
     }
 }
 
+//Fonction de création des éléments du jeu
 function create() {
     var graphics = this.add.graphics();
-    
+    //On change les bordures intérieur de la grille en fonciton de la taille de celle-ci
     switch (taille) {
         case 4:
             graphics.lineStyle(4, 0xffffff);
@@ -305,13 +314,13 @@ function create() {
             graphics.strokeRect(78, 78, 324, 324);
             break;
     }
-
+    //Bordures extérieur
     var graphics2 = this.add.graphics();
     graphics2.lineStyle(4, 0xffffff); 
     graphics2.strokeRect(2, 2, 480, 480);
     background = this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0.3)');
 
-
+    //On crée la grille de jeu
     createGrid(numRows, numCols);
 
 }

@@ -300,7 +300,7 @@ function createGrid(rows, cols) {
                             console.log(road_pattern);
                             console.log(base_pattern);
                             isAnimating = true;
-                            updateBasePattern(i, j); // Déplacez ceci ici
+                            updateBasePattern(i, j); 
                             if(score<999){
                                 score++;
                             }
@@ -371,6 +371,7 @@ function create() {
     
     switch (taille) {
         case 4:
+            //On change la place du score pour pas qu'il soit en contact avec la sortie
             if (pattern[5][0] == 'A' || pattern[5][1] == 'A' || pattern[5][2] == 'A') {
                 scoreText = this.add.text(320, 420, 'Score: ' + score, {
                     fontSize: '32px',
@@ -474,7 +475,7 @@ function update() {
             }
             
 
-            // Configurer la minuterie pour changer les images de Dino
+            // Configurer la minuterie pour changer les images de Dino (faire une animation)
             this.time.addEvent({
                 delay: 300, // 0.3 seconde
                 callback: function () {
@@ -506,11 +507,11 @@ function update() {
             sortieSprite.setTexture('img_6');
         }
 
-        // Afficher le rectangle et le texte de victoire une seule fois
         if (!succes) {
             succes = true; // Marquer que la sauvegarde a été tentée
             END=true;
             victoryRect.setVisible(true);
+            //On sauvegarde le score
             saveScore(score);
         }
     } else {

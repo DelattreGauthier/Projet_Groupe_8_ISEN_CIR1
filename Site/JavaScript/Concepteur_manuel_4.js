@@ -1,9 +1,9 @@
 var config = {
-    type: Phaser.AUTO,
+    type: Phaser.AUTO,//permet de faire un jeu via Phaser
     width: 484,
     transparent: true,
     height: 484,
-    scene: {
+    scene: {//fonctions qui s'activent au lancement du jeu
         preload: preload,
         create: create
     }
@@ -11,6 +11,7 @@ var config = {
 
 let numRows = 6;
 let numCols = 6;
+//On modifie la taille de la grille en fonction de taille
 switch (taille) {
     case 4:  
         numRows = 6;
@@ -37,13 +38,14 @@ switch (taille) {
 let cellSize = 484 / numCols;
 let gridContainer;
 let gridImages = []; // Ajout d'une variable pour stocker les références des cellules
+//Jeu phaser en fonction de config
 var game = new Phaser.Game(config);
 var isAnimating1 = false;
 var isAnimating2 = false;
 var background;
 var startRedClicked=false;
 var endRedClicked=false;
-
+//On crée une matrice remplie de 8 sauf aux endroits où on pourra placer le chemin
 let road_pattern = [
     [8, 8, 8, 8, 8, 8],
     [8, 0, 0, 0, 0, 8],
@@ -52,7 +54,7 @@ let road_pattern = [
     [8, 0, 0, 0, 0, 8],
     [8, 8, 8, 8, 8, 8],
 ];
-
+//On change la taille de la grille en fonction de taille
 switch (taille) {
     case 4:  
         road_pattern = [
@@ -121,6 +123,7 @@ switch (taille) {
         break;
 }
 let imageFiles = [];
+//On change les images a utilisé en fonction du paramètre couleur
 switch (couleur) {
     case 'bleu':  
         imageFiles = [
@@ -154,12 +157,14 @@ switch (couleur) {
         ]; 
         break;
 }
-
+//On charge les images
 function preload() {
     for (let i = 0; i < imageFiles.length; i++) {
         this.load.image('img_' + i, imageFiles[i]);
     }
 }
+//Fonction qui met a jour road_pattern, mettant pour chaque case un valeur 
+//de 1 à chaque case n'étant pas un E dans le pattern
 function updateRoadPattern(pattern) {
     for (let i = 0; i < numRows; i++) {
         for (let j = 0; j < numCols; j++) {
@@ -169,6 +174,7 @@ function updateRoadPattern(pattern) {
         }
     }
 }
+//Fonction qui permet de crée une matrice en fonction d'une taille et d'un chaine de caractère
 function convertToMatrix(str, rows, cols) {
     let result = [];
     let chunks = str.split(",");
@@ -179,17 +185,8 @@ function convertToMatrix(str, rows, cols) {
     }
     return result;
 }
-function convertToMatrix_int(int, rows, cols) {
-    let result = [];
-    let chunks = int.split(",").map(Number); // Convertir les chaînes en nombres
-    let index = 0;
-    for (let i = 0; i < rows; i++) {
-        result.push(chunks.slice(index, index + cols));
-        index += cols;
-    }
-    return result;
-}
 
+//On crée une matrice img_pattern en fonction de pattern et de taille
 let img_pattern = [];
 switch (taille) {
     case 4:  
@@ -209,10 +206,10 @@ switch (taille) {
         break;
 }
 
-
+//variables pour savoir si la route est fini
 let topRowSelected = false;
 let bottomRowSelected = false;
-
+//Fonction qui va crée la grille de jeu 
 function createGrid(rows, cols) {
     numRows = rows;
     numCols = cols;
@@ -224,7 +221,7 @@ function createGrid(rows, cols) {
     var graphics = game.scene.scenes[0].add.graphics();
 
     // Dessiner les lignes blanches
-    graphics.lineStyle(4, 0xffffff); // Définir le style de ligne à blanc
+    graphics.lineStyle(4, 0xffffff); 
 
 
     // Remplir les cellules avec la couleur grise
@@ -240,6 +237,7 @@ function createGrid(rows, cols) {
     }
     
 }
+
 let redRectX_D= 0; 
 let redRectY_D= 0; 
 let redRectX_A= 0; 
@@ -253,17 +251,19 @@ function handleCellClick(image, row, col) {
         // Mettre à jour road_pattern pour marquer cette case comme occupée
         road_pattern[row][col] = 1;
 
+        //On vérifie si les cases de début et de fin sont sélectionné
         if(row===redRectY_D && col===redRectX_D){
             startRedClicked=true;
         }
         if(row===redRectY_A && col===redRectX_A){
             endRedClicked=true;
         }
+        //On rend les 4 cases adjacentes cliquable
         checkAndMakeClickable(row - 1, col); // Case au-dessus
         checkAndMakeClickable(row + 1, col); // Case en-dessous
         checkAndMakeClickable(row, col - 1); // Case à gauche
         checkAndMakeClickable(row, col + 1); // Case à droite
-        // Si les deux cases rouges sont devenues vertes, désactiver toutes les cases
+        // Si les deux cases de début et de fin sont devenues vertes, désactiver toutes les cases et vérifier que la route est correcte
         if (startRedClicked && endRedClicked) {
             disableAllCells();
             checkPathConnected();
@@ -279,7 +279,7 @@ function disableAllCells() {
     });
 }
 
-
+//Fonction qui va vérifier si la route est correcte et qui nous envoie à la prochaine étape si c'est le cas
 function checkPathConnected() {
     // Trouver les coordonnées de la case 'D' et de la case 'A' dans img_pattern
     let startCoords, endCoords;
@@ -295,7 +295,7 @@ function checkPathConnected() {
 
     // Vérifier si les deux chemins sont connectés
     if (isPathConnected(startCoords, endCoords) && checkRoadFunctionality()) {
-            // Si les chemins sont connectés, vous pouvez rediriger vers une autre page ici si nécessaire
+            // Si les chemins sont connectés, on est redirigé à la prochaine étape avec les variables utiles
         window.location.href = "Concepteur_manuel_5.php?color=" + couleur + "&taille=" + taille + "&pattern=" + img_pattern + "&road_pattern=" + road_pattern;
 
     } else {
@@ -304,6 +304,7 @@ function checkPathConnected() {
     }
 }
 
+//fonction qui va vérifier si la route est fonctionnel
 function checkRoadFunctionality() {
     for (let i = 0; i < numRows; i++) {
         for (let j = 0; j < numCols; j++) {
@@ -330,7 +331,8 @@ function checkRoadFunctionality() {
             }
         }
     }
-    // Si toutes les cases 1 (sauf les cases de départ et d'arrivée) ont au moins deux cases adjacentes 1, la route est fonctionnelle
+    // Si toutes les cases ayant pour valeur 1 (sauf les cases de départ et 
+    //d'arrivée) ont au moins deux cases adjacentes 1, la route est fonctionnelle
     return true;
 }
 
@@ -363,7 +365,7 @@ function getAdjacentCells(row, col) {
     return adjacentCells;
 }
 
-
+//Fonction qui vérifie que le début et la fin sont connectés
 function isPathConnected(startCoords, endCoords) {
     let visited = new Array(numRows).fill(false).map(() => new Array(numCols).fill(false)); // Tableau pour suivre les cases visitées
     let queue = []; // File pour le parcours BFS
